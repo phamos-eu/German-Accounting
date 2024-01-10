@@ -39,7 +39,7 @@ def get_custom_fields():
 			"description": "This field will be filled by either 'Goods' or 'Services' depending on the result that is calculated in the item table."
 		},
 		{
-			"label": "Tax Id",
+			"label": "Tax ID",
 			"fieldname": "tax_id",
 			"fieldtype": "Data",
 			"read_only": 1,
