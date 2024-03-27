@@ -134,7 +134,7 @@ def get_debtors_csv_data(data):
 	debtors_csv_data = frappe.db.sql(
 	"""
 		SELECT
-			DISTINCT cust.tax_id, cust.name as customer, acc.account as debitor_no_datev,
+			DISTINCT COALESCE(cust.tax_id,""), COALESCE(cust.name,"") as customer, COALESCE(acc.account,"") as debitor_no_datev,
 			COALESCE(addrs.address_line1,""), COALESCE(addrs.address_line2,""), COALESCE(addrs.city,""), COALESCE(addrs.pincode,""), 
 			COALESCE((select cn.code from tabCountry as cn WHERE cn.name = addrs.country ),"") as country_code
 		FROM 
