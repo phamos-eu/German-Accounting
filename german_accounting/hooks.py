@@ -18,6 +18,7 @@ fixtures = [
 				"in",
 				[
 					"Address-is_primary_address-description"
+					"Address-tax_category-fetch_if_empty"
 				],
 			)
 		},
