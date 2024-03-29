@@ -15,5 +15,22 @@
   "property_type": "Text",
   "row_name": null,
   "value": "This check can only be set once per party that is linked in the Links table in the Reference section of this page"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Address",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "tax_category",
+  "modified": "2024-03-29 00:03:47.584195",
+  "name": "Address-tax_category-fetch_if_empty",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "property": "fetch_if_empty",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "1"
  }
 ]
