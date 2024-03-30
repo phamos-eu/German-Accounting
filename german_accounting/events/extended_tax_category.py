@@ -49,10 +49,10 @@ def validate_tax_category_fields(doc, method=None):
 
 
 def setting_tax_defaults(doc):
-    track_logs = frappe.db.get_single_value("German Accounting Settings", "track_logs")
+    transaction_validation_type = frappe.db.get_single_value("German Accounting Settings", "transaction_validation_message")
     if doc.doctype == 'Quotation' and doc.quotation_to == 'Customer' and doc.party_name:
         doc.tax_id = frappe.get_cached_value("Customer", doc.party_name, "tax_id")
-
+    message = None
     if doc.item_group and doc.tax_category:
         is_vat_applicable = True if doc.tax_id else False
         filters = {
@@ -64,8 +64,8 @@ def setting_tax_defaults(doc):
         }
         if frappe.db.exists('German Accounting Tax Defaults', filters):
             item_tax_template = frappe.get_cached_doc('German Accounting Tax Defaults', filters)
-            if track_logs:
-                frappe.msgprint(item_tax_template.item_tax_template)
+            if transaction_validation_type == "Error or Info":
+                message = item_tax_template.item_tax_template
             for item in doc.items:
                 if item_tax_template.item_tax_template:
                     item.item_tax_template = item_tax_template.item_tax_template
@@ -91,7 +91,10 @@ def setting_tax_defaults(doc):
             doc.taxes_and_charges = ""
             doc.run_method("set_missing_values")
             doc.run_method("calculate_taxes_and_totals")
-            frappe.msgprint(_("This case is not reflected in the table (German Accounting Tax Defaults) in {0}. Please check the fields tax_category, customer_type, is_vat_applicable and add your combination to the table.").format(frappe.get_desk_link("Item Group", doc.item_group)))
+            if transaction_validation_type in ["Error or Info", "Error Only"]:
+                message = _("This case is not reflected in the table (German Accounting Tax Defaults) in {0}. Please check the fields tax_category, customer_type, is_vat_applicable and add your combination to the table.").format(frappe.get_desk_link("Item Group", doc.item_group))
+    if message:
+        frappe.msgprint(message)
 
 def set_customer_type(doc):
     if doc.doctype == 'Quotation':
