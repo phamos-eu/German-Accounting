@@ -1,0 +1,101 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-03-30 13:14:26.460676",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "datev_exports_section",
+  "create_datev_html",
+  "column_break_ltkjn",
+  "create_datev_export_logs",
+  "section_break_61fja",
+  "show_export_logs_html",
+  "column_break_6sdmb",
+  "show_export_logs",
+  "section_break_whs9x",
+  "show_report_html",
+  "column_break_p4usw",
+  "show_report"
+ ],
+ "fields": [
+  {
+   "fieldname": "datev_exports_section",
+   "fieldtype": "Section Break",
+   "label": "DATEV EXPORTS"
+  },
+  {
+   "fieldname": "create_datev_html",
+   "fieldtype": "HTML",
+   "options": "Condimentum tristique posuere curae morbi felis praesent per gravida erat placerat, class cras duis interdum ante phasellus integer diam. Interdum vitae mattis pellentesque potenti consequat ridiculus vehicula"
+  },
+  {
+   "fieldname": "column_break_ltkjn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "create_datev_export_logs",
+   "fieldtype": "Button",
+   "label": "Create DATEV Export Logs"
+  },
+  {
+   "fieldname": "section_break_61fja",
+   "fieldtype": "Section Break",
+   "hide_border": 1
+  },
+  {
+   "fieldname": "show_export_logs_html",
+   "fieldtype": "HTML",
+   "options": "Condimentum tristique posuere curae morbi felis praesent per gravida erat placerat, class cras duis interdum ante phasellus integer diam. Interdum vitae mattis pellentesque potenti consequat ridiculus vehicula"
+  },
+  {
+   "fieldname": "column_break_6sdmb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "show_export_logs",
+   "fieldtype": "Button",
+   "label": "Show Export Logs"
+  },
+  {
+   "fieldname": "section_break_whs9x",
+   "fieldtype": "Section Break",
+   "hide_border": 1
+  },
+  {
+   "fieldname": "show_report_html",
+   "fieldtype": "HTML",
+   "options": "Condimentum tristique posuere curae morbi felis praesent per gravida erat placerat, class cras duis interdum ante phasellus integer diam. Interdum vitae mattis pellentesque potenti consequat ridiculus vehicula"
+  },
+  {
+   "fieldname": "show_report",
+   "fieldtype": "Button",
+   "label": "Show Report"
+  },
+  {
+   "fieldname": "column_break_p4usw",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "hide_toolbar": 1,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-04-02 03:10:24.445007",
+ "modified_by": "Administrator",
+ "module": "German Accounting",
+ "name": "DATEV Action Panel",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

@@ -9,7 +9,6 @@
  "field_order": [
   "month",
   "exported_on",
-  "datev_export_mapping",
   "year",
   "sales_invoice_csv",
   "sales_invoice_pdf",
@@ -28,14 +27,6 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Exported On",
-   "reqd": 1
-  },
-  {
-   "fieldname": "datev_export_mapping",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "DATEV Export Mapping",
-   "options": "DATEV Export Mapping",
    "reqd": 1
   },
   {
@@ -63,11 +54,10 @@
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-03-18 19:15:33.421303",
+ "modified": "2024-03-31 01:08:03.606581",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "DATEV Export Log",
- "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
@@ -84,6 +74,5 @@
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC",
- "states": []
+ "sort_order": "DESC"
 }
