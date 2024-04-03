@@ -120,7 +120,7 @@ frappe.ui.form.on('DATEV Action Panel', {
 
 	show_report: function(frm){
 		frappe.open_in_new_tab = true;
-		frappe.set_route('query-report', 'DATEV Sales Invoice', {})
+		frappe.set_route('query-report', 'DATEV Sales Invoice Export', {})
 	}
 
 });

@@ -38,23 +38,26 @@
   {
    "fieldname": "sales_invoice_csv",
    "fieldtype": "Attach",
-   "label": "Sales Invoice CSV"
+   "label": "Sales Invoice CSV",
+   "read_only": 1
   },
   {
    "fieldname": "sales_invoice_pdf",
    "fieldtype": "Attach",
-   "label": "Sales Invoice PDF"
+   "label": "Sales Invoice PDF",
+   "read_only": 1
   },
   {
    "fieldname": "debtors_csv",
    "fieldtype": "Attach",
-   "label": "Debtors CSV"
+   "label": "Debtors CSV",
+   "read_only": 1
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-03-31 01:08:03.606581",
+ "modified": "2024-04-03 12:12:40.988326",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "DATEV Export Log",

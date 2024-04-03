@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('DATEV Export Log', {
-	// refresh: function(frm) {
-
-	// }
+	refresh: function(frm) {
+		$('.attachment-row').find(".remove-btn").remove()
+	}
 });
