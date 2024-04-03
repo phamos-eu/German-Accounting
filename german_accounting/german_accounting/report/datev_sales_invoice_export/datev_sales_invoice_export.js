@@ -40,5 +40,8 @@ frappe.query_reports["DATEV Sales Invoice Export"] = {
             "options": "\nSales Invoice CSV\nSales Invoice PDF\nDebtors CSV",
             "reqd": 1
         }
-    ]
+    ],
+    onload: function(){
+        frappe.breadcrumbs.add("German Accounting")
+    }
 };
