@@ -41,7 +41,7 @@ def get_data(filters):
 		h_or_s = "S" if entry.get('is_return') else "H"
 		grand_total = cstr(("%.2f" % flt(entry.grand_total))).replace(",","").replace(".","")
 		pdf_total = "%.2f" % flt(entry.grand_total)
-		pdf_net_total = cstr(("%.2f" % flt(entry.pdf_net_total))).replace(",","").replace(".","")
+		pdf_net_total = cstr(("%.2f" % flt(entry.grand_total))).replace(",","").replace(".","")
 
 		invoices_map.setdefault(entry.get('invoice_no'), []).append({
 			"posting_date": format_date(entry.get('posting_date'), "ddmm"),
