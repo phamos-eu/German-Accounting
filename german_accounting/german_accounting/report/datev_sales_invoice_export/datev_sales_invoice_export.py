@@ -40,6 +40,9 @@ def get_data(filters):
 	for entry in data:
 		h_or_s = "S" if entry.get('is_return') else "H"
 		grand_total = cstr(("%.2f" % flt(entry.grand_total))).replace(",","").replace(".","")
+		pdf_total = "%.2f" % flt(entry.grand_total)
+		pdf_net_total = cstr(("%.2f" % flt(entry.pdf_net_total))).replace(",","").replace(".","")
+
 		invoices_map.setdefault(entry.get('invoice_no'), []).append({
 			"posting_date": format_date(entry.get('posting_date'), "ddmm"),
 			"pdf_posting_date": format_date(entry.get('posting_date'), "dd.mm.YYYY"),
@@ -47,8 +50,8 @@ def get_data(filters):
 			"tax_id": entry.get('tax_id') if entry.get('tax_id') else "",
 			"currency": entry.get('currency'),
 			"grand_total": "{0}{1}".format(grand_total, h_or_s),
-			"pdf_total_datev": entry.pdf_net_total,
-			"pdf_total": entry.grand_total,
+			"pdf_total_datev": pdf_net_total,
+			"pdf_total": pdf_total,
 			"pdf_net_total": entry.pdf_net_total,
 			"debit_to": entry.get('debit_to'),
 			"item_tax_rate": entry.get('item_tax_rate'),
