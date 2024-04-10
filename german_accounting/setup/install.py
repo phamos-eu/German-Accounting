@@ -115,10 +115,21 @@ def get_custom_fields():
 		}	
 	]
 
+	custom_fields_party_account = [
+		{
+			"label": "Debtor/Creditor Number",
+			"fieldname": "debtor_creditor_number",
+			"fieldtype": "Data",
+			"insert_after": "account",
+			"translatable": 0,
+		},
+	]
+
 	return {
 		"Quotation": custom_fields_quotation,
 		"Sales Order": custom_fields_so_si,
 		"Item Group": custom_fields_item_group,
 		"Sales Invoice": custom_fields_so_si,
-		"Country": custom_fields_country
+		"Country": custom_fields_country,
+		"Party Account": custom_fields_party_account,
 	}
