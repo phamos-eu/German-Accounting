@@ -1,0 +1,47 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:DATEV OPOS Import on {creation}",
+ "creation": "2024-04-23 09:23:34.743892",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "import_file"
+ ],
+ "fields": [
+  {
+   "fieldname": "import_file",
+   "fieldtype": "Attach",
+   "in_list_view": 1,
+   "label": "Import File",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-04-23 09:34:37.924267",
+ "modified_by": "Administrator",
+ "module": "German Accounting",
+ "name": "DATEV OPOS Import",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
