@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:DATEV OPOS Import on {creation}",
  "creation": "2024-04-23 09:23:34.743892",
  "default_view": "List",
  "doctype": "DocType",
@@ -20,10 +21,11 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-04-23 09:23:34.743892",
+ "modified": "2024-04-23 09:34:37.924267",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "DATEV OPOS Import",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
