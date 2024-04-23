@@ -157,7 +157,7 @@ def get_debtors_csv_data(data):
 			if len(debitor_no_datev) < 9:
 				n = 9 - len(debitor_no_datev)
 				zeros = '0' * n
-				debit_no_datev += zeros
+				debitor_no_datev += zeros
 			d['debitor_no_datev'] = debitor_no_datev
 
 	return debtors_csv_data
