@@ -30,10 +30,10 @@ def get_data(filters):
 		SELECT
 			si.name as invoice_no, si.posting_date, si.is_return,si.cost_center, 
 			si.tax_id, si.currency, si.grand_total, si.net_total as pdf_net_total,
-			si.debit_to, si.custom_exported_on, co.code, ad.country, si.customer, 
+			acc.debtor_creditor_number as debit_to, si.custom_exported_on, co.code, ad.country, si.customer, 
 			sii.income_account, sii.item_tax_rate
-		FROM `tabSales Invoice` si, `tabSales Invoice Item` sii, `tabAddress` ad, `tabCountry` co
-		WHERE si.docstatus=1 AND si.name = sii.parent AND si.customer_address=ad.name AND ad.country=co.name %s
+		FROM `tabSales Invoice` si, `tabSales Invoice Item` sii, `tabAddress` ad, `tabCountry` co, `tabParty Account` acc
+		WHERE si.docstatus=1 AND si.name = sii.parent AND si.customer_address=ad.name AND ad.country=co.name AND acc.parent = si.customer %s
 	"""% conditions,filters, as_dict = 1)
 	
 	invoices_map = {}
@@ -137,7 +137,7 @@ def get_debtors_csv_data(data):
 	debtors_csv_data = frappe.db.sql(
 	"""
 		SELECT
-			DISTINCT COALESCE(cust.tax_id,"") as tax_id, COALESCE(cust.name,"") as customer, COALESCE(acc.account,"") as debitor_no_datev,
+			DISTINCT COALESCE(cust.tax_id,"") as tax_id, COALESCE(cust.name,"") as customer, COALESCE(acc.debtor_creditor_number,"") as debitor_no_datev,
 			COALESCE(addrs.address_line1,"") as address_line1, COALESCE(addrs.address_line2,"") as address_line2, COALESCE(addrs.city,"") as city, COALESCE(addrs.pincode,"") as pincode, 
 			COALESCE((select cn.code from tabCountry as cn WHERE cn.name = addrs.country ),"") as country_code
 		FROM 
@@ -157,7 +157,7 @@ def get_debtors_csv_data(data):
 			if len(debitor_no_datev) < 9:
 				n = 9 - len(debitor_no_datev)
 				zeros = '0' * n
-				debit_no_datev += zeros
+				debitor_no_datev += zeros
 			d['debitor_no_datev'] = debitor_no_datev
 
 	return debtors_csv_data
