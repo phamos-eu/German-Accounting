@@ -168,16 +168,10 @@ def get_custom_fields():
 			"options": "Address"
 		},
 		{
-			"label": "Amount",
-			"fieldname": "amount",
-			"fieldtype": "Section Break",
-			"insert_after": 'billing_address',
-		},
-		{
 			"label": "Open Invoice Amount",
 			"fieldname": "open_invoice_amount",
 			"fieldtype": "Currency",
-			"insert_after": "amount",
+			"insert_after": "billing_address",
 		},
 		{
 			"label": "Overdue Invoice Amount",
