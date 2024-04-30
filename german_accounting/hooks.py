@@ -56,9 +56,10 @@ doc_events = {
 	},
     "Sales Invoice": {
         "validate": "german_accounting.events.extended_tax_category.validate_tax_category_fields",
-		"on_submit": "german_accounting.events.add_outstanding_amount.add_outstanding_amount"
-
 	},
+	"Customer": {
+		"onload": "german_accounting.events.update_amounts_value.update_amounts"
+	}
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
