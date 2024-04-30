@@ -172,12 +172,14 @@ def get_custom_fields():
 			"fieldname": "open_invoice_amount",
 			"fieldtype": "Currency",
 			"insert_after": "billing_address",
+			"read_only": 1
 		},
 		{
 			"label": "Overdue Invoice Amount",
 			"fieldname": "overdue_invoice_amount",
 			"fieldtype": "Currency",
 			"insert_after": "open_invoice_amount",
+			"read_only": 1
 		},
 		{
 			"fieldname": "col_break",
@@ -189,12 +191,14 @@ def get_custom_fields():
 			"fieldname": "non_invoiced_amount",
 			"fieldtype": "Currency",
 			"insert_after": "col_break",
+			"read_only": 1
 		},
 		{
 			"label": "Total",
 			"fieldname": "total",
 			"fieldtype": "Currency",
 			"insert_after": "non_invoiced_amount",
+			"read_only": 1
 		},
 	]
 	custom_fields_party_account = [
