@@ -24,27 +24,46 @@ def update_open_invoice_amount(doc):
     doc.open_invoice_amount = total_outstanding_amount
 
 def update_overdue_invoice_amount(doc):
-    pass
-
-def update_non_invoiced_amount(doc):
     customer = doc.name
-    total_non_invoiced_amount = 0.0
+    total_outstanding_amount = 0.0
 
     sql_query = """
-        SELECT SUM(grand_total)
-        FROM `tabSales Order`
+        SELECT SUM(outstanding_amount)
+        FROM `tabSales Invoice`
         WHERE customer = %(customer)s
-        AND status NOT IN ('Cancelled', 'Completed','On Hold', 'Closed');
+        AND status='Overdue'
     """
         
     result = frappe.db.sql(sql_query, {"customer": customer})
     
     if result:
-        noninvoiced_amount = result[0][0]
-        if noninvoiced_amount:
-            total_non_invoiced_amount = noninvoiced_amount
+        outstanding_amount = result[0][0]
+        if outstanding_amount:
+            total_outstanding_amount = outstanding_amount
 
-    doc.non_invoiced_amount = total_non_invoiced_amount
+    doc.overdue_invoice_amount = total_outstanding_amount
+
+def update_non_invoiced_amount(doc):
+    pass
+    # customer = doc.name
+    # total_non_invoiced_amount = 0.0
+
+    # sql_query = """
+    #     SELECT SUM(grand_total)
+    #     FROM `tabSales Order`
+    #     WHERE customer = %(customer)s
+    #     AND status NOT IN ('Cancelled', 'Completed','On Hold', 'Closed')
+    #     AND per_billed != '100'
+    # """
+        
+    # result = frappe.db.sql(sql_query, {"customer": customer})
+    
+    # if result:
+    #     noninvoiced_amount = result[0][0]
+    #     if noninvoiced_amount:
+    #         total_non_invoiced_amount = noninvoiced_amount
+
+    # doc.non_invoiced_amount = total_non_invoiced_amount
 
 def update_total(doc):
     pass
