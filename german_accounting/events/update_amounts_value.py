@@ -11,7 +11,7 @@ def update_open_invoice_amount(doc):
         FROM `tabSales Invoice`
         WHERE customer = %(customer)s
         AND docstatus = 1
-        AND outstanding_amount > 0
+        AND outstanding_amount != 0
     """
         
     result = frappe.db.sql(sql_query, {"customer": customer})
