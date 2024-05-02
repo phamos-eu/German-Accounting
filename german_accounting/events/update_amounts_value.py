@@ -88,7 +88,7 @@ def update_non_invoiced_amount(doc):
     doc.non_invoiced_amount = net_non_invoice_amount
 
 def update_total(doc):
-    pass
+    doc.total = doc.open_invoice_amount + doc.non_invoiced_amount
 
 
 def update_amounts(doc, method=None):
@@ -96,6 +96,5 @@ def update_amounts(doc, method=None):
     update_overdue_invoice_amount(doc)
     update_non_invoiced_amount(doc)
     update_total(doc)
-
 
 
