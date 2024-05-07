@@ -15,6 +15,7 @@ frappe.ui.form.on('Customer', {
                 let overdue_invoice_amount = frm.doc.overdue_invoice_amount.toFixed(2)
                 let non_invoiced_amount = frm.doc.non_invoiced_amount.toFixed(2)
                 let total = frm.doc.total.toFixed(2)
+                frm.dashboard.clear_headline();
                 
                 frm.dashboard.set_headline_alert(`
                     <div class="row">
