@@ -32,7 +32,7 @@ def update_open_invoice_amount(doc):
     doc.open_invoice_amount = total_outstanding_amount
 
     if document_type=="Customer":
-        frappe.db.set_value(document_type, doc.name, "open_invoice_amount", total_outstanding_amount)
+        frappe.db.set_value(document_type, doc.name, "open_invoice_amount", total_outstanding_amount, update_modified=False)
         frappe.db.commit()
 
 def update_overdue_invoice_amount(doc):
@@ -65,7 +65,7 @@ def update_overdue_invoice_amount(doc):
     doc.overdue_invoice_amount = total_overdue_amount
 
     if document_type=="Customer":
-        frappe.db.set_value(document_type, doc.name, "overdue_invoice_amount", total_overdue_amount)
+        frappe.db.set_value(document_type, doc.name, "overdue_invoice_amount", total_overdue_amount, update_modified=False)
         frappe.db.commit()
 
 def update_non_invoiced_amount(doc):
@@ -120,7 +120,7 @@ def update_non_invoiced_amount(doc):
     doc.non_invoiced_amount = net_non_invoice_amount
 
     if document_type=="Customer":
-        frappe.db.set_value(document_type, doc.name, "non_invoiced_amount", net_non_invoice_amount)
+        frappe.db.set_value(document_type, doc.name, "non_invoiced_amount", net_non_invoice_amount, update_modified=False)
         frappe.db.commit()
 
 
@@ -135,7 +135,7 @@ def update_total(doc):
         doc.totall = total
     
     if document_type=="Customer":
-        frappe.db.set_value(document_type, doc.name, "total", total)
+        frappe.db.set_value(document_type, doc.name, "total", total, update_modified=False)
         frappe.db.commit()
 
 
