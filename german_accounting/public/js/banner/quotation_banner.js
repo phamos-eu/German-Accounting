@@ -1,12 +1,11 @@
-
 frappe.ui.form.on('Quotation', {
 	refresh: (frm) => {
-		if(!frm.is_new()) {
+		// if(!frm.is_new()) {
 			frm.trigger('make_dashboard');
-		}
+        // }
 	},
 	make_dashboard: async (frm) => {
-		if(!frm.is_new()) {
+		// if(!frm.is_new()) {
             if (frm.doc.party_name) {
                 const currencySymbol = await getDefaultCurrencySymbol();
 
@@ -14,7 +13,8 @@ frappe.ui.form.on('Quotation', {
                 let open_invoice_amount = frm.doc.open_invoice_amount.toFixed(2)
                 let overdue_invoice_amount = frm.doc.overdue_invoice_amount.toFixed(2)
                 let non_invoiced_amount = frm.doc.non_invoiced_amount.toFixed(2)
-                let total = frm.doc.totall.toFixed(2)
+                let total = (parseFloat(open_invoice_amount)+parseFloat(non_invoiced_amount)).toFixed(2)
+                frm.dashboard.clear_headline();
 
                 frm.dashboard.set_headline_alert(`
                     <div class="row">
@@ -26,9 +26,10 @@ frappe.ui.form.on('Quotation', {
                             </span>
                         </div>
                     </div>
-                `);        
+                `);  
+            
             }
-		}
+		// }
 	}
 })
 
