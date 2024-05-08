@@ -1,13 +1,30 @@
 
 frappe.ui.form.on('Sales Order', {
+    customer: (frm) => {
+        
+        const customer = frm.doc.customer
+        frappe.call({
+            method: "german_accounting.events.sales_order_amount.update_amounts",
+            args: {
+                customer: customer
+            },
+            callback: function (r) {
+               const val = r.message
+               frm.doc.open_invoice_amount = val[0]
+               frm.doc.overdue_invoice_amount = val[1]
+               frm.doc.non_invoiced_amount = val[2]
+               frm.doc.totall = val[3]
+            },
+        });
+    },
 	refresh: (frm) => {
-		if(!frm.is_new()) {
+		// if(!frm.is_new()) {
 			frm.trigger('make_dashboard');
-		}
+		// }
 	},
 	make_dashboard: async (frm) => {
-		if(!frm.is_new()) {
-            if (frm.doc.customer) {
+		// if(!frm.is_new()) {
+            if (frm.doc.customer && frm.doc.open_invoice_amount!=null) {
                 const currencySymbol = await getDefaultCurrencySymbol();
 
 				let customer = frm.doc.customer
@@ -22,14 +39,14 @@ frappe.ui.form.on('Sales Order', {
                         <div class="col-xs-12">
                             <span class="indicator whitespace-nowrap">
                                 <span class="hidden-xs">
-                                    <p>Customer <b>${customer}</b> has an Open Invoice Amount of: <b>${currencySymbol} ${open_invoice_amount}</b>, Overdue Invoice Amount of: <b>${currencySymbol} ${overdue_invoice_amount}</b> and Non-Invoiced Amount of: <b>${currencySymbol} ${non_invoiced_amount}</b>.<br> This is a Total of: <b>${currencySymbol} ${total}</b>.</p>
+                                    <p>Customer <b>${customer}</b> has an Open Invoice Amount of: <b>${currencySymbol} ${open_invoice_amount}</b>, Overdue Invoice Amount of: <b>${currencySymbol} ${overdue_invoice_amount}</b> and Non-Invoiced Amount of: <b>${currencySymbol} ${non_invoiced_amount}</b><br> This is a Total of: <b>${currencySymbol} ${total}</b></p>
                                 </span>
                             </span>
                         </div>
                     </div>
                 `);
             }
-		}
+		// }
 	}
 })
 
