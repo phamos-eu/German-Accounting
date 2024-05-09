@@ -44,7 +44,10 @@ fixtures = [
 
 # include js in doctype views
 doctype_js = {
-    "Customer" : "public/js/customer.js",
+    "Customer" : [
+		"public/js/customer.js",
+		"public/js/banner/customer_banner.js"
+	],
 	"Quotation": "public/js/banner/quotation_banner.js",
 	"Sales Order": "public/js/banner/sales_order_banner.js",
 }
@@ -56,7 +59,7 @@ doc_events = {
 	},
     "Sales Order": {
         "validate": "german_accounting.events.extended_tax_category.validate_tax_category_fields",
-		"onload": "german_accounting.events.update_amounts_value.update_amounts"
+		"onload": "german_accounting.events.update_amounts_value.update_amounts",
 	},
     "Sales Invoice": {
         "validate": "german_accounting.events.extended_tax_category.validate_tax_category_fields",

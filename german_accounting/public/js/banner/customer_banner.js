@@ -1,21 +1,22 @@
-frappe.ui.form.on('Quotation', {
+frappe.ui.form.on('Customer', {
 	refresh: (frm) => {
-		// if(!frm.is_new()) {
+		if(!frm.is_new()) {
 			frm.trigger('make_dashboard');
-        // }
+		}
 	},
 	make_dashboard: async (frm) => {
-		// if(!frm.is_new()) {
-            if (frm.doc.party_name) {
+        
+		if(!frm.is_new()) {
+            if (frm.doc.customer_name) {
                 const currencySymbol = await getDefaultCurrencySymbol();
-
-                let customer = frm.doc.party_name
+                
+                let customer = frm.doc.customer_name
                 let open_invoice_amount = frm.doc.open_invoice_amount.toFixed(2)
                 let overdue_invoice_amount = frm.doc.overdue_invoice_amount.toFixed(2)
                 let non_invoiced_amount = frm.doc.non_invoiced_amount.toFixed(2)
-                let total = (parseFloat(open_invoice_amount)+parseFloat(non_invoiced_amount)).toFixed(2)
+                let total = frm.doc.total.toFixed(2)
                 frm.dashboard.clear_headline();
-
+                
                 frm.dashboard.set_headline_alert(`
                     <div class="row">
                         <div class="col-xs-12">
@@ -26,12 +27,12 @@ frappe.ui.form.on('Quotation', {
                             </span>
                         </div>
                     </div>
-                `);  
-            
+                `);
             }
-		// }
+		}
 	}
 })
+
 
 
 async function getDefaultCurrencySymbol() {
