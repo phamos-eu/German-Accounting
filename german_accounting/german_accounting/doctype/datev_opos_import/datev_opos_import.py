@@ -20,26 +20,35 @@ class DATEVOPOSImport(Document):
 			result = chardet.detect(rawdata)
 			encoding = result['encoding']
 
-		total_rows = sum(1 for _ in open(file_path, mode='r', encoding=encoding))
+
+		total_rows = self.detect_actual_data_rows(file_path, encoding)
 		csv_data = []
+
 		with open(file_path, mode='r', encoding=encoding, errors='replace') as csvfile:
+			
 			csv_reader = csv.reader(csvfile)
 			frappe.publish_progress(0, title='Importing', description='Starting import...')
-		
-			if encoding=='utf-8' or encoding=='ascii':
+			
+			if encoding=='ascii':
 				
 				for index, row in enumerate(csv_reader):
+					
+					if index >= total_rows:
+				 		break
+
+					row = ''.join(row)
+					row = row.split(';')
 					
 					csv_data.append(row)
 
 					index+=1
 					progress = int((index / total_rows) * 100)
 					frappe.publish_progress(progress, title='Importing', description=f'Processing row {index}/{total_rows}')
-				
+
 				self.update_sales_invoice_status(csv_data)
 			else:
 				
-				frappe.throw(_('{0} is unsupported file format. Only utf-8 and ascii formats are supported currently.').format(encoding))
+				frappe.throw(_('{0} is unsupported file format. Only ascii format is supported currently.').format(encoding))
 
 
 	def get_file_from_url(self, file_url):
@@ -50,15 +59,32 @@ class DATEVOPOSImport(Document):
 		
 		return file_path
 
-	def update_sales_invoice_status(self, csv_data):
-		csv_invoice_numbers = [row[1] for row in csv_data]
+	def detect_actual_data_rows(self, file_path, encoding):
+		with open(file_path, mode='r', encoding=encoding, errors='replace') as csvfile:
+			csv_reader = csv.reader(csvfile)
+			actual_rows = 0
+			for row in csv_reader:
+				row = ''.join(row)
+				row = row.split(';')
+				empty_row = True
+				for cell in row:
+					if cell.strip():
+						empty_row = False
+						break  
+				if not empty_row:
+					actual_rows += 1
 				
+		return actual_rows
+
+	def update_sales_invoice_status(self, csv_data):
+		
+		csv_invoice_numbers = [row[1] for row in csv_data]
+		
 		invoices = frappe.get_all("Sales Invoice", filters={
 			"status": ["not in", ["Paid", "Cancelled", "Draft"]],
 			"name": ["not in", csv_invoice_numbers]
 			}, fields=["name"])
-	
+
 		for invoice in invoices:
 	
 			frappe.db.set_value("Sales Invoice", invoice.name, "status", "Paid")
-
