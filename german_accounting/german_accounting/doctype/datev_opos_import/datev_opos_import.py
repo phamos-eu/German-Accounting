@@ -3,6 +3,7 @@
 
 import frappe
 from frappe.utils.file_manager import get_file_path
+from frappe.utils import today
 from frappe.model.document import Document
 import os
 import csv
@@ -86,5 +87,9 @@ class DATEVOPOSImport(Document):
 			}, fields=["name"])
 
 		for invoice in invoices:
-	
-			frappe.db.set_value("Sales Invoice", invoice.name, "status", "Paid")
+			payment_entry = frappe.call("erpnext.accounts.doctype.payment_entry.payment_entry.get_payment_entry", 'Sales Invoice', invoice.name)
+			payment_entry.reference_date = today()
+			payment_entry.reference_no = 'DATEV OPOS import '+ today()
+
+			payment_entry.insert()
+			payment_entry.submit()
