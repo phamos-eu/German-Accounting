@@ -8,6 +8,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "month",
   "import_file"
  ],
  "fields": [
@@ -17,11 +18,16 @@
    "in_list_view": 1,
    "label": "Import File",
    "reqd": 1
+  },
+  {
+   "fieldname": "month",
+   "fieldtype": "Date",
+   "label": "Month"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-04-23 09:34:37.924267",
+ "modified": "2024-05-10 15:53:15.348007",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "DATEV OPOS Import",
