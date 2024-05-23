@@ -28,7 +28,7 @@
   {
    "fieldname": "create_datev_html",
    "fieldtype": "HTML",
-   "options": "Condimentum tristique posuere curae morbi felis praesent per gravida erat placerat, class cras duis interdum ante phasellus integer diam. Interdum vitae mattis pellentesque potenti consequat ridiculus vehicula"
+   "options": "Mit dem Button "Create DATEV Export Logs" erstellen wir einen Export aller Ausgangsrechnungen (inkl. Stornos und Gutschriften) für den Import nach DATEV. Es werden alle Belege berücksichtigt die gebucht sind, zuvor nicht exportiert wurden und bei welchen die Stammdaten korrekt angelegt sind. Der Export bezieht sich auf einen Kalnedermonant kann aber mehrfach ausgelöst werden."
   },
   {
    "fieldname": "column_break_ltkjn",
@@ -47,7 +47,7 @@
   {
    "fieldname": "show_export_logs_html",
    "fieldtype": "HTML",
-   "options": "Condimentum tristique posuere curae morbi felis praesent per gravida erat placerat, class cras duis interdum ante phasellus integer diam. Interdum vitae mattis pellentesque potenti consequat ridiculus vehicula"
+   "options": "Über diesen Button gelangen wir in die Listenansicht der bereits getätigten Exporte (DATEV Export Log). Dort können wir die *.csv Datei der Belege, eine Übersicht als *.pdf sowie die *.csv der Debitorenstammdaten einsehen und herunterladen."
   },
   {
    "fieldname": "column_break_6sdmb",
@@ -66,7 +66,7 @@
   {
    "fieldname": "show_report_html",
    "fieldtype": "HTML",
-   "options": "Condimentum tristique posuere curae morbi felis praesent per gravida erat placerat, class cras duis interdum ante phasellus integer diam. Interdum vitae mattis pellentesque potenti consequat ridiculus vehicula"
+   "options": "Über diesen Button gelangen wir zu einer Ansicht in welcher wir die Daten wie sie in den Exporten abgebildet sind bzw. sein werden eingehen. Diese Ansichsten sind nicht belastbar. Die tatsächlich exportieren Daten finden sich in den DATEV Export Logs."
   },
   {
    "fieldname": "show_report",
