@@ -28,7 +28,7 @@
   {
    "fieldname": "create_datev_html",
    "fieldtype": "HTML",
-   "options": "Mit dem Button "Create DATEV Export Logs" erstellen wir einen Export aller Ausgangsrechnungen (inkl. Stornos und Gutschriften) für den Import nach DATEV. Es werden alle Belege berücksichtigt die gebucht sind, zuvor nicht exportiert wurden und bei welchen die Stammdaten korrekt angelegt sind. Der Export bezieht sich auf einen Kalnedermonant kann aber mehrfach ausgelöst werden."
+   "options": "Mit dem Button <b>Create DATEV Export Logs</b> erstellen wir einen Export aller Ausgangsrechnungen (inkl. Stornos und Gutschriften) für den Import nach DATEV. Es werden alle Belege berücksichtigt die gebucht sind, zuvor nicht exportiert wurden und bei welchen die Stammdaten korrekt angelegt sind. Der Export bezieht sich auf einen Kalnedermonant kann aber mehrfach ausgelöst werden."
   },
   {
    "fieldname": "column_break_ltkjn",
