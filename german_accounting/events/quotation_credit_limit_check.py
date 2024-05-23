@@ -93,13 +93,13 @@ def get_credit_limit(customer, company):
 	return flt(credit_limit)  
 
 
-def get_customer_outstanding(party_name, company):
+def get_customer_outstanding(party_name, company, total):
 
-	return flt(203)
+	return flt(total)
 
 
 
-def check_credit_limit_for_customer(party_name, company):
+def check_credit_limit_for_customer(party_name, company, total):
 	# if bypass credit limit check is set to true (1) at quotation level,
 	# then we need not to check credit limit and vise versa
 	if not cint(
@@ -114,7 +114,7 @@ def check_credit_limit_for_customer(party_name, company):
 		if not credit_limit:
 			return
 
-		customer_outstanding =  get_customer_outstanding(party_name, company)
+		customer_outstanding =  get_customer_outstanding(party_name, company, total)
 
 		if credit_limit > 0 and flt(customer_outstanding) > credit_limit:
 
@@ -127,5 +127,4 @@ def check_credit_limit_for_customer(party_name, company):
 
 def check_credit_limit(doc, method=None):
     
-    check_credit_limit_for_customer(doc.party_name, doc.company)
-    frappe.throw("Error message: Condition not met")
+    check_credit_limit_for_customer(doc.party_name, doc.company, doc.totall)
