@@ -287,6 +287,15 @@ def get_custom_fields():
 		},
 	]
 
+	custom_fields_customer_credit_limit = [
+		{
+			"label": "Bypass Credit Limit Check at Quotation",
+			"fieldname": "bypass_credit_limit_check_quotation",
+			"fieldtype": "Check",
+			"insert_after": "bypass_credit_limit_check"
+		}
+	]
+
 	return {
 		"Quotation": custom_fields_quotation,
 		"Sales Order": custom_fields_so,
@@ -295,4 +304,5 @@ def get_custom_fields():
 		"Country": custom_fields_country,
 		"Customer": custom_fields_customer,
 		"Party Account": custom_fields_party_account,
+		"Customer Credit Limit": custom_fields_customer_credit_limit
 	}
