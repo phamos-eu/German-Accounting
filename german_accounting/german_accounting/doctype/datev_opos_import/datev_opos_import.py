@@ -33,12 +33,12 @@ class DATEVOPOSImport(Document):
 			if encoding=='ascii':
 				
 				for index, row in enumerate(csv_reader):
-					
+
 					if index >= total_rows:
 				 		break
 
-					row = ''.join(row)
-					row = row.split(';')
+					# row = ''.join(row)
+					# row = row.split(';')
 					
 					csv_data.append(row)
 
@@ -78,7 +78,7 @@ class DATEVOPOSImport(Document):
 		return actual_rows
 
 	def update_sales_invoice_status(self, csv_data):
-		
+
 		csv_invoice_numbers = [row[1] for row in csv_data]
 		
 		invoices = frappe.get_all("Sales Invoice", filters={
