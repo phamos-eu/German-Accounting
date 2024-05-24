@@ -33,7 +33,7 @@ class DATEVOPOSImport(Document):
 			if encoding=='ascii':
 				
 				for index, row in enumerate(csv_reader):
-					print(index, row)
+
 					if index >= total_rows:
 				 		break
 
