@@ -86,7 +86,6 @@ class DATEVOPOSImport(Document):
 			"name": ["not in", csv_invoice_numbers]
 			}, fields=["name"])
         
-		print('invoices', invoices)
 		for invoice in invoices:
 			payment_entry = frappe.call("erpnext.accounts.doctype.payment_entry.payment_entry.get_payment_entry", 'Sales Invoice', invoice.name)
 			payment_entry.reference_date = today()
