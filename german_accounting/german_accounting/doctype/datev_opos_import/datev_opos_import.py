@@ -92,7 +92,5 @@ class DATEVOPOSImport(Document):
 			payment_entry.reference_date = today()
 			payment_entry.reference_no = 'DATEV OPOS import '+ today()
 
-			print('payment entry', payment_entry)
-
 			payment_entry.insert()
 			payment_entry.submit()
