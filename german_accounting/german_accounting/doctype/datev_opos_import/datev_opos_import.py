@@ -82,14 +82,17 @@ class DATEVOPOSImport(Document):
 		csv_invoice_numbers = [row[1] for row in csv_data]
 		
 		invoices = frappe.get_all("Sales Invoice", filters={
-			"status": ["not in", ["Paid", "Cancelled", "Draft"]],
+			"status": ["not in", ["Paid", "Cancelled", "Draft", "Credit Note Issued", "Return"]],
 			"name": ["not in", csv_invoice_numbers]
 			}, fields=["name"])
-
+        
+		print('invoices', invoices)
 		for invoice in invoices:
 			payment_entry = frappe.call("erpnext.accounts.doctype.payment_entry.payment_entry.get_payment_entry", 'Sales Invoice', invoice.name)
 			payment_entry.reference_date = today()
 			payment_entry.reference_no = 'DATEV OPOS import '+ today()
+
+			print('payment entry', payment_entry)
 
 			payment_entry.insert()
 			payment_entry.submit()
