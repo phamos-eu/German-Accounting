@@ -1,5 +1,8 @@
 frappe.ui.form.on('Quotation', {
+    
 	refresh: (frm) => {
+        $('button[data-label="Submit"]').off()
+        $('button[data-label="Submit"]').click(() => {cur_frm.save("Submit")});
 		// if(!frm.is_new()) {
 			frm.trigger('make_dashboard');
         // }

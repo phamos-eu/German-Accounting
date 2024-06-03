@@ -19,6 +19,8 @@ frappe.ui.form.on('Sales Order', {
     },
 	refresh: (frm) => {
 		// if(!frm.is_new()) {
+            $('button[data-label="Submit"]').off()
+            $('button[data-label="Submit"]').click(() => {cur_frm.save("Submit")});
 			frm.trigger('make_dashboard');
 		// }
 	},
