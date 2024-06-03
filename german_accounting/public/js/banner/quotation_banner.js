@@ -17,7 +17,6 @@ frappe.ui.form.on('Quotation', {
 
                 let creditLimitText = credit_limit !== '0.00' ? `and The Credit Limit is: <b>${currencySymbol} ${credit_limit}</b>` : `<br> <span style="color: #ff4d4d;">Credit Limit is not set for this customer</span>`;
 
-
                 let textColor = '#1366AE'; // Default text color
                 if ((parseFloat(total) > parseFloat(credit_limit)) && parseFloat(credit_limit) > 0) {
                     textColor = '#ff4d4d'; // Red text color
