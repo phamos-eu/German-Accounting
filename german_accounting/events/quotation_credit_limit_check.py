@@ -63,10 +63,9 @@ def credit_limit(customer, company, ignore_outstanding_sales_order=False, extra_
 			)
 
 
-
+@frappe.whitelist()
 def get_credit_limit(customer, company):
 	credit_limit = None
-
 	if customer:
 		credit_limit = frappe.db.get_value(
 			"Customer Credit Limit",
