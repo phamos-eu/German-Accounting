@@ -1,8 +1,6 @@
 frappe.ui.form.on('Quotation', {
     
 	refresh: (frm) => {
-        $('button[data-label="Submit"]').off()
-        $('button[data-label="Submit"]').click(() => {cur_frm.save("Submit")});
 		// if(!frm.is_new()) {
 			frm.trigger('make_dashboard');
         // }
@@ -16,12 +14,14 @@ frappe.ui.form.on('Quotation', {
                 let open_invoice_amount = frm.doc.open_invoice_amount.toFixed(2)
                 let overdue_invoice_amount = frm.doc.overdue_invoice_amount.toFixed(2)
                 let non_invoiced_amount = frm.doc.non_invoiced_amount.toFixed(2)
-                let total = (parseFloat(open_invoice_amount)+parseFloat(non_invoiced_amount)).toFixed(2)
+                let total = (parseFloat(open_invoice_amount) + parseFloat(non_invoiced_amount)).toFixed(2)
 
                 let creditLimitText = credit_limit !== '0.00' ? `and The Credit Limit is: <b>${currencySymbol} ${credit_limit}</b>` : `<br> <span style="color: #ff4d4d;">Credit Limit is not set for this customer</span>`;
 
                 let textColor = '#1366AE'; // Default text color
                 if ((parseFloat(total) > parseFloat(credit_limit)) && parseFloat(credit_limit) > 0) {
+                    $('button[data-label="Submit"]').off()
+                    $('button[data-label="Submit"]').click(() => {cur_frm.save("Submit")});
                     textColor = '#ff4d4d'; // Red text color
                 }
                 frm.dashboard.clear_headline();

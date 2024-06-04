@@ -103,7 +103,6 @@ def check_credit_limit_for_customer(docname, party_name, company, total):
 				},
 			)
 
-
 def check_credit_limit(doc, method=None):
     
     check_credit_limit_for_customer(doc.name, doc.party_name, doc.company, doc.totall)
