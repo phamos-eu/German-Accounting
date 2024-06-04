@@ -19,8 +19,6 @@ frappe.ui.form.on('Sales Order', {
     },
 	refresh: (frm) => {
 		// if(!frm.is_new()) {
-            $('button[data-label="Submit"]').off()
-            $('button[data-label="Submit"]').click(() => {cur_frm.save("Submit")});
 			frm.trigger('make_dashboard');
 		// }
 	},
@@ -39,6 +37,8 @@ frappe.ui.form.on('Sales Order', {
 
                 let textColor = '#1366AE'; // Default text color
                 if ((parseFloat(total) > parseFloat(credit_limit)) && parseFloat(credit_limit) > 0) {
+                    $('button[data-label="Submit"]').off()
+                    $('button[data-label="Submit"]').click(() => {cur_frm.save("Submit")});
                     textColor = '#ff4d4d'; // Red text color
                 }
 
