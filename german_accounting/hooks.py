@@ -61,6 +61,7 @@ doc_events = {
     "Sales Order": {
         "validate": "german_accounting.events.extended_tax_category.validate_tax_category_fields",
 		"onload": "german_accounting.events.update_amounts_value.update_amounts",
+		"before_submit": "german_accounting.events.sales_order_credit_limit_check.check_credit_limit"
 	},
     "Sales Invoice": {
         "validate": "german_accounting.events.extended_tax_category.validate_tax_category_fields",
