@@ -21,13 +21,14 @@
   },
   {
    "fieldname": "month",
-   "fieldtype": "Date",
-   "label": "Month"
+   "fieldtype": "Select",
+   "label": "Month",
+   "options": "\nJanuary\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-10 15:53:15.348007",
+ "modified": "2024-06-10 13:10:19.422695",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "DATEV OPOS Import",

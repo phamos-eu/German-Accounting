@@ -82,7 +82,8 @@ class DATEVOPOSImport(Document):
 		csv_invoice_numbers = [row[1] for row in csv_data]
 		
 		invoices = frappe.get_all("Sales Invoice", filters={
-			"status": ["not in", ["Paid", "Cancelled", "Draft", "Credit Note Issued", "Return"]],
+			"status": ["not in", ["Paid", "Cancelled", "Draft", "Credit Note Issued"]],
+			"outstanding_amount": ["!=", 0],
 			"name": ["not in", csv_invoice_numbers]
 			}, fields=["name"])
         
