@@ -17,7 +17,11 @@
   "section_break_whs9x",
   "show_report_html",
   "column_break_p4usw",
-  "show_report"
+  "show_report",
+  "datev_imports_section",
+  "datev_import_html",
+  "column_break_hlyij",
+  "datev_opos_import"
  ],
  "fields": [
   {
@@ -28,7 +32,7 @@
   {
    "fieldname": "create_datev_html",
    "fieldtype": "HTML",
-   "options": "Mit dem Button <b>Create DATEV Export Logs</b> erstellen wir einen Export aller Ausgangsrechnungen (inkl. Stornos und Gutschriften) für den Import nach DATEV. Es werden alle Belege berücksichtigt die gebucht sind, zuvor nicht exportiert wurden und bei welchen die Stammdaten korrekt angelegt sind. Der Export bezieht sich auf einen Kalnedermonant kann aber mehrfach ausgelöst werden."
+   "options": "Mit dem Button <b>Create DATEV Export Logs</b> erstellen wir einen Export aller Ausgangsrechnungen (inkl. Stornos und Gutschriften) f\u00fcr den Import nach DATEV. Es werden alle Belege ber\u00fccksichtigt die gebucht sind, zuvor nicht exportiert wurden und bei welchen die Stammdaten korrekt angelegt sind. Der Export bezieht sich auf einen Kalnedermonant kann aber mehrfach ausgel\u00f6st werden."
   },
   {
    "fieldname": "column_break_ltkjn",
@@ -47,7 +51,7 @@
   {
    "fieldname": "show_export_logs_html",
    "fieldtype": "HTML",
-   "options": "Über diesen Button gelangen wir in die Listenansicht der bereits getätigten Exporte (DATEV Export Log). Dort können wir die *.csv Datei der Belege, eine Übersicht als *.pdf sowie die *.csv der Debitorenstammdaten einsehen und herunterladen."
+   "options": "\u00dcber diesen Button gelangen wir in die Listenansicht der bereits get\u00e4tigten Exporte (DATEV Export Log). Dort k\u00f6nnen wir die *.csv Datei der Belege, eine \u00dcbersicht als *.pdf sowie die *.csv der Debitorenstammdaten einsehen und herunterladen."
   },
   {
    "fieldname": "column_break_6sdmb",
@@ -66,7 +70,7 @@
   {
    "fieldname": "show_report_html",
    "fieldtype": "HTML",
-   "options": "Über diesen Button gelangen wir zu einer Ansicht in welcher wir die Daten wie sie in den Exporten abgebildet sind bzw. sein werden eingehen. Diese Ansichsten sind nicht belastbar. Die tatsächlich exportieren Daten finden sich in den DATEV Export Logs."
+   "options": "\u00dcber diesen Button gelangen wir zu einer Ansicht in welcher wir die Daten wie sie in den Exporten abgebildet sind bzw. sein werden eingehen. Diese Ansichsten sind nicht belastbar. Die tats\u00e4chlich exportieren Daten finden sich in den DATEV Export Logs."
   },
   {
    "fieldname": "show_report",
@@ -76,13 +80,32 @@
   {
    "fieldname": "column_break_p4usw",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "datev_imports_section",
+   "fieldtype": "Section Break",
+   "label": "DATEV IMPORTS"
+  },
+  {
+   "fieldname": "datev_import_html",
+   "fieldtype": "HTML",
+   "options": "Mit dem DATEV OPOS Import laden wir eine Datei hoch mit welcher wir den Zahlstatus des Ausgangsrechnungen \u00e4ndern. Die in der Datei enthaltenen Eintr\u00e4ge bilden die noch nicht bezahlten Rechnungen ab. Alle Ausgangsrechnungs IDs die also nicht in der Datei enthalten sind werden auf bezahlt gestellt. Ausnahmen gelten f\u00fcr den Status \"Abgebrochen (Cancelled), Entwurf (Draft), Gutschrift ausgel\u00f6st (Credit Note Issues) und Zur\u00fcck (Return)."
+  },
+  {
+   "fieldname": "column_break_hlyij",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "datev_opos_import",
+   "fieldtype": "Button",
+   "label": "DATEV OPOS Import"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-04-02 03:10:24.445007",
+ "modified": "2024-06-11 07:57:16.522658",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "DATEV Action Panel",
@@ -97,5 +120,6 @@
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "states": []
 }
