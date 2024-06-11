@@ -89,7 +89,7 @@
   {
    "fieldname": "datev_import_html",
    "fieldtype": "HTML",
-   "options": "Mit dem DATEV OPOS Import laden wir eine Datei hoch mit welcher wir den Zahlstatus des Ausgangsrechnungen \u00e4ndern. Die in der Datei enthaltenen Eintr\u00e4ge bilden die noch nicht bezahlten Rechnungen ab. Alle Ausgangsrechnungs IDs die also nicht in der Datei enthalten sind werden auf bezahlt gestellt. Ausnahmen gelten f\u00fcr den Status \"Abgebrochen (Cancelled), Entwurf (Draft), Gutschrift ausgel\u00f6st (Credit Note Issues) und Zur\u00fcck (Return)."
+   "options": "Mit dem DATEV OPOS Import laden wir eine Datei hoch mit welcher wir den Zahlstatus des Ausgangsrechnungen \u00e4ndern. Die in der Datei enthaltenen Eintr\u00e4ge bilden die noch nicht bezahlten Rechnungen ab. Alle Ausgangsrechnungs IDs die also nicht in der Datei enthalten sind werden auf bezahlt gestellt. Ausnahmen gelten f\u00fcr den Status \"Bezahlt (Paid), Abgebrochen (Cancelled), Entwurf (Draft) und Gutschrift ausgel\u00f6st (Credit Note Issues)."
   },
   {
    "fieldname": "column_break_hlyij",
@@ -105,7 +105,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-06-11 07:57:16.522658",
+ "modified": "2024-06-11 10:54:33.388127",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "DATEV Action Panel",
