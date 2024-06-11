@@ -121,6 +121,11 @@ frappe.ui.form.on('DATEV Action Panel', {
 	show_report: function(frm){
 		frappe.open_in_new_tab = true;
 		frappe.set_route('query-report', 'DATEV Sales Invoice Export', {})
+	},
+
+	datev_opos_import: function(frm){
+		frappe.open_in_new_tab = true;
+		frappe.set_route('List', 'DATEV OPOS Import', {})
 	}
 
 });
