@@ -23,34 +23,42 @@ class DATEVOPOSImport(Document):
 
 
 		total_rows = self.detect_actual_data_rows(file_path, encoding)
+		self.db_set('payload_count', total_rows)
 		csv_data = []
-
-		with open(file_path, mode='r', encoding=encoding, errors='replace') as csvfile:
-			
-			csv_reader = csv.reader(csvfile)
-			frappe.publish_progress(0, title='Importing', description='Starting import...')
-			
-			if encoding=='ascii':
+		try:
+			with open(file_path, mode='r', encoding=encoding, errors='replace') as csvfile:
 				
-				for index, row in enumerate(csv_reader):
-
-					if index >= total_rows:
-				 		break
-
-					# row = ''.join(row)
-					# row = row.split(';')
+				csv_reader = csv.reader(csvfile)
+				frappe.publish_progress(0, title='Importing', description='Starting import...')
+				
+				if encoding=='ascii':
 					
-					csv_data.append(row)
+					for index, row in enumerate(csv_reader):
 
-					index+=1
-					progress = int((index / total_rows) * 100)
-					frappe.publish_progress(progress, title='Importing', description=f'Processing row {index}/{total_rows}')
+						if index >= total_rows:
+							break
 
-				self.update_sales_invoice_status(csv_data)
-			else:
-				
-				frappe.throw(_('{0} is unsupported file format. Only ascii format is supported currently.').format(encoding))
+						# row = ''.join(row)
+						# row = row.split(';')
+						
+						csv_data.append(row)
 
+						index+=1
+						progress = int((index / total_rows) * 100)
+						frappe.publish_progress(progress, title='Importing', description=f'Processing row {index}/{total_rows}')
+
+					self.update_sales_invoice_status(csv_data)
+				else:
+					self.update_status('Error')
+					frappe.throw(_('{0} is unsupported file format. Only ascii format is supported currently.').format(encoding))
+
+		except Exception as e:
+			frappe.msgprint(f'Error during import: {e}')
+			self.update_status('Error')
+
+	def update_status(self, status):
+		self.db_set('status', status)
+		frappe.publish_realtime('update_import_status', {'docname': self.name, 'status': status}, user=frappe.session.user)
 
 	def get_file_from_url(self, file_url):
 		
@@ -87,10 +95,18 @@ class DATEVOPOSImport(Document):
 			"name": ["not in", csv_invoice_numbers]
 			}, fields=["name"])
         
-		for invoice in invoices:
-			payment_entry = frappe.call("erpnext.accounts.doctype.payment_entry.payment_entry.get_payment_entry", 'Sales Invoice', invoice.name)
-			payment_entry.reference_date = today()
-			payment_entry.reference_no = 'DATEV OPOS import '+ today()
+		for index,invoice in enumerate(invoices):
+			try:
+				payment_entry = frappe.call("erpnext.accounts.doctype.payment_entry.payment_entry.get_payment_entry", 'Sales Invoice', invoice.name)
+				payment_entry.reference_date = today()
+				payment_entry.reference_no = 'DATEV OPOS import '+ today()
 
-			payment_entry.insert()
-			payment_entry.submit()
+				payment_entry.insert()
+				payment_entry.submit()
+			except Exception as e:
+				self.update_status('Partial Success')
+				self.db_set('imported_records', index)
+				frappe.msgprint(f'Error creating payment for: {invoice}')
+		
+		if self.status=='Not Started':
+			self.update_status('Success')
