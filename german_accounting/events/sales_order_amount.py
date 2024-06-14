@@ -46,7 +46,6 @@ def update_overdue_invoice_amount(customer):
 
 
 def update_non_invoiced_amount(customer):
-
     total_non_invoiced_amount = 0.0
     total_billed_amount = 0.0
     net_non_invoice_amount = 0.0

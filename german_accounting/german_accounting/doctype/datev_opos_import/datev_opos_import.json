@@ -31,6 +31,7 @@
    "in_standard_filter": 1,
    "label": "Month",
    "options": "\nJanuary\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember",
+   "reqd": 1,
    "set_only_once": 1
   },
   {
@@ -60,12 +61,13 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Year",
+   "reqd": 1,
    "set_only_once": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-11 15:27:11.401419",
+ "modified": "2024-06-13 13:27:39.627243",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "DATEV OPOS Import",

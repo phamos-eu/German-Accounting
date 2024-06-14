@@ -42,6 +42,22 @@ frappe.ui.form.on("DATEV OPOS Import", {
 				});
 		}
 
+		if(frm.is_new()){
+			let currentDate = new Date();
+            let currentYear = currentDate.getFullYear();
+            let currentMonthIndex = currentDate.getMonth();
+
+			let monthNames = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+
+			let currentMonth = monthNames[currentMonthIndex];
+
+            frm.set_value('year', currentYear);
+            frm.set_value('month', currentMonth);
+		}
+
 		if(!frm.is_new()){
 			frm.trigger('set_headline')
 		}
