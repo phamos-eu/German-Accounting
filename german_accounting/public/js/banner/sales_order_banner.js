@@ -8,7 +8,6 @@ frappe.ui.form.on('Sales Order', {
     },
 	refresh: (frm) => {
 		// if(!frm.is_new()) {
-            console.log(frm.doc.non_invoiced_amount, 'refresh')
 			frm.trigger('make_dashboard');
 		// }
 	},
@@ -21,7 +20,7 @@ frappe.ui.form.on('Sales Order', {
                 let open_invoice_amount = frm.doc.open_invoice_amount.toFixed(2)
                 let overdue_invoice_amount = frm.doc.overdue_invoice_amount.toFixed(2)
                 let non_invoiced_amount = frm.doc.non_invoiced_amount.toFixed(2)
-                console.log('heyheyhey', non_invoiced_amount)
+                
                 let total = frm.doc.totall.toFixed(2)
 
                 let creditLimitText = credit_limit !== '0.00' ? `and The Credit Limit is: <b>${currencySymbol} ${credit_limit}</b>` : `<br> <span style="color: #ff4d4d;">Credit Limit is not set for this customer</span>`;
