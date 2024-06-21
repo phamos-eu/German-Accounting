@@ -32,7 +32,8 @@
   {
    "fieldname": "year",
    "fieldtype": "Data",
-   "hidden": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Year"
   },
   {
@@ -54,10 +55,11 @@
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-04-03 12:29:26.515773",
+ "modified": "2024-06-21 08:26:14.027662",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "DATEV Export Log",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
@@ -74,5 +76,6 @@
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "states": []
 }
