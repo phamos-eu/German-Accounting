@@ -14,7 +14,7 @@ frappe.ui.form.on('DATEV Action Panel', {
 
 	export_datev_logs: function(frm){
 		let d = new frappe.ui.Dialog({
-			title: __("Select Month"),
+			title: __("Select Month and Year"),
 			fields: [
 				{
 					"fieldname": "month",
@@ -24,6 +24,13 @@ frappe.ui.form.on('DATEV Action Panel', {
 					"default": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November",
 						"December"
 					][frappe.datetime.str_to_obj(frappe.datetime.get_today()).getMonth()],
+					"reqd": 1
+				},
+				{
+					"fieldname": "year",
+					"label": __("Year"),
+					"fieldtype": "Data",
+					"default": new Date().getFullYear(),
 					"reqd": 1
 				}
 			],
@@ -51,9 +58,11 @@ frappe.ui.form.on('DATEV Action Panel', {
 
 				datev_export_filters = {
 					'month': data.month,
+					'year': data.year,
 					'export_type': 'Sales Invoice CSV',
 					'unexported_sales_invoice': true
 				}
+				
 				let datev_export_csv = await get_datev_export_data(datev_export_filters);
 				if (datev_export_csv.message) {
 					datev_export_csv = datev_export_csv.message;
