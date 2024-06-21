@@ -14,8 +14,15 @@ frappe.ui.form.on('DATEV Action Panel', {
 
 	export_datev_logs: function(frm){
 		let d = new frappe.ui.Dialog({
-			title: __("Select Month and Year"),
+			title: __("Select Year and Month"),
 			fields: [
+				{
+					"fieldname": "year",
+					"label": __("Year"),
+					"fieldtype": "Data",
+					"default": new Date().getFullYear(),
+					"reqd": 1
+				},
 				{
 					"fieldname": "month",
 					"label": __("Month"),
@@ -24,13 +31,6 @@ frappe.ui.form.on('DATEV Action Panel', {
 					"default": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November",
 						"December"
 					][frappe.datetime.str_to_obj(frappe.datetime.get_today()).getMonth()],
-					"reqd": 1
-				},
-				{
-					"fieldname": "year",
-					"label": __("Year"),
-					"fieldtype": "Data",
-					"default": new Date().getFullYear(),
 					"reqd": 1
 				}
 			],
