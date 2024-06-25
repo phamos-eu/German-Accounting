@@ -170,6 +170,9 @@ def get_conditions(filters):
 				"December"].index(filters.month) + 1
 		conditions += "AND month(si.posting_date) = %(month)s"
 
+	if filters.get("year"):
+		conditions += " AND year(si.posting_date) = %(year)s "
+
 	if filters.get("unexported_sales_invoice"):
 		conditions += " AND coalesce(si.custom_exported_on, '') = '' "
 
