@@ -4,8 +4,10 @@ frappe.ui.form.on('Sales Order', {
         await updateAmounts(frm)
     },
     onload: async (frm) => {
-        await updateAmounts(frm)
-    },
+        if(frm.doc.customer) {
+            await updateAmounts(frm)
+        }
+    },  
 	refresh: (frm) => {
 		// if(!frm.is_new()) {
 			frm.trigger('make_dashboard');
@@ -28,7 +30,7 @@ frappe.ui.form.on('Sales Order', {
                 let textColor = '#1366AE'; // Default text color
                 if ((parseFloat(total) > parseFloat(credit_limit)) && parseFloat(credit_limit) > 0) {
                     $('button[data-label="Submit"]').off()
-                    $('button[data-label="Submit"]').click(() => {cur_frm.save("Submit")});
+                    $('button[data-label="Submit"]').click(() => {check_credit_limit(frm)});
                     textColor = '#ff4d4d'; // Red text color
                 }
 
@@ -68,6 +70,99 @@ async function updateAmounts(frm) {
         },
     });
 }
+
+
+function check_credit_limit(frm) {
+    const docname = frm.doc.name;
+    const customer = frm.doc.customer;
+    const company = frm.doc.company;
+    const total = frm.doc.totall;
+
+    frappe.call({
+        method: "german_accounting.events.sales_order_credit_limit_check.check_credit_limit",
+        args: {
+            docname,
+            customer,
+            company,
+            total
+        },
+        callback: function (r) {
+            const response = r.message;
+           
+            const dialog = new frappe.ui.Dialog({
+                title: ('Are you sure you want to proceed?'),
+                fields: [
+                    {
+                        fieldtype: 'HTML',
+                        fieldname: 'message',
+                        options: `<p>${response.message}</p>`
+                    },
+                    {
+                        fieldtype: 'HTML',
+                        fieldname: 'users',
+                        options: response.users
+                    }
+                ],
+                primary_action_label: (response.button_label),
+                primary_action: function() {
+                    if (response.button_label == "Acknowledge"){
+
+                        frm.save("Submit");
+
+                    } else {
+
+                        const selectedUsers = [];
+                        $(dialog.$wrapper).find('input[name="user_checkbox"]:checked').each(function() {
+                            selectedUsers.push($(this).val());
+                        });
+                        
+                        // send email
+                        frappe.call({
+                            method: "german_accounting.events.sales_order_credit_limit_check.send_emails",
+                            args: {
+                                users: selectedUsers,
+                                docname: docname
+                            },
+                            callback: function (r) {
+
+                                if (r.message) {
+                                    if (r.message.status === "success") {
+                                        frappe.msgprint({
+                                            title: __('Success'),
+                                            indicator: 'green',
+                                            message: r.message.message
+                                        });
+                                    } else {
+                                        frappe.msgprint({
+                                            title: __('Error'),
+                                            indicator: 'red',
+                                            message: r.message.message
+                                        });
+                                    }
+                                }
+                            }
+                        })
+                    }
+
+                    dialog.hide();
+                },
+                secondary_action_label: __('Cancel'),
+                secondary_action: function() {
+                    dialog.hide();
+                }
+            });
+
+            dialog.show();
+
+            $(dialog.$wrapper).find('#select-all').on('change', function() {
+                const isChecked = $(this).is(':checked');
+                $(dialog.$wrapper).find('input[name="user_checkbox"]').prop('checked', isChecked);
+            });
+
+            $(dialog.$wrapper).find('.modal-footer .btn-primary').addClass('btn-danger').removeClass('btn-primary');
+        }
+    });
+}  
 
 
 async function getDefaultCurrencySymbol() {

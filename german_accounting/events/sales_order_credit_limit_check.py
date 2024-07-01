@@ -2,31 +2,53 @@ import frappe
 from frappe.utils import cint, flt
 from frappe import _, msgprint
 import json
+from frappe.query_builder import DocType
 
+
+def get_users_with_role(role: str) -> list[str]:
+	User = DocType("User")
+	HasRole = DocType("Has Role")
+
+	return (
+		frappe.qb.from_(HasRole)
+		.from_(User)
+		.where(
+			(HasRole.role == role)
+			& (User.enabled == 1)
+			& (HasRole.parent == User.name)
+		)
+		.select(User.email)
+		.distinct()
+		.run(pluck=True)
+	)
 
 @frappe.whitelist()
-def submit_sales_order_doc(args):
-	args = json.loads(args)
-	sales_order_docname = args.get("sales_order_docname")
-	customer = args.get("customer")
-	company = args.get("company")
+def send_emails(users, docname):
+	try:
+		users = json.loads(users)
+		subject = _("Anfrage zur Belegfreigabe für {0}.").format(docname)
+		message = _("Bitte geben Sie den Beleg {0} frei.").format( frappe.utils.get_url_to_form("Sales Order", docname))
+		
+		frappe.sendmail(
+			recipients= users, 
+			subject=subject, 
+			message=message,
+			delayed=False,
+			retry=3 
+		)
+		return {"status": "success", "message": _("Emails sent successfully.")}
+	except Exception as e:
+		return {"status": "error", "message": str(e)}
+
+def user_has_imat_belegfreigabe_role():
+	user = frappe.session.user
+	role  = "IMAT Belegfreigabe"
 	
-	frappe.db.set_value(
-		"Customer Credit Limit",
-		{"parent": customer, "parenttype": "Customer", "company": company},
-		"bypass_credit_limit_check",
-		1
-	)
-
-	doc = frappe.get_doc('Sales Order', sales_order_docname)
-	doc.submit()
-
-	frappe.db.set_value(
-		"Customer Credit Limit",
-		{"parent": customer, "parenttype": "Customer", "company": company},
-		"bypass_credit_limit_check",
-		0
-	)
+	return frappe.db.exists("Has Role", {
+        "parent": user,
+        "role": role,
+        "parenttype": "User", 
+    })
 
 
 @frappe.whitelist()
@@ -75,35 +97,57 @@ def check_credit_limit_for_customer(docname, customer, company, total):
         )
 	):
 		credit_limit = get_credit_limit(customer, company)
-
 		if not credit_limit:
 			return
 
 		customer_outstanding =  get_customer_outstanding(customer, company, total)
-
 		if credit_limit > 0 and flt(customer_outstanding) > credit_limit:
 
-			message = _("Credit limit has been crossed for customer {0} which has outstanding  amount of {1} and credit limit of {2}").format(
+			message = _("Credit limit has been crossed for customer {0} which has total outstanding amount of {1} and credit limit of {2}").format(
                 customer, customer_outstanding, credit_limit
             )
+			return message
 
-			frappe.msgprint(
-				message,
-				title="Confirm",
-				raise_exception=1,
-				primary_action={
-					"label": "Acknowledge",
-					"server_action": "german_accounting.events.sales_order_credit_limit_check.submit_sales_order_doc",
-					"hide_on_success": True,
-					"args": {
-						"sales_order_docname": docname,
-						"customer": customer,
-						"company": company
-					},
-				},
-			)
+@frappe.whitelist()
+def check_credit_limit(docname, customer, company, total, method=None):
 
+  message = check_credit_limit_for_customer(docname, customer, company, total)
 
-def check_credit_limit(doc, method=None):
-    
-    check_credit_limit_for_customer(doc.name, doc.customer, doc.company, doc.totall)
+  if message is None:
+    message = ""
+
+  table = ""
+  button_label = "Acknowledge"
+
+  if not user_has_imat_belegfreigabe_role():
+    button_label = "Request Approval"
+    formatted_user_rows = ""
+    users = get_users_with_role("IMAT Belegfreigabe")
+
+    for user in users:
+      formatted_user_rows += f"""
+      		<tr>
+                <td style="padding: 5px;"><input type="checkbox" name="user_checkbox" value="{user}"></td>
+                <td style="padding: 5px;">{user}</td>
+            </tr>"""
+
+    table= """
+            <table>
+                <thead>
+                    <tr>
+                        <th style="padding: 5px;"><input type="checkbox" id="select-all"></th>
+                        <th style="padding: 5px;">{}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {}
+                </tbody>
+            </table>
+    """.format(_("Users"), formatted_user_rows)
+
+  return {
+	"message": message, 
+	"users": table, 
+	"button_label": button_label
+  }
+
