@@ -21,14 +21,21 @@ class DATEVOPOSImport(Document):
 			result = chardet.detect(rawdata)
 			encoding = result['encoding']
 
+		# Read the first 1024 bytes to identify the delimiter
+		with open(file_path, 'r', encoding=encoding, errors='replace') as file:
+			sample = file.read(1024)
+			if ';' in sample:
+				delimiter = ';'
+			else:
+				delimiter = ','
 
-		total_rows = self.detect_actual_data_rows(file_path, encoding)
+		total_rows = self.detect_actual_data_rows(file_path, encoding, delimiter)
 		self.db_set('payload_count', total_rows)
 		csv_data = []
 		try:
 			with open(file_path, mode='r', encoding=encoding, errors='replace') as csvfile:
 				
-				csv_reader = csv.reader(csvfile)
+				csv_reader = csv.reader(csvfile, delimiter=delimiter)
 				frappe.publish_progress(0, title='Importing', description='Starting import...')
 				
 				if encoding=='ascii':
@@ -37,10 +44,7 @@ class DATEVOPOSImport(Document):
 
 						if index >= total_rows:
 							break
-
-						# row = ''.join(row)
-						# row = row.split(';')
-						
+												
 						csv_data.append(row)
 
 						index+=1
@@ -61,20 +65,20 @@ class DATEVOPOSImport(Document):
 		frappe.publish_realtime('update_import_status', {'docname': self.name, 'status': status}, user=frappe.session.user)
 
 	def get_file_from_url(self, file_url):
-		
-		file_path = get_file_path(file_url.split('/')[-1])
+		base = frappe.local.site_path
+		file_path = base + file_url
+
 		if not os.path.exists(file_path):
 			frappe.throw(_('File not found: {0}').format(file_path))
 		
 		return file_path
 
-	def detect_actual_data_rows(self, file_path, encoding):
+	def detect_actual_data_rows(self, file_path, encoding, delimiter):
 		with open(file_path, mode='r', encoding=encoding, errors='replace') as csvfile:
-			csv_reader = csv.reader(csvfile)
+			csv_reader = csv.reader(csvfile, delimiter=delimiter)
 			actual_rows = 0
 			for row in csv_reader:
-				row = ''.join(row)
-				row = row.split(';')
+				
 				empty_row = True
 				for cell in row:
 					if cell.strip():
@@ -86,9 +90,8 @@ class DATEVOPOSImport(Document):
 		return actual_rows
 
 	def update_sales_invoice_status(self, csv_data):
-
-		csv_invoice_numbers = [row[1] for row in csv_data]
 		
+		csv_invoice_numbers = [row[1] for row in csv_data]
 		invoices = frappe.get_all("Sales Invoice", filters={
 			"status": ["not in", ["Paid", "Cancelled", "Draft", "Credit Note Issued"]],
 			"outstanding_amount": ["!=", 0],

@@ -23,6 +23,12 @@ fixtures = [
 			)
 		},
 	},
+	{
+        "dt": "Role",
+        "filters": [
+            ["role_name", "in", ["German Accounting Belegfreigabe"]]
+        ]
+    }
 ]
 # include js, css files in header of desk.html
 # app_include_css = "/assets/german_accounting/css/german_accounting.css"
@@ -60,8 +66,6 @@ doc_events = {
 	},
     "Sales Order": {
         "validate": "german_accounting.events.extended_tax_category.validate_tax_category_fields",
-		"onload": "german_accounting.events.update_amounts_value.update_amounts",
-		"before_submit": "german_accounting.events.sales_order_credit_limit_check.check_credit_limit"
 	},
     "Sales Invoice": {
         "validate": "german_accounting.events.extended_tax_category.validate_tax_category_fields",
@@ -134,9 +138,9 @@ before_uninstall = "german_accounting.setup.install.before_uninstall"
 # ---------------
 # Override standard doctype classes
 
-# override_doctype_class = {
-#	"ToDo": "custom_app.overrides.CustomToDo"
-# }
+override_doctype_class = {
+	"Sales Order": "german_accounting.overrides.sales_order.custom_sales_order.CustomSalesOrder"
+}
 
 # Document Events
 # ---------------
