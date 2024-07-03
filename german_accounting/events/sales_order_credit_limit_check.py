@@ -42,7 +42,7 @@ def send_emails(users, docname):
 
 def user_has_imat_belegfreigabe_role():
 	user = frappe.session.user
-	role  = "IMAT Belegfreigabe"
+	role  = "German Accounting Belegfreigabe"
 	
 	return frappe.db.exists("Has Role", {
         "parent": user,
@@ -122,7 +122,7 @@ def check_credit_limit(docname, customer, company, total, method=None):
   if not user_has_imat_belegfreigabe_role():
     button_label = "Request Approval"
     formatted_user_rows = ""
-    users = get_users_with_role("IMAT Belegfreigabe")
+    users = get_users_with_role("German Accounting Belegfreigabe")
 
     for user in users:
       formatted_user_rows += f"""
