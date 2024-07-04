@@ -117,7 +117,7 @@ def check_credit_limit(docname, customer, company, total, method=None):
     message = ""
 
   table = ""
-  button_label = "Acknowledge"
+  button_label = "Submit"
 
   if not user_has_imat_belegfreigabe_role():
     button_label = "Request Approval"

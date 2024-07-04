@@ -105,7 +105,7 @@ function check_credit_limit(frm) {
                 ],
                 primary_action_label: (response.button_label),
                 primary_action: function() {
-                    if (response.button_label == "Acknowledge"){
+                    if (response.button_label == "Submit"){
 
                         frm.save("Submit");
 
