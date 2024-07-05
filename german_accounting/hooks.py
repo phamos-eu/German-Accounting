@@ -56,6 +56,7 @@ doctype_js = {
 	],
 	"Quotation": "public/js/banner/quotation_banner.js",
 	"Sales Order": "public/js/banner/sales_order_banner.js",
+	"Sales Invoice": "public/js/sales_invoice.js"
 }
 
 doc_events = {
