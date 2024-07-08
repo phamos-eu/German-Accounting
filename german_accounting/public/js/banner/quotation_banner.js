@@ -1,5 +1,12 @@
 frappe.ui.form.on('Quotation', {
-    
+    party_name: async (frm) => {
+        await updateAmounts(frm)
+    },
+    onload: async (frm) => {
+        if(frm.doc.party_name) {
+            await updateAmounts(frm)
+        }
+    },
 	refresh: (frm) => {
 		// if(!frm.is_new()) {
 			frm.trigger('make_dashboard');
@@ -8,8 +15,9 @@ frappe.ui.form.on('Quotation', {
 	make_dashboard: async (frm) => {
 		// if(!frm.is_new()) {
             if (frm.doc.party_name) {
+                const doctype = frm.doc.doctype
                 const currencySymbol = await getDefaultCurrencySymbol();
-                const credit_limit =  (await getCreditLimit(frm.doc.party_name, frm.doc.company)).toFixed(2);
+                const credit_limit =  (await getCreditLimit(frm.doc.party_name, frm.doc.company, doctype)).toFixed(2);
                 let customer = frm.doc.party_name
                 let open_invoice_amount = frm.doc.open_invoice_amount.toFixed(2)
                 let overdue_invoice_amount = frm.doc.overdue_invoice_amount.toFixed(2)
@@ -21,7 +29,7 @@ frappe.ui.form.on('Quotation', {
                 let textColor = '#1366AE'; // Default text color
                 if ((parseFloat(total) > parseFloat(credit_limit)) && parseFloat(credit_limit) > 0) {
                     $('button[data-label="Submit"]').off()
-                    $('button[data-label="Submit"]').click(() => {cur_frm.save("Submit")});
+                    $('button[data-label="Submit"]').click(() => {check_credit_limit(frm, doctype)});
                     textColor = '#ff4d4d'; // Red text color
                 }
                 frm.dashboard.clear_headline();
@@ -45,6 +53,119 @@ frappe.ui.form.on('Quotation', {
 })
 
 
+async function updateAmounts(frm) {
+
+    const customer = frm.doc.party_name
+    frappe.call({
+        method: "german_accounting.events.sales_order_amount.update_amounts",
+        args: {
+            customer: customer
+        },
+        callback: function (r) {
+           const val = r.message
+           frm.doc.open_invoice_amount = val[0]
+           frm.doc.overdue_invoice_amount = val[1]
+           frm.doc.non_invoiced_amount = val[2]
+           frm.doc.totall = val[3]
+        },
+    });
+}
+
+
+function check_credit_limit(frm, doctype) {
+    const docname = frm.doc.name;
+    const customer = frm.doc.party_name;
+    const company = frm.doc.company;
+    const total = frm.doc.totall;
+
+    frappe.call({
+        method: "german_accounting.events.sales_order_credit_limit_check.check_credit_limit",
+        args: {
+            docname,
+            customer,
+            company,
+            total,
+            doctype
+        },
+        callback: function (r) {
+            const response = r.message;
+           
+            const dialog = new frappe.ui.Dialog({
+                title: ('Are you sure you want to proceed?'),
+                fields: [
+                    {
+                        fieldtype: 'HTML',
+                        fieldname: 'message',
+                        options: `<p>${response.message}</p>`
+                    },
+                    {
+                        fieldtype: 'HTML',
+                        fieldname: 'users',
+                        options: response.users
+                    }
+                ],
+                primary_action_label: (response.button_label),
+                primary_action: function() {
+                    if (response.button_label == "Submit"){
+
+                        frm.save("Submit");
+
+                    } else {
+
+                        const selectedUsers = [];
+                        $(dialog.$wrapper).find('input[name="user_checkbox"]:checked').each(function() {
+                            selectedUsers.push($(this).val());
+                        });
+                        
+                        // send email
+                        frappe.call({
+                            method: "german_accounting.events.sales_order_credit_limit_check.send_emails",
+                            args: {
+                                users: selectedUsers,
+                                docname: docname,
+                                doctype
+                            },
+                            callback: function (r) {
+
+                                if (r.message) {
+                                    if (r.message.status === "success") {
+                                        frappe.msgprint({
+                                            title: __('Success'),
+                                            indicator: 'green',
+                                            message: r.message.message
+                                        });
+                                    } else {
+                                        frappe.msgprint({
+                                            title: __('Error'),
+                                            indicator: 'red',
+                                            message: r.message.message
+                                        });
+                                    }
+                                }
+                            }
+                        })
+                    }
+
+                    dialog.hide();
+                },
+                secondary_action_label: __('Cancel'),
+                secondary_action: function() {
+                    dialog.hide();
+                }
+            });
+
+            dialog.show();
+
+            $(dialog.$wrapper).find('#select-all').on('change', function() {
+                const isChecked = $(this).is(':checked');
+                $(dialog.$wrapper).find('input[name="user_checkbox"]').prop('checked', isChecked);
+            });
+
+            $(dialog.$wrapper).find('.modal-footer .btn-primary').addClass('btn-danger').removeClass('btn-primary');
+        }
+    });
+} 
+
 async function getDefaultCurrencySymbol() {
     try {
 
@@ -66,13 +187,14 @@ async function getDefaultCurrencySymbol() {
 }
 
 
-async function getCreditLimit(customer, company) {
+async function getCreditLimit(customer, company, doctype) {
     return new Promise((resolve, reject) => {
         frappe.call({
-            method: 'german_accounting.events.quotation_credit_limit_check.get_credit_limit',
+            method: 'german_accounting.events.sales_order_credit_limit_check.get_credit_limit',
             args: {
-                customer: customer,
-                company: company
+                customer,
+                company,
+                doctype
             },
             callback: function(r) {
                 if (r.message !== null && r.message !== undefined) {

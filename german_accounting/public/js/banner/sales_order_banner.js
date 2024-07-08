@@ -16,8 +16,9 @@ frappe.ui.form.on('Sales Order', {
 	make_dashboard: async (frm) => {
 		// if(!frm.is_new()) {
             if (frm.doc.customer && frm.doc.open_invoice_amount!=null) {
+                const doctype = frm.doc.doctype
                 const currencySymbol = await getDefaultCurrencySymbol();
-                const credit_limit =  (await getCreditLimit(frm.doc.customer, frm.doc.company)).toFixed(2);
+                const credit_limit =  (await getCreditLimit(frm.doc.customer, frm.doc.company, doctype)).toFixed(2);
 				let customer = frm.doc.customer
                 let open_invoice_amount = frm.doc.open_invoice_amount.toFixed(2)
                 let overdue_invoice_amount = frm.doc.overdue_invoice_amount.toFixed(2)
@@ -30,7 +31,7 @@ frappe.ui.form.on('Sales Order', {
                 let textColor = '#1366AE'; // Default text color
                 if ((parseFloat(total) > parseFloat(credit_limit)) && parseFloat(credit_limit) > 0) {
                     $('button[data-label="Submit"]').off()
-                    $('button[data-label="Submit"]').click(() => {check_credit_limit(frm)});
+                    $('button[data-label="Submit"]').click(() => {check_credit_limit(frm, doctype)});
                     textColor = '#ff4d4d'; // Red text color
                 }
 
@@ -72,19 +73,20 @@ async function updateAmounts(frm) {
 }
 
 
-function check_credit_limit(frm) {
+function check_credit_limit(frm, doctype) {
     const docname = frm.doc.name;
     const customer = frm.doc.customer;
     const company = frm.doc.company;
     const total = frm.doc.totall;
-
+   
     frappe.call({
         method: "german_accounting.events.sales_order_credit_limit_check.check_credit_limit",
         args: {
             docname,
             customer,
             company,
-            total
+            total,
+            doctype
         },
         callback: function (r) {
             const response = r.message;
@@ -121,7 +123,8 @@ function check_credit_limit(frm) {
                             method: "german_accounting.events.sales_order_credit_limit_check.send_emails",
                             args: {
                                 users: selectedUsers,
-                                docname: docname
+                                docname: docname,
+                                doctype
                             },
                             callback: function (r) {
 
@@ -186,13 +189,14 @@ async function getDefaultCurrencySymbol() {
 }
 
 
-async function getCreditLimit(customer, company) {
+async function getCreditLimit(customer, company, doctype) {
     return new Promise((resolve, reject) => {
         frappe.call({
-            method: 'german_accounting.events.quotation_credit_limit_check.get_credit_limit',
+            method: 'german_accounting.events.sales_order_credit_limit_check.get_credit_limit',
             args: {
-                customer: customer,
-                company: company
+                customer,
+                company,
+                doctype
             },
             callback: function(r) {
                 if (r.message !== null && r.message !== undefined) {

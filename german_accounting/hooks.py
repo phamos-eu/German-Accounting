@@ -57,13 +57,11 @@ doctype_js = {
 	"Quotation": "public/js/banner/quotation_banner.js",
 	"Sales Order": "public/js/banner/sales_order_banner.js",
 	"Sales Invoice": "public/js/sales_invoice.js"
-}
+} 
 
 doc_events = {
     "Quotation": {
         "validate": "german_accounting.events.extended_tax_category.validate_tax_category_fields",
-		"onload": "german_accounting.events.update_amounts_value.update_amounts",
-		"before_submit": "german_accounting.events.quotation_credit_limit_check.check_credit_limit"
 	},
     "Sales Order": {
         "validate": "german_accounting.events.extended_tax_category.validate_tax_category_fields",
