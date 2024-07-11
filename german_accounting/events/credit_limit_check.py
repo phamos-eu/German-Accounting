@@ -36,7 +36,7 @@ def send_emails(users, docname, doctype=None):
 			delayed=False,
 			retry=3 
 		)
-		return {"status": "success", "message": _("Emails sent successfully.")}
+		return {"status": "success", "message": _("Email sent successfully.")}
 	except Exception as e:
 		return {"status": "error", "message": str(e)}
 
@@ -91,33 +91,45 @@ def get_customer_outstanding(customer, company, total):
 
 	return flt(total)
 
+@frappe.whitelist()
+def bypass_checked(customer, company, doctype):
+	field_map = {
+		'Sales Order': 'bypass_credit_limit_check',
+		'Quotation': 'bypass_credit_limit_check_quotation'
+	}
+	if doctype in field_map:
+		bypass_field = field_map[doctype]
+
+		return cint(
+			frappe.db.get_value(
+					"Customer Credit Limit",
+					{"parent": customer, "parenttype": "Customer", "company": company},
+					bypass_field,
+			)
+		)
 
 
 def check_credit_limit_for_customer(docname, customer, company, total, doctype):
-	# if bypass credit limit check is set to true (1) at sales_order level,
+	# if bypass credit limit check is set to true (1) at sales_order or quotation level,
 	# then we need not to check credit limit and vise versa
-	if not cint(
-        frappe.db.get_value(
-                "Customer Credit Limit",
-                {"parent": customer, "parenttype": "Customer", "company": company},
-                "bypass_credit_limit_check",
-        )
-	):
+	if not bypass_checked(customer, company, doctype):
+
 		credit_limit = get_credit_limit(customer, company, doctype)
 		if not credit_limit:
 			return
 
 		customer_outstanding =  get_customer_outstanding(customer, company, total)
+			
 		if credit_limit > 0 and flt(customer_outstanding) > credit_limit:
-
+				
 			message = _("Credit limit has been crossed for customer {0} which has total outstanding amount of {1} and credit limit of {2}").format(
-                customer, customer_outstanding, credit_limit
-            )
+					customer, customer_outstanding, credit_limit
+			)
 			return message
 
 @frappe.whitelist()
 def check_credit_limit(docname, customer, company, total, doctype, method=None):
-
+  
   message = check_credit_limit_for_customer(docname, customer, company, total, doctype)
 
   if message is None:

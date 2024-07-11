@@ -8,16 +8,16 @@ frappe.ui.form.on('Quotation', {
         }
     },
 	refresh: (frm) => {
-		// if(!frm.is_new()) {
 			frm.trigger('make_dashboard');
-        // }
 	},
 	make_dashboard: async (frm) => {
-		// if(!frm.is_new()) {
+		
             if (frm.doc.party_name) {
                 const doctype = frm.doc.doctype
                 const currencySymbol = await getDefaultCurrencySymbol();
                 const credit_limit =  (await getCreditLimit(frm.doc.party_name, frm.doc.company, doctype)).toFixed(2);
+                const bypass_checked = await check_bypass(frm, doctype);
+
                 let customer = frm.doc.party_name
                 let open_invoice_amount = frm.doc.open_invoice_amount.toFixed(2)
                 let overdue_invoice_amount = frm.doc.overdue_invoice_amount.toFixed(2)
@@ -28,8 +28,10 @@ frappe.ui.form.on('Quotation', {
 
                 let textColor = '#1366AE'; // Default text color
                 if ((parseFloat(total) > parseFloat(credit_limit)) && parseFloat(credit_limit) > 0) {
-                    $('button[data-label="Submit"]').off()
-                    $('button[data-label="Submit"]').click(() => {check_credit_limit(frm, doctype)});
+                    if (!bypass_checked){
+                        $('button[data-label="Submit"]').off()
+                        $('button[data-label="Submit"]').click(() => {check_credit_limit(frm, doctype)});
+                    }
                     textColor = '#ff4d4d'; // Red text color
                 }
                 frm.dashboard.clear_headline();
@@ -48,7 +50,6 @@ frappe.ui.form.on('Quotation', {
                 `);  
             
             }
-		// }
 	}
 })
 
@@ -79,7 +80,7 @@ function check_credit_limit(frm, doctype) {
     const total = frm.doc.totall;
 
     frappe.call({
-        method: "german_accounting.events.sales_order_credit_limit_check.check_credit_limit",
+        method: "german_accounting.events.credit_limit_check.check_credit_limit",
         args: {
             docname,
             customer,
@@ -119,7 +120,7 @@ function check_credit_limit(frm, doctype) {
                         
                         // send email
                         frappe.call({
-                            method: "german_accounting.events.sales_order_credit_limit_check.send_emails",
+                            method: "german_accounting.events.credit_limit_check.send_emails",
                             args: {
                                 users: selectedUsers,
                                 docname: docname,
@@ -190,7 +191,7 @@ async function getDefaultCurrencySymbol() {
 async function getCreditLimit(customer, company, doctype) {
     return new Promise((resolve, reject) => {
         frappe.call({
-            method: 'german_accounting.events.sales_order_credit_limit_check.get_credit_limit',
+            method: 'german_accounting.events.credit_limit_check.get_credit_limit',
             args: {
                 customer,
                 company,
@@ -205,4 +206,30 @@ async function getCreditLimit(customer, company, doctype) {
             }
         });
     });
+}
+
+
+
+async function check_bypass(frm, doctype) {
+    return new Promise((resolve, reject) => {
+
+        const customer = frm.doc.party_name;
+        const company = frm.doc.company;
+
+        frappe.call({
+            method: 'german_accounting.events.credit_limit_check.bypass_checked',
+            args: {
+                customer,
+                company,
+                doctype
+            },
+            callback: function(r) {
+                if (r.message !== null && r.message !== undefined) {
+                    resolve(r.message);
+                } else {
+                    reject(new Error('Response not found'));
+                }
+            }
+        });
+    })
 }
