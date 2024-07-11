@@ -110,6 +110,28 @@ class DATEVOPOSImport(Document):
 				self.update_status('Partial Success')
 				self.db_set('imported_records', index)
 				frappe.msgprint(f'Error creating payment for: {invoice}')
+
+
+		# Get all sales invoice which are paid or partly paid and ID of the current import list
+		paid_invoices = frappe.get_all("Sales Invoice", filters={
+			"status": ["in", ["Paid", "Partly Paid"]],
+			"name": ["in", csv_invoice_numbers]
+			}, fields=["name"])
+		
+		for index,invoice in enumerate(paid_invoices):
+			try:
+				# Fetch linked Payment Entries
+				payment_entries = frappe.get_all('Payment Entry Reference', filters={
+					'reference_doctype': 'Sales Invoice',
+                	'reference_name': invoice.name,
+					'docstatus': 1
+					}, fields=['parent'])
+				
+				for entry in payment_entries:
+					payment_entry = frappe.get_doc('Payment Entry', entry.parent)
+					payment_entry.cancel()
+			except Exception as e:
+				frappe.msgprint(f'Error cancelling payment entry for: {invoice}')
 		
 		if self.status=='Not Started':
 			self.update_status('Success')
