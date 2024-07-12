@@ -1,14 +1,13 @@
 frappe.ui.form.on('Sales Invoice', {
     onload: function(frm){
-        
-        if (frm.is_new() && frm.doc.items.some(item => item.sales_order)){
-            frm.doc.custom_sales_invoice_type = "Sales Invoice"
-            frm.events.toggle_fields(frm);
-        } 
-        else if (frm.is_new() && frm.doc.is_return){
+        if (frm.is_new() && frm.doc.is_return){
             frm.doc.custom_sales_invoice_type = "Invoice Cancellation"
             frm.events.toggle_fields(frm);
         }
+        else if (frm.is_new() && frm.doc.items.some(item => item.sales_order)){
+            frm.doc.custom_sales_invoice_type = "Sales Invoice"
+            frm.events.toggle_fields(frm);
+        }   
     },
     refresh: function(frm) {
         frm.events.toggle_fields(frm);
