@@ -19,96 +19,53 @@ frappe.ui.form.on('Sales Invoice', {
 
     toggle_fields: function(frm) {
         
-        if (frm.doc.custom_sales_invoice_type) {
-            // Details tab
-            frm.set_df_property('is_pos', 'read_only', true);
-            frm.set_df_property('is_return', 'read_only', true);
-            frm.set_df_property('is_debit_note', 'read_only', true);
+        
+            if (frm.doc.custom_sales_invoice_type === "Sales Invoice"){
+                // Details tab
+                frm.set_df_property('is_pos', 'hidden', true);
+                frm.set_df_property('pos_profile', 'hidden', true);
+                frm.set_df_property('is_consolidated', 'hidden', true);
+                frm.set_df_property('is_return', 'hidden', true);
+                frm.set_df_property('return_against', 'hidden', true);
+                frm.set_df_property('update_outstanding_for_self', 'hidden', true);
+                frm.set_df_property('update_billed_amount_in_sales_order', 'hidden', true);
+                frm.set_df_property('update_billed_amount_in_delivery_note', 'hidden', true);
+                frm.set_df_property('is_debit_note', 'hidden', true);
+                
+            }
 
+            if (frm.doc.custom_sales_invoice_type === "Credit Note"){
+                // Details tab
+                frm.set_df_property('is_return', 'hidden', false);
+                frm.set_value('is_return', 1);
+                frm.set_df_property('is_return', 'read_only', true);
+
+            }
+
+            if (frm.doc.custom_sales_invoice_type === "Invoice Cancellation"){
+                // Details tab
+                frm.set_df_property('is_pos', 'hidden', true);
+
+                frm.set_df_property('is_return', 'hidden', false);
+                frm.set_value('is_return', 1);
+                frm.set_df_property('is_return', 'read_only', true);
+
+                frm.set_value('update_outstanding_for_self', 0);
+            }
+
+            
             // Payments tab
-
-                // advance section
-            frm.set_df_property('allocate_advances_automatically', 'read_only', true);
-            frm.set_df_property('only_include_allocated_payments', 'read_only', true);
-            frm.set_df_property('get_advances', 'read_only', true);
-            frm.set_df_property('advances', 'read_only', true);
-            
-                // loyalty section
-            frm.set_df_property('redeem_loyalty_points', 'read_only', true);
-            frm.set_df_property('loyalty_points', 'read_only', true);
-            frm.set_df_property('loyalty_program', 'read_only', true);
-            
+            frm.set_df_property('advances_section', 'hidden', true);
+            frm.set_df_property('loyalty_points_redemption', 'hidden', true);
 
             // Contact & Address tab
-            frm.set_df_property('dispatch_address_name', 'read_only', true);
+            frm.set_df_property('dispatch_address_name', 'hidden', true);
 
-            // More Info tab
-            frm.set_df_property('is_opening', 'read_only', true);
-
-                // commission section
-            frm.set_df_property('sales_partner', 'read_only', true);
-            frm.set_df_property('amount_eligible_for_commission', 'read_only', true);
-            frm.set_df_property('commission_rate', 'read_only', true);
-            frm.set_df_property('total_commission', 'read_only', true);
-
-                // subscription section
-            frm.set_df_property('from_date', 'read_only', true);
-            frm.set_df_property('to_date', 'read_only', true);
-
-                // additional info section
-            frm.set_df_property('status', 'read_only', true);
-            frm.set_df_property('campaign', 'read_only', true);
-            frm.set_df_property('source', 'read_only', true);
-            frm.set_df_property('customer_group', 'read_only', true);
-            frm.set_df_property('is_internal_customer', 'read_only', true);
-            frm.set_df_property('is_discounted', 'read_only', true);
-            frm.set_df_property('remarks', 'read_only', true);
-
-            
-                        
-        } else {
-            // Details tab
-            frm.set_df_property('is_pos', 'read_only', false);
-            frm.set_df_property('is_return', 'read_only', false);
-            frm.set_df_property('is_debit_note', 'read_only', false);
-
-            // Payments tab
-                // advance section
-            frm.set_df_property('allocate_advances_automatically', 'read_only', false);
-            frm.set_df_property('only_include_allocated_payments', 'read_only', false);
-            frm.set_df_property('get_advances', 'read_only', false);
-            frm.set_df_property('advances', 'read_only', false);
-
-                // loyalty section
-            frm.set_df_property('redeem_loyalty_points', 'read_only', false);
-            frm.set_df_property('loyalty_points', 'read_only', false);
-            frm.set_df_property('loyalty_program', 'read_only', false);
-
-            // Contact & Address tab
-            frm.set_df_property('dispatch_address_name', 'read_only', false);
-
-            // More Info tab
-            frm.set_df_property('is_opening', 'read_only', false);
-
-                // commission section
-            frm.set_df_property('sales_partner', 'read_only', false);
-            frm.set_df_property('amount_eligible_for_commission', 'read_only', false);
-            frm.set_df_property('commission_rate', 'read_only', false);
-            frm.set_df_property('total_commission', 'read_only', false);
-
-                // subscription section
-            frm.set_df_property('from_date', 'read_only', false);
-            frm.set_df_property('to_date', 'read_only', false);
-
-                // additional info section
-            frm.set_df_property('status', 'read_only', false);
-            frm.set_df_property('campaign', 'read_only', false);
-            frm.set_df_property('source', 'read_only', false);
-            frm.set_df_property('customer_group', 'read_only', false);
-            frm.set_df_property('is_internal_customer', 'read_only', false);
-            frm.set_df_property('is_discounted', 'read_only', false);
-            frm.set_df_property('remarks', 'read_only', false);
-
-        }
+            // More Info
+            frm.set_df_property('is_opening', 'hidden', true);
+            frm.set_df_property('sales_team_section_break', 'hidden', true);
+            frm.set_df_property('subscription_section', 'hidden', true);
+            frm.set_df_property('more_information', 'hidden', true);                        
+              
     }
 });

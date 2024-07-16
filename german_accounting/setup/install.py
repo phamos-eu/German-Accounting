@@ -171,7 +171,7 @@ def get_custom_fields():
 			"label": "Sales Invoice Type",
 			"fieldname": "custom_sales_invoice_type",
 			"fieldtype": "Select",
-			"options": "\nSales Invoice\nInvoice Cancellation\nCredit Note",   
+			"options": "Sales Invoice\nInvoice Cancellation\nCredit Note",   
 			"default": "Sales Invoice",
 			"insert_after": "german_accounting",
 			"allow_on_submit": 0,
