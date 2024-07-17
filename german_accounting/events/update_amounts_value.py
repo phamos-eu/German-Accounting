@@ -131,10 +131,6 @@ def update_total(doc):
     
     if document_type=="Customer":
         doc.total = total
-    else:
-        doc.totall = total
-    
-    if document_type=="Customer":
         frappe.db.set_value(document_type, doc.name, "total", total, update_modified=False)
         frappe.db.commit()
 

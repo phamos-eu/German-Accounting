@@ -1,6 +1,8 @@
 frappe.ui.form.on('Quotation', {
     party_name: async (frm) => {
-        await updateAmounts(frm)
+        if(frm.doc.party_name) {
+            await updateAmounts(frm)
+        }
     },
     onload: async (frm) => {
         if(frm.doc.party_name) {
@@ -24,7 +26,9 @@ frappe.ui.form.on('Quotation', {
                 let non_invoiced_amount = frm.doc.non_invoiced_amount.toFixed(2)
                 let total = (parseFloat(open_invoice_amount) + parseFloat(non_invoiced_amount)).toFixed(2)
 
-                let creditLimitText = credit_limit !== '0.00' ? `and The Credit Limit is: <b>${currencySymbol} ${credit_limit}</b>` : `<br> <span style="color: #ff4d4d;">Credit Limit is not set for this customer</span>`;
+                let creditLimitText = credit_limit !== '0.00' ?
+                `${__('and The Credit Limit is')}: <b>${currencySymbol} ${credit_limit}</b>` :
+                `<br> <span style="color: #ff4d4d;">${__('Credit Limit is not set for this customer')}</span>`;
 
                 let textColor = '#1366AE'; // Default text color
                 if ((parseFloat(total) > parseFloat(credit_limit)) && parseFloat(credit_limit) > 0) {
@@ -41,13 +45,14 @@ frappe.ui.form.on('Quotation', {
                         <div class="col-xs-12">
                             <span class="indicator whitespace-nowrap" style="color: ${textColor};">
                                 <span class="hidden-xs">
-                                    <p>Customer <b>${customer}</b> has an Open Invoice Amount of: <b>${currencySymbol} ${open_invoice_amount}</b>, Overdue Invoice Amount of: <b>${currencySymbol} ${overdue_invoice_amount}</b> and Non-Invoiced Amount of: <b>${currencySymbol} ${non_invoiced_amount}</b><br> This is a Total of: <b>${currencySymbol} ${total}</b> ${creditLimitText}
+                                    <p>${__('Customer')} <b>${customer}</b> ${__('has an Open Invoice Amount of')}: <b>${currencySymbol} ${open_invoice_amount}</b>, ${__('Overdue Invoice Amount of')}: <b>${currencySymbol} ${overdue_invoice_amount}</b> ${__('and Non-Invoiced Amount of')}: <b>${currencySymbol} ${non_invoiced_amount}</b><br> ${__('This is a Total of')}: <b>${currencySymbol} ${total}</b> ${creditLimitText}
                                     </p>
                                 </span>
                             </span>
                         </div>
                     </div>
-                `);  
+                `);
+                
             
             }
 	}
@@ -67,7 +72,7 @@ async function updateAmounts(frm) {
            frm.doc.open_invoice_amount = val[0]
            frm.doc.overdue_invoice_amount = val[1]
            frm.doc.non_invoiced_amount = val[2]
-           frm.doc.totall = val[3]
+           frm.doc.total_outstanding_amount = val[3]
         },
     });
 }
@@ -77,7 +82,7 @@ function check_credit_limit(frm, doctype) {
     const docname = frm.doc.name;
     const customer = frm.doc.party_name;
     const company = frm.doc.company;
-    const total = frm.doc.totall;
+    const total = frm.doc.total_outstanding_amount;
 
     frappe.call({
         method: "german_accounting.events.credit_limit_check.check_credit_limit",

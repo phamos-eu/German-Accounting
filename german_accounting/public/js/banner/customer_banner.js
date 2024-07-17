@@ -22,12 +22,12 @@ frappe.ui.form.on('Customer', {
                         <div class="col-xs-12">
                             <span class="indicator whitespace-nowrap">
                                 <span class="hidden-xs">
-                                    <p>Customer <b>${customer}</b> has an Open Invoice Amount of: <b>${currencySymbol} ${open_invoice_amount}</b>, Overdue Invoice Amount of: <b>${currencySymbol} ${overdue_invoice_amount}</b> and Non-Invoiced Amount of: <b>${currencySymbol} ${non_invoiced_amount}</b><br> This is a Total of: <b>${currencySymbol} ${total}</b></p>
+                                    <p>${__('Customer')} <b>${customer}</b> ${__('has an Open Invoice Amount of')}: <b>${currencySymbol} ${open_invoice_amount}</b>, ${__('Overdue Invoice Amount of')}: <b>${currencySymbol} ${overdue_invoice_amount}</b> ${__('and Non-Invoiced Amount of')}: <b>${currencySymbol} ${non_invoiced_amount}</b><br> ${__('This is a Total of')}: <b>${currencySymbol} ${total}</b></p>
                                 </span>
                             </span>
                         </div>
                     </div>
-                `);
+                `);                
             }
 		}
 	}
