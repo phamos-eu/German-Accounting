@@ -32,7 +32,7 @@
   {
    "fieldname": "create_datev_html",
    "fieldtype": "HTML",
-   "options": "Mit dem Button <b>Create DATEV Export Logs</b> erstellen wir einen Export aller Ausgangsrechnungen (inkl. Stornos und Gutschriften) f\u00fcr den Import nach DATEV. Es werden alle Belege ber\u00fccksichtigt die gebucht sind, zuvor nicht exportiert wurden und bei welchen die Stammdaten korrekt angelegt sind. Der Export bezieht sich auf einen Kalnedermonant kann aber mehrfach ausgel\u00f6st werden."
+   "options": "Mit dem Button <b>Create DATEV Export Logs</b> erstellen wir einen Export aller Ausgangsrechnungen (inkl. Stornos und Gutschriften) f\u00fcr den Import nach DATEV. Es werden alle Belege ber\u00fccksichtigt die gebucht sind, zuvor nicht exportiert wurden und bei welchen die Stammdaten korrekt angelegt sind. Der Export bezieht sich auf einen Kalendermonat kann aber mehrfach ausgel\u00f6st werden."
   },
   {
    "fieldname": "column_break_ltkjn",
@@ -65,7 +65,7 @@
   {
    "fieldname": "show_report_html",
    "fieldtype": "HTML",
-   "options": "\u00dcber diesen Button gelangen wir zu einer Ansicht in welcher wir die Daten wie sie in den Exporten abgebildet sind bzw. sein werden eingehen. Diese Ansichsten sind nicht belastbar und dienen zur Kontrolle der Stammdaten. Die tats\u00e4chlich exportieren Daten finden sich in den DATEV Export Logs."
+   "options": "\u00dcber diesen Button gelangen wir zu einer Ansicht in welcher wir die Daten wie sie in den Exporten abgebildet sind bzw. sein werden eingehen. Diese Ansichsten sind nicht belastbar und dienen zur Kontrolle der Stammdaten. Die tats\u00e4chlich exportierten Daten finden sich in den DATEV Export Logs."
   },
   {
    "fieldname": "show_report",
@@ -104,7 +104,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-06-26 12:53:24.771152",
+ "modified": "2024-07-18 09:44:38.829473",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "DATEV Action Panel",

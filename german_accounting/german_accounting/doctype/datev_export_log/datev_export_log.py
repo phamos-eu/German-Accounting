@@ -3,13 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
-from frappe.utils import today, now_datetime
-from datetime import datetime, date
+from frappe.utils import now_datetime
 
 class DATEVExportLog(Document):
-	# def autoname(self):
-	# 	self.name = "DATEV-Export-" + self.month + "-" + str(date.today().year)
-
-	def validate(self):
-		now = datetime.now()
-		self.exported_on =  now_datetime().strftime("%d-%m-%Y %H:%M:%S")
+    pass
