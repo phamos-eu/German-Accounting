@@ -87,8 +87,8 @@ def get_custom_fields():
 			"hidden": 1
 		},
 		{
-			"label": "Total",
-			"fieldname": "totall",
+			"label": "Total Outstanding Amount",
+			"fieldname": "total_outstanding_amount",
 			"fieldtype": "Currency",
 			"insert_after": "non_invoiced_amount",
 			"read_only": 1,
@@ -152,8 +152,8 @@ def get_custom_fields():
 			"hidden": 1
 		},
 		{
-			"label": "Total",
-			"fieldname": "totall",
+			"label": "Total Outstanding Amount",
+			"fieldname": "total_outstanding_amount",
 			"fieldtype": "Currency",
 			"insert_after": "non_invoiced_amount",
 			"read_only": 1,
