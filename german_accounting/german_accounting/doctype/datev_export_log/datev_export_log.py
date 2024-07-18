@@ -6,5 +6,4 @@ from frappe.model.document import Document
 from frappe.utils import now_datetime
 
 class DATEVExportLog(Document):
-	def validate(self):
-		self.exported_on =  now_datetime().strftime("%d-%m-%Y %H:%M:%S")
+    pass
