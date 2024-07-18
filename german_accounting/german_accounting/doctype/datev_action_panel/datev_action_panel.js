@@ -110,7 +110,6 @@ frappe.ui.form.on('DATEV Action Panel', {
 							frappe.throw(__("No data found!"))
 						}
 						let debtors_csv_blob = create_csv_blob(debtors_csv_rows, debtors_csv_columns, true, delimiter);
-						// let debtors_csv_blob = create_csv_blob(debtors_csv_rows, debtors_csv_columns, true, delimiter);
 						let filename = datev_export_log_name + '-debtors.csv';
 						await upload_file(debtors_csv_blob, datev_export_log_name, filename, 'debtors_csv');
 					}

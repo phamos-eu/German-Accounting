@@ -121,7 +121,6 @@ def get_data(filters):
 				n = 9 - len(deb_no_datev)
 				zeros = '0' * n
 				deb_no_datev += zeros
-			# row['debit_to'] = deb_no_datev
 			row['debitor_no_datev'] = deb_no_datev
 
 		data.append(row)
