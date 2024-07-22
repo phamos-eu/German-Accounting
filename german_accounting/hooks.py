@@ -26,7 +26,7 @@ fixtures = [
 	{
         "dt": "Role",
         "filters": [
-            ["role_name", "in", ["German Accounting Belegfreigabe"]]
+            ["role_name", "in", ["German Accounting Order Approval"]]
         ]
     }
 ]
