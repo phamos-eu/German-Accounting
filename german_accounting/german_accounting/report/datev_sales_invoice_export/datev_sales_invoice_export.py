@@ -187,6 +187,9 @@ def get_conditions(filters):
 			last_day = get_last_day(today.replace(month=filters.get("month")))
 			conditions += " AND si.posting_date BETWEEN '{0}' AND '{1}'".format(first_day, last_day)
 
+	if filters.get("company"):
+		conditions += " AND si.company = %(company)s"
+
 	return conditions
 
 def get_columns(filters):
