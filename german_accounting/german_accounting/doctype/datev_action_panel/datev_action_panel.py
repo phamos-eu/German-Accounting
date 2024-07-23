@@ -12,7 +12,7 @@ class DATEVActionPanel(Document):
 
 
 @frappe.whitelist()
-def create_log(month, sales_invoices=[]):
+def create_log(month, company, sales_invoices=[]):
 	if sales_invoices and not isinstance(sales_invoices, list):
 		sales_invoices = frappe.parse_json(sales_invoices)
 
@@ -20,6 +20,7 @@ def create_log(month, sales_invoices=[]):
 	log_doc = frappe.new_doc("DATEV Export Log")
 	log_doc.update({
 		"month": month,
+		"company": company,
 		"exported_on": exported_on,
 		"year": str(date.today().year)
 	})

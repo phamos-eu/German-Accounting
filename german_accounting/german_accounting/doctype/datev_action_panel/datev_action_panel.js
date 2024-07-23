@@ -14,7 +14,7 @@ frappe.ui.form.on('DATEV Action Panel', {
 
 	export_datev_logs: function(frm){
 		let d = new frappe.ui.Dialog({
-			title: __("Select Year and Month"),
+			title: __("Select Year, Month and Company"),
 			fields: [
 				{
 					"fieldname": "year",
@@ -32,7 +32,13 @@ frappe.ui.form.on('DATEV Action Panel', {
 						"December"
 					][frappe.datetime.str_to_obj(frappe.datetime.get_today()).getMonth()],
 					"reqd": 1
-				}
+				},
+				{
+					"fieldname": "company",
+					"label": __("Company"),
+					"fieldtype": "Link",
+					"options": "Company"
+				},
 			],
 			primary_action: async function () {
 				let delimiter = ";";
@@ -59,6 +65,7 @@ frappe.ui.form.on('DATEV Action Panel', {
 				datev_export_filters = {
 					'month': data.month,
 					'year': data.year,
+					'company': data.company,
 					'export_type': 'Sales Invoice CSV',
 					'unexported_sales_invoice': true
 				}
@@ -73,7 +80,7 @@ frappe.ui.form.on('DATEV Action Panel', {
 						frappe.throw(__("No data found!"))
 					}
 
-					let datev_export_log = await create_datev_export_log(data.month, sales_invoices);
+					let datev_export_log = await create_datev_export_log(data.month, data.company, sales_invoices);
 					let datev_export_log_name = datev_export_log.message.name;
 					let datev_exported_on = datev_export_log.message.exported_on;
 
@@ -83,6 +90,8 @@ frappe.ui.form.on('DATEV Action Panel', {
 
 					datev_export_filters = {
 						'month': data.month,
+						'year': data.year,
+						'company': data.company,
 						'export_type': 'Sales Invoice PDF',
 						'unexported_sales_invoice': false,
 						'exported_on': datev_exported_on,
@@ -96,6 +105,8 @@ frappe.ui.form.on('DATEV Action Panel', {
 					}
 					datev_export_filters = {
 						'month': data.month,
+						'year': data.year,
+						'company': data.company,
 						'export_type': 'Debtors CSV',
 						'unexported_sales_invoice': false,
 						'exported_on': datev_exported_on,
@@ -163,6 +174,7 @@ function get_si_field_options() {
 }
 
 const get_datev_export_data = (filters) => {
+	console.log(filters)
 	return frappe.call({
 		method: "german_accounting.german_accounting.report.datev_sales_invoice_export.datev_sales_invoice_export.execute",
 		args: {
@@ -174,11 +186,12 @@ const get_datev_export_data = (filters) => {
 	});
 }
 
-const create_datev_export_log = (month, sales_invoices) => {
+const create_datev_export_log = (month, company, sales_invoices) => {
 	return frappe.call({
 		"method": "german_accounting.german_accounting.doctype.datev_action_panel.datev_action_panel.create_log",
 		args: {
 			"month": month,
+			"company": company,
 			"sales_invoices": sales_invoices
 		},
 		callback: function (r) {

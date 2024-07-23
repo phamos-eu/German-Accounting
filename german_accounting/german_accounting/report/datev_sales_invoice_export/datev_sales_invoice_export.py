@@ -330,6 +330,13 @@ def get_columns(filters):
 			"custom_header": "",
 			"one_col": True,
 			"width": 160
+		},
+		{
+			"label": _("Company"),
+			"fieldtype": "Data",
+			"fieldname": "company",
+			"custom_header": "company",
+			"width": 100
 		}
 	]
 
@@ -439,6 +446,13 @@ def get_columns(filters):
 			"custom_header": "Exportdatum",
 			"width": 160
 		},
+		{
+			"label": _("Company"),
+			"fieldtype": "Data",
+			"fieldname": "company",
+			"custom_header": "company",
+			"width": 100
+		}
 	]
 
 	debtors_csv_columns = [
@@ -498,6 +512,13 @@ def get_columns(filters):
 			"custom_header": "country_code",
 			"width": 160
 		},
+		{
+			"label": _("Company"),
+			"fieldtype": "Data",
+			"fieldname": "company",
+			"custom_header": "company",
+			"width": 100
+		}
 		
 	]
 
