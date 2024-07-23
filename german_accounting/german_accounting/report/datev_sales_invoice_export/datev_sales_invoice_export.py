@@ -187,6 +187,9 @@ def get_conditions(filters):
 			last_day = get_last_day(today.replace(month=filters.get("month")))
 			conditions += " AND si.posting_date BETWEEN '{0}' AND '{1}'".format(first_day, last_day)
 
+	if filters.get("company"):
+		conditions += " AND si.company = %(company)s"
+
 	return conditions
 
 def get_columns(filters):
@@ -327,6 +330,13 @@ def get_columns(filters):
 			"custom_header": "",
 			"one_col": True,
 			"width": 160
+		},
+		{
+			"label": _("Company"),
+			"fieldtype": "Data",
+			"fieldname": "company",
+			"custom_header": "company",
+			"width": 100
 		}
 	]
 
@@ -436,6 +446,13 @@ def get_columns(filters):
 			"custom_header": "Exportdatum",
 			"width": 160
 		},
+		{
+			"label": _("Company"),
+			"fieldtype": "Data",
+			"fieldname": "company",
+			"custom_header": "company",
+			"width": 100
+		}
 	]
 
 	debtors_csv_columns = [
@@ -495,6 +512,13 @@ def get_columns(filters):
 			"custom_header": "country_code",
 			"width": 160
 		},
+		{
+			"label": _("Company"),
+			"fieldtype": "Data",
+			"fieldname": "company",
+			"custom_header": "company",
+			"width": 100
+		}
 		
 	]
 

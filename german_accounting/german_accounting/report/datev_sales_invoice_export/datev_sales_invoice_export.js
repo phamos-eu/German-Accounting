@@ -33,6 +33,12 @@ frappe.query_reports["DATEV Sales Invoice Export"] = {
             "hidden": 1
         },
         {
+            "fieldname": 'company',
+            "label": __('Company'),
+            "fieldtype": "Link",
+            "options": "Company",
+        },
+        {
             "fieldname": 'export_type',
             "label": __('Export Type'),
             "fieldtype": "Select",
