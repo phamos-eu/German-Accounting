@@ -1,0 +1,58 @@
+{% set sumPdfNetTotal = 0 %}
+{% set sumPdfTotal = 0 %}
+<h2 class="text-center">{{ title }}</h2>
+<h4>
+    {% if filters.month %}
+        Month: {{ filters.month }}
+    {% endif %}
+</h4>
+
+<hr>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th style="width: 10%">{{ _("Belegart") }}</th>
+            <th style="width: 1%">{{ _("SH") }}</th>
+            <th style="width: 10%">{{ _("Betrag") }}</th>
+            <th style="width: 10%">{{ _("Betrag DATEV") }}</th>
+            <th style="width: 10%">{{ _("Erlöskonto") }}</th>
+            <th style="width: 1%">{{ _("Beleg Nr") }}</th>
+            <th style="width: 10%">{{ _("Buchungsdatum") }}</th>
+            <th style="width: 10%">{{ _("Kurzdatum") }}</th>
+            <th style="width: 10%">{{ _("Deb.-Nr.") }}</th>
+            <th style="width: 10%">{{ _("Deb.-Nr. Datev") }}</th>
+            <th style="width: 1%">{{ _("Land") }}</th>
+            <th style="width: 10%">{{ _("Buchtext") }}</th>
+            <th style="width: 10%">{{ _("St.-satz") }}</th>
+            <th style="width: 10%">{{ _("Währung") }}</th>
+            <th style="width: 10%">{{ _("Exportdatum") }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in data %}
+            {% set sumPdfNetTotal = sumPdfNetTotal + row.pdf_net_total|float %}
+            {% set sumPdfTotal = sumPdfTotal + row.pdf_total|float %}
+            <tr>
+                <td style="text-align: right">{{ row.voucher_type }}</td>
+                <td style="text-align: right">{{ row.dc }}</td>
+                <td style="text-align: right">{{ row.pdf_total }}</td>
+                <td style="text-align: right">{{ row.pdf_total_datev }}</td>
+                <td style="text-align: right">{{ row.income_account }}</td>
+                <td style="text-align: right">{{ row.invoice_no }}</td>
+                <td style="text-align: right">{{ row.pdf_posting_date }}</td>
+                <td style="text-align: right">{{ row.posting_date }}</td>
+                <td style="text-align: right">{{ row.debit_to }}</td>
+                <td style="text-align: right">{{ row.debitor_no_datev }}</td>
+                <td style="text-align: right">{{ row.country }}</td>
+                <td style="text-align: right">{{ row.journal_text }}</td>
+                <td style="text-align: right">{{ row.item_tax_rate }}</td>
+                <td style="text-align: right">{{ row.currency }}</td>
+                <td style="text-align: right">{{ row.custom_exported_on }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p>Net Total {{  frappe.utils.fmt_money(sumPdfNetTotal, currency="EUR") }}</p>
+<p>Gross Total {{ frappe.utils.fmt_money(sumPdfTotal, currency="EUR") }}</p>
+<p class="text-right text-muted">Printed On {{ frappe.utils.now_datetime() }}</p>
