@@ -28,7 +28,11 @@ fixtures = [
         "filters": [
             ["role_name", "in", ["German Accounting Order Approval"]]
         ]
-    }
+    },
+	{
+        "dt": "Translation",
+    },
+	
 ]
 # include js, css files in header of desk.html
 # app_include_css = "/assets/german_accounting/css/german_accounting.css"

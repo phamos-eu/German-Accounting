@@ -12,7 +12,8 @@
   "year",
   "sales_invoice_csv",
   "sales_invoice_pdf",
-  "debtors_csv"
+  "debtors_csv",
+  "company"
  ],
  "fields": [
   {
@@ -50,12 +51,18 @@
    "fieldname": "debtors_csv",
    "fieldtype": "Attach",
    "label": "Debtors CSV"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Data",
+   "label": "Company",
+   "read_only": 1
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-21 08:26:14.027662",
+ "modified": "2024-07-23 08:11:24.241212",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "DATEV Export Log",
