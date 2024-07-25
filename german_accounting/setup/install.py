@@ -56,44 +56,6 @@ def get_custom_fields():
 			"translatable": 0,
 			"insert_after": "tax_id",
 		},
-		{
-			"label": "Open Invoice Amount",
-			"fieldname": "open_invoice_amount",
-			"fieldtype": "Currency",
-			"insert_after": "customer_type",
-			"read_only": 1,
-			"hidden": 1
-		},
-		{
-			"label": "Overdue Invoice Amount",
-			"fieldname": "overdue_invoice_amount",
-			"fieldtype": "Currency",
-			"insert_after": "open_invoice_amount",
-			"read_only": 1,
-			"hidden": 1
-		},
-		{
-			"fieldname": "col_break",
-			"fieldtype": "Column Break",
-			"insert_after": "overdue_invoice_amount",
-			"hidden": 1
-		},
-		{
-			"label": "Non Invoiced Amount",
-			"fieldname": "non_invoiced_amount",
-			"fieldtype": "Currency",
-			"insert_after": "col_break",
-			"read_only": 1,
-			"hidden": 1
-		},
-		{
-			"label": "Total Outstanding Amount",
-			"fieldname": "total_outstanding_amount",
-			"fieldtype": "Currency",
-			"insert_after": "non_invoiced_amount",
-			"read_only": 1,
-			"hidden": 1
-		},
 	]
 
 	custom_fields_so = [
@@ -120,44 +82,6 @@ def get_custom_fields():
 			"read_only": 1,
 			"translatable": 0,
 			"insert_after": "german_accounting",
-		},
-		{
-			"label": "Open Invoice Amount",
-			"fieldname": "open_invoice_amount",
-			"fieldtype": "Currency",
-			"insert_after": "customer_type",
-			"read_only": 1,
-			"hidden": 1
-		},
-		{
-			"label": "Overdue Invoice Amount",
-			"fieldname": "overdue_invoice_amount",
-			"fieldtype": "Currency",
-			"insert_after": "open_invoice_amount",
-			"read_only": 1,
-			"hidden": 1
-		},
-		{
-			"fieldname": "col_break",
-			"fieldtype": "Column Break",
-			"insert_after": "overdue_invoice_amount",
-			"hidden": 1
-		},
-		{
-			"label": "Non Invoiced Amount",
-			"fieldname": "non_invoiced_amount",
-			"fieldtype": "Currency",
-			"insert_after": "col_break",
-			"read_only": 1,
-			"hidden": 1
-		},
-		{
-			"label": "Total Outstanding Amount",
-			"fieldname": "total_outstanding_amount",
-			"fieldtype": "Currency",
-			"insert_after": "non_invoiced_amount",
-			"read_only": 1,
-			"hidden": 1
 		},
 	]
 
@@ -251,40 +175,7 @@ def get_custom_fields():
 			"description": "This represents the standard billing address used for the export for DATEV debtors file.",
 			"insert_after": "german_accounting_section",
 			"options": "Address"
-		},
-		{
-			"label": "Open Invoice Amount",
-			"fieldname": "open_invoice_amount",
-			"fieldtype": "Currency",
-			"insert_after": "billing_address",
-			"read_only": 1
-		},
-		{
-			"label": "Overdue Invoice Amount",
-			"fieldname": "overdue_invoice_amount",
-			"fieldtype": "Currency",
-			"insert_after": "open_invoice_amount",
-			"read_only": 1
-		},
-		{
-			"fieldname": "col_break",
-			"fieldtype": "Column Break",
-			"insert_after": "overdue_invoice_amount",
-		},
-		{
-			"label": "Non Invoiced Amount",
-			"fieldname": "non_invoiced_amount",
-			"fieldtype": "Currency",
-			"insert_after": "col_break",
-			"read_only": 1
-		},
-		{
-			"label": "Total",
-			"fieldname": "total",
-			"fieldtype": "Currency",
-			"insert_after": "non_invoiced_amount",
-			"read_only": 1
-		},
+		}
 	]
 	custom_fields_party_account = [
 		{

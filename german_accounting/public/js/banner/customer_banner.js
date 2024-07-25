@@ -1,3 +1,4 @@
+frappe.require('/assets/german_accounting/js/banner_utils.js')
 frappe.ui.form.on('Customer', {
 	refresh: (frm) => {
 		if(!frm.is_new()) {
@@ -8,21 +9,28 @@ frappe.ui.form.on('Customer', {
         
 		if(!frm.is_new()) {
             if (frm.doc.customer_name) {
-                const currencySymbol = await getDefaultCurrencySymbol();
+                const customer = frm.doc.customer_name
                 
-                let customer = frm.doc.customer_name
-                let open_invoice_amount = frm.doc.open_invoice_amount.toFixed(2)
-                let overdue_invoice_amount = frm.doc.overdue_invoice_amount.toFixed(2)
-                let non_invoiced_amount = frm.doc.non_invoiced_amount.toFixed(2)
-                let total = frm.doc.total.toFixed(2)
+                const currencySymbol = await getCurrencySymbol()
+                const amounts = await updateAmounts(customer)
+              
+                const open_invoice_amount = amounts.open_invoice.toFixed(2)
+                const overdue_invoice_amount = amounts.overdue_invoice.toFixed(2)
+                const non_invoiced_amount = amounts.non_invoice.toFixed(2)
+                const total = amounts.total.toFixed(2)
+
                 frm.dashboard.clear_headline();
-                
+
                 frm.dashboard.set_headline_alert(`
                     <div class="row">
                         <div class="col-xs-12">
                             <span class="indicator whitespace-nowrap">
                                 <span class="hidden-xs">
-                                    <p>${__('Customer')} <b>${customer}</b> ${__('has an Open Invoice Amount of')}: <b>${currencySymbol} ${open_invoice_amount}</b>, ${__('Overdue Invoice Amount of')}: <b>${currencySymbol} ${overdue_invoice_amount}</b> ${__('and Non-Invoiced Amount of')}: <b>${currencySymbol} ${non_invoiced_amount}</b><br> ${__('This is a Total of')}: <b>${currencySymbol} ${total}</b></p>
+                                    <p>
+                                        ${__("Customer {} has an Open Invoice Amount of: {}, Overdue Invoice Amount of: {} and Non-Invoiced Amount of: {}",[`<b>${customer}</b>`, `<b>${currencySymbol} ${open_invoice_amount}</b>`, `<b>${currencySymbol} ${overdue_invoice_amount}</b>`, `<b>${currencySymbol} ${non_invoiced_amount}</b>`])}
+                                        <br>
+                                        ${__("This is a Total of {}", [`<b>${currencySymbol} ${total}</b>`])}
+                                    </p>
                                 </span>
                             </span>
                         </div>
@@ -32,25 +40,3 @@ frappe.ui.form.on('Customer', {
 		}
 	}
 })
-
-
-
-async function getDefaultCurrencySymbol() {
-    try {
-
-        const response = await fetch("/api/resource/Global Defaults/Global Defaults");
-        const data = await response.json();
-
-        const currencyCode = data.data.default_currency;
-
-        const currencyResponse = await fetch(`/api/resource/Currency/${currencyCode}`);
-        const currencyData = await currencyResponse.json();
-
-        const currencySymbol = currencyData.data.symbol;
-
-        return currencySymbol;
-    } catch (error) {
-        console.error("Error fetching default currency symbol:", error);
-        return null;
-    }
-}
