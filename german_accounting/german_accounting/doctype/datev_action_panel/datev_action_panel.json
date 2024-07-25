@@ -104,7 +104,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-07-25 16:12:27.174617",
+ "modified": "2024-07-18 09:44:38.829473",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "DATEV Action Panel",
@@ -119,5 +119,6 @@
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "states": []
 }
