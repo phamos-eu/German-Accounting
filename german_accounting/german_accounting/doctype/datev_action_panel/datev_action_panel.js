@@ -39,91 +39,115 @@ frappe.ui.form.on('DATEV Action Panel', {
 					"fieldtype": "Link",
 					"options": "Company"
 				},
+				{
+					"fieldname": "select_version",
+					"label": __("Select version"),
+					"fieldtype": "Select",
+					"options": "Latest\nLegacy",
+					"reqd": 1
+				},
 			],
 			primary_action: async function () {
-				let delimiter = ";";
-				let datev_export_filters = {};
 				let data = d.get_values();
-				let include_header_in_csv = false;
-				let html_format = "<p>No print format setup!</p>"
-				await frappe.db.get_single_value("German Accounting Settings", "include_header_in_csv").then((value) => {
-					if (value) {
-						include_header_in_csv = true;
-					}
-				});
 
-				await frappe.call({
-					method: "frappe.desk.query_report.get_script",
-					args: {
-						report_name: "DATEV Sales Invoice Export",
-					},
-					callback: function (r) {
-						html_format = r.message.html_format;
-					},
-				});
+				if (data.select_version == "Latest") {
+					frappe.call({
+						method: "german_accounting.german_accounting.doctype.datev_action_panel.datev_action_panel.create_datev_export_logs",
+						args: {
+							"month": data.month,
+							"year": data.year,
+							"company": data.company,
+						},
+						callback: function (r) {
+	
+						},
+					});
+				} else {
 
-				datev_export_filters = {
-					'month': data.month,
-					'year': data.year,
-					'company': data.company,
-					'export_type': 'Sales Invoice CSV',
-					'unexported_sales_invoice': true
-				}
-				
-				let datev_export_csv = await get_datev_export_data(datev_export_filters);
-				if (datev_export_csv.message) {
-					datev_export_csv = datev_export_csv.message;
-					let csv_columns = datev_export_csv[0];
-					let csv_rows = datev_export_csv[1];
-					let sales_invoices = csv_rows.map(row => row.invoice_no);
-					if (csv_rows.length == 0) {
-						frappe.throw(__("No data found!"))
-					}
-
-					let datev_export_log = await create_datev_export_log(data.month, data.company, sales_invoices);
-					let datev_export_log_name = datev_export_log.message.name;
-					let datev_exported_on = datev_export_log.message.exported_on;
-
-					let csv_blob = create_csv_blob(csv_rows, csv_columns, include_header_in_csv, delimiter);
-					let filename = datev_export_log_name + '-sales-invoice.csv';
-					await upload_file(csv_blob, datev_export_log_name, filename, 'sales_invoice_csv');
-
+					let delimiter = ";";
+					let datev_export_filters = {};
+					let include_header_in_csv = false;
+					let html_format = "<p>No print format setup!</p>"
+					await frappe.db.get_single_value("German Accounting Settings", "include_header_in_csv").then((value) => {
+						if (value) {
+							include_header_in_csv = true;
+						}
+					});
+	
+					await frappe.call({
+						method: "frappe.desk.query_report.get_script",
+						args: {
+							report_name: "DATEV Sales Invoice Export",
+						},
+						callback: function (r) {
+							html_format = r.message.html_format;
+						},
+					});
+	
 					datev_export_filters = {
 						'month': data.month,
 						'year': data.year,
 						'company': data.company,
-						'export_type': 'Sales Invoice PDF',
-						'unexported_sales_invoice': false,
-						'exported_on': datev_exported_on,
+						'export_type': 'Sales Invoice CSV',
+						'unexported_sales_invoice': true
 					}
-					let datev_export_pdf = await get_datev_export_data(datev_export_filters);
-					if (datev_export_pdf.message) {
-						datev_export_pdf = datev_export_pdf.message;
-						let pdf_columns = datev_export_pdf[0];
-						let pdf_rows = datev_export_pdf[1];
-						await create_and_upload_pdf(data.month, pdf_columns, pdf_rows, html_format, datev_export_log_name);
-					}
-					datev_export_filters = {
-						'month': data.month,
-						'year': data.year,
-						'company': data.company,
-						'export_type': 'Debtors CSV',
-						'unexported_sales_invoice': false,
-						'exported_on': datev_exported_on,
-					}
-					let datev_export_debtors_csv = await get_datev_export_data(datev_export_filters);
-
-					if (datev_export_debtors_csv.message) {
-						datev_export_debtors_csv = datev_export_debtors_csv.message;
-						let debtors_csv_columns = datev_export_debtors_csv[0];
-						let debtors_csv_rows = datev_export_debtors_csv[1];
-						if (debtors_csv_rows.length == 0) {
+					
+					let datev_export_csv = await get_datev_export_data(datev_export_filters);
+					if (datev_export_csv.message) {
+						datev_export_csv = datev_export_csv.message;
+						let csv_columns = datev_export_csv[0];
+						let csv_rows = datev_export_csv[1];
+						let sales_invoices = csv_rows.map(row => row.invoice_no);
+						if (csv_rows.length == 0) {
 							frappe.throw(__("No data found!"))
 						}
-						let debtors_csv_blob = create_csv_blob(debtors_csv_rows, debtors_csv_columns, true, delimiter);
-						let filename = datev_export_log_name + '-debtors.csv';
-						await upload_file(debtors_csv_blob, datev_export_log_name, filename, 'debtors_csv');
+	
+						let datev_export_log = await create_datev_export_log(data.month, data.company, sales_invoices);
+						let datev_export_log_name = datev_export_log.message.name;
+						let datev_exported_on = datev_export_log.message.exported_on;
+	
+						let csv_blob = create_csv_blob(csv_rows, csv_columns, include_header_in_csv, delimiter);
+						let filename = datev_export_log_name + '-sales-invoice.csv';
+						await upload_file(csv_blob, datev_export_log_name, filename, 'sales_invoice_csv');
+	
+						datev_export_filters = {
+							'month': data.month,
+							'year': data.year,
+							'company': data.company,
+							'export_type': 'Sales Invoice PDF',
+							'unexported_sales_invoice': false,
+							'exported_on': datev_exported_on,
+						}
+						let datev_export_pdf = await get_datev_export_data(datev_export_filters);
+						if (datev_export_pdf.message) {
+							datev_export_pdf = datev_export_pdf.message;
+							let pdf_columns = datev_export_pdf[0];
+							let pdf_rows = datev_export_pdf[1];
+							await create_and_upload_pdf(data.month, pdf_columns, pdf_rows, html_format, datev_export_log_name);
+						}
+						datev_export_filters = {
+							'month': data.month,
+							'year': data.year,
+							'company': data.company,
+							'export_type': 'Debtors CSV',
+							'unexported_sales_invoice': false,
+							'exported_on': datev_exported_on,
+						}
+						let datev_export_debtors_csv = await get_datev_export_data(datev_export_filters);
+	
+						if (datev_export_debtors_csv.message) {
+							datev_export_debtors_csv = datev_export_debtors_csv.message;
+							let debtors_csv_columns = datev_export_debtors_csv[0];
+							let debtors_csv_rows = datev_export_debtors_csv[1];
+							if (debtors_csv_rows.length == 0) {
+								frappe.throw(__("No data found!"))
+							}
+							let debtors_csv_blob = create_csv_blob(debtors_csv_rows, debtors_csv_columns, true, delimiter);
+							let filename = datev_export_log_name + '-debtors.csv';
+							await upload_file(debtors_csv_blob, datev_export_log_name, filename, 'debtors_csv');
+						}
 					}
+
 				}
 				d.hide();
 			},
@@ -265,6 +289,8 @@ const create_and_upload_pdf = (month, pdf_columns, pdf_rows, html_format, datev_
 		lang: frappe.boot.lang,
 		layout_direction: frappe.utils.is_rtl() ? "rtl" : "ltr",
 	});
+
+	console.log(html);
 
 	//Create a form to place the HTML content
 	var formData = new FormData();
