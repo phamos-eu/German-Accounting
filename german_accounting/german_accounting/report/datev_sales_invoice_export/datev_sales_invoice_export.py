@@ -29,7 +29,7 @@ def get_data(filters):
 	"""
 		SELECT
 			si.name as invoice_no, si.posting_date, si.is_return,si.cost_center, 
-			si.tax_id, si.currency, si.grand_total, si.net_total as pdf_net_total,
+			si.tax_id, si.currency, si.grand_total, si.net_total as pdf_net_total, si.company,
 			acc.debtor_creditor_number as debit_to, si.custom_exported_on, co.code, ad.country, si.customer, 
 			sii.income_account, sii.item_tax_rate
 		FROM `tabSales Invoice` si, `tabSales Invoice Item` sii, `tabAddress` ad, `tabCountry` co, `tabParty Account` acc
@@ -60,7 +60,8 @@ def get_data(filters):
 			"country": entry.code,
 			"journal_text": entry.customer if entry.country == 'Germany' else entry.code + ", " + entry.customer,
 			"customer": entry.customer,
-			"dc": h_or_s
+			"dc": h_or_s,
+			"company": entry.company
 		})
 	
 	merged_data = {}
@@ -104,6 +105,7 @@ def get_data(filters):
 			merged_values['pdf_net_total'] = entry['pdf_net_total']
 			merged_values['pdf_total'] = entry['pdf_total']
 			merged_values['customer'] = entry['customer']
+			merged_values['company'] = entry['company']
 
 		merged_data[key] = merged_values
 
@@ -166,7 +168,7 @@ def get_conditions(filters):
 	conditions = ""
 	if filters.get("month"):
 		filters["month"] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November",
-				"December"].index(filters.month) + 1
+				"December"].index(filters.get("month")) + 1
 		conditions += "AND month(si.posting_date) = %(month)s"
 
 	if filters.get("year"):
