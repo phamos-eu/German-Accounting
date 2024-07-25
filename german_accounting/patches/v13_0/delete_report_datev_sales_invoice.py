@@ -11,4 +11,3 @@ def execute():
 			WHERE name = 'DATEV Sales Invoice'
 		"""
 		)
-		frappe.db.commit()
