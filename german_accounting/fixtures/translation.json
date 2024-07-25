@@ -270,5 +270,53 @@
   "parenttype": null,
   "source_text": "Revenue Account",
   "translated_text": "Erl\u00f6skonto"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "de",
+  "modified": "2024-07-25 17:46:20.306291",
+  "name": "4b50df263a",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "source_text": "A DATEV Export Log",
+  "translated_text": "Ein DATEV-Exportprotokoll "
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "de",
+  "modified": "2024-07-25 17:46:31.277737",
+  "name": "71fec72e9f",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "source_text": "has been created for",
+  "translated_text": " wurde geschaffen f\u00fcr "
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "de",
+  "modified": "2024-07-25 17:45:27.997217",
+  "name": "2deca24cef",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "source_text": "month containing a *.csv and *.pdf that can be downloaded",
+  "translated_text": " Monat mit einer *.csv- und *.pdf-Datei zum Herunterladen"
  }
 ]
