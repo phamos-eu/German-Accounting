@@ -100,4 +100,9 @@ def update_amounts(customer):
     non_invoice = update_non_invoiced_amount(customer)
     total = update_total(open_invoice, non_invoice)
 
-    return [open_invoice, overdue_invoice, non_invoice, total]
+    return {
+        "open_invoice": open_invoice,
+        "overdue_invoice": overdue_invoice,
+        "non_invoice": non_invoice,
+        "total": total
+    }
