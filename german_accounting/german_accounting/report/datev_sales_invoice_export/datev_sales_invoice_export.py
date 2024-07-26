@@ -3,7 +3,7 @@
 
 import frappe
 from frappe import _
-from frappe.utils import flt, cstr, today, now_datetime, get_first_day, get_last_day, format_date
+from frappe.utils import flt, cstr, cint, get_first_day, get_last_day, format_date
 from datetime import datetime
 from collections import defaultdict
 import json
@@ -84,7 +84,10 @@ def get_data(filters):
 			if len(values) == 1 or item_tax_rate in item_tax_rates:
 				item_tax_rate = json.loads(item_tax_rate)
 				item_tax_rate = sum(value for value in item_tax_rate.values())
-				merged_values['item_tax_rate'] = flt(item_tax_rate)
+				if isinstance(item_tax_rate, float) and item_tax_rate.is_integer():
+						merged_values['item_tax_rate'] = cint(item_tax_rate)
+				else:
+					merged_values['item_tax_rate'] = item_tax_rate
 
 			else:
 				item_tax_rates.add(item_tax_rate)
