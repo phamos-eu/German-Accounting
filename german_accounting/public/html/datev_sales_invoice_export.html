@@ -11,21 +11,23 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th style="width: 10%">{{ _("Belegart") }}</th>
-            <th style="width: 1%">{{ _("SH") }}</th>
-            <th style="width: 10%">{{ _("Betrag") }}</th>
-            <th style="width: 10%">{{ _("Betrag DATEV") }}</th>
-            <th style="width: 10%">{{ _("Erlöskonto") }}</th>
-            <th style="width: 1%">{{ _("Beleg Nr") }}</th>
-            <th style="width: 10%">{{ _("Buchungsdatum") }}</th>
-            <th style="width: 10%">{{ _("Kurzdatum") }}</th>
-            <th style="width: 10%">{{ _("Deb.-Nr.") }}</th>
-            <th style="width: 10%">{{ _("Deb.-Nr. Datev") }}</th>
-            <th style="width: 1%">{{ _("Land") }}</th>
-            <th style="width: 10%">{{ _("Buchtext") }}</th>
-            <th style="width: 10%">{{ _("St.-satz") }}</th>
-            <th style="width: 10%">{{ _("Währung") }}</th>
-            <th style="width: 10%">{{ _("Exportdatum") }}</th>
+			<th style="width: 10%">{%= _("Document type") %}</th>
+			<th style="width: 1%">{%= _("SH") %}</th>
+			<th style="width: 10%">{%= _("Amount") %}</th>
+			<th style="width: 10%">{%= _("Amount DATEV") %}</th>
+			<th style="width: 10%">{%= _("Revenue Account") %}</th>
+
+			<th style="width: 1%">{%= _("Receipt No") %}</th>
+			<th style="width: 10%">{%= _("Booking date") %}</th>
+			<th style="width: 10%">{%= _("Short date") %}</th>
+			<th style="width: 10%">{%= _("Deb.-No.") %}</th>
+			<th style="width: 10%">{%= _("Deb.-No. Datev") %}</th>
+
+			<th style="width: 1%">{%= _("Country") %}</th>
+			<th style="width: 10%">{%= _("Book text") %}</th>
+			<th style="width: 10%">{%= _("St.Rate") %}</th>
+			<th style="width: 10%">{%= _("currency") %}</th>
+			<th style="width: 10%">{%= _("Export Date") %}</th>
         </tr>
     </thead>
     <tbody>
@@ -53,6 +55,6 @@
     </tbody>
 </table>
 
-<p>Net Total {{  frappe.utils.fmt_money(sum_pdf_net_total.value, currency="EUR") }}</p>
-<p>Gross Total {{ frappe.utils.fmt_money(sum_pdf_total.value, currency="EUR") }}</p>
-<p class="text-right text-muted">Printed On {{ frappe.utils.now_datetime() }}</p>
+<p>{{_("Net Total")}} {{  frappe.utils.fmt_money(sum_pdf_net_total.value, currency="EUR") }}</p>
+<p>{{_("Gross Total")}} {{ frappe.utils.fmt_money(sum_pdf_total.value, currency="EUR") }}</p>
+<p class="text-right text-muted">{{_(Printed On)}} {{ frappe.utils.now_datetime() }}</p>
