@@ -26,7 +26,7 @@ def get_users_with_role(role: str) -> list[str]:
 def send_emails(users, docname, doctype=None):
 	try:
 		users = json.loads(users)
-		subject = _("Request for document release for {0}.").format(docname)
+		subject = _("Request for document release {0}.").format(docname)
 		message = _("Please release the following document {0}.").format( frappe.utils.get_url_to_form(doctype, docname))
 		
 		frappe.sendmail(
