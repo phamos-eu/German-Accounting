@@ -198,7 +198,6 @@ function get_si_field_options() {
 }
 
 const get_datev_export_data = (filters) => {
-	console.log(filters)
 	return frappe.call({
 		method: "german_accounting.german_accounting.report.datev_sales_invoice_export.datev_sales_invoice_export.execute",
 		args: {
@@ -289,8 +288,6 @@ const create_and_upload_pdf = (month, pdf_columns, pdf_rows, html_format, datev_
 		lang: frappe.boot.lang,
 		layout_direction: frappe.utils.is_rtl() ? "rtl" : "ltr",
 	});
-
-	console.log(html);
 
 	//Create a form to place the HTML content
 	var formData = new FormData();
