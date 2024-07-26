@@ -3,12 +3,10 @@
 
 from frappe.model.document import Document
 from german_accounting.german_accounting.report.datev_sales_invoice_export.datev_sales_invoice_export import get_data, get_columns
-from frappe.utils.jinja_globals import bundled_asset, is_rtl
 from frappe.utils import get_link_to_form, now_datetime
-from frappe.utils.pdf import get_pdf
-# from frappe.utils.print_format import report_to_pdf
+from frappe.utils.jinja_globals import bundled_asset
 from frappe.utils.file_manager import save_file
-from frappe.desk.query_report import get_script
+from frappe.utils.pdf import get_pdf
 from datetime import date
 from frappe import _
 import frappe
