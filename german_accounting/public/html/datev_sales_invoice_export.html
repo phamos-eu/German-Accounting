@@ -1,5 +1,5 @@
-{% set sumPdfNetTotal = 0 %}
-{% set sumPdfTotal = 0 %}
+{% set sum_pdf_net_total = namespace(value=0) %}
+{% set sum_pdf_total = namespace(value=0) %}
 <h2 class="text-center">{{ title }}</h2>
 <h4>
     {% if filters.month %}
@@ -30,8 +30,8 @@
     </thead>
     <tbody>
         {% for row in data %}
-            {% set sumPdfNetTotal = sumPdfNetTotal + row.pdf_net_total|float %}
-            {% set sumPdfTotal = sumPdfTotal + row.pdf_total|float %}
+            {% set sum_pdf_net_total.value = sum_pdf_net_total.value + row.pdf_net_total|float %}
+            {% set sum_pdf_total.value = sum_pdf_total.value + row.pdf_total|float %}
             <tr>
                 <td style="text-align: right">{{ row.voucher_type }}</td>
                 <td style="text-align: right">{{ row.dc }}</td>
@@ -53,6 +53,6 @@
     </tbody>
 </table>
 
-<p>Net Total {{  frappe.utils.fmt_money(sumPdfNetTotal, currency="EUR") }}</p>
-<p>Gross Total {{ frappe.utils.fmt_money(sumPdfTotal, currency="EUR") }}</p>
+<p>Net Total {{  frappe.utils.fmt_money(sum_pdf_net_total.value, currency="EUR") }}</p>
+<p>Gross Total {{ frappe.utils.fmt_money(sum_pdf_total.value, currency="EUR") }}</p>
 <p class="text-right text-muted">Printed On {{ frappe.utils.now_datetime() }}</p>
