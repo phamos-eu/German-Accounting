@@ -26,8 +26,8 @@ def get_users_with_role(role: str) -> list[str]:
 def send_emails(users, docname, doctype=None):
 	try:
 		users = json.loads(users)
-		subject = _("Anfrage zur Belegfreigabe für {0}.").format(docname)
-		message = _("Bitte geben Sie den Beleg {0} frei.").format( frappe.utils.get_url_to_form(doctype, docname))
+		subject = _("Request for document release {0}.").format(docname)
+		message = _("Please release the following document {0}.").format( frappe.utils.get_url_to_form(doctype, docname))
 		
 		frappe.sendmail(
 			recipients= users, 
@@ -40,7 +40,7 @@ def send_emails(users, docname, doctype=None):
 	except Exception as e:
 		return {"status": "error", "message": str(e)}
 
-def user_has_imat_belegfreigabe_role():
+def user_has_german_accounting_order_approval_role():
 	user = frappe.session.user
 	role  = "German Accounting Order Approval"
 	
@@ -138,7 +138,7 @@ def check_credit_limit(docname, customer, company, total, doctype, method=None):
   table = ""
   button_label = "Submit"
 
-  if not user_has_imat_belegfreigabe_role():
+  if not user_has_german_accounting_order_approval_role():
     button_label = "Request Approval"
     formatted_user_rows = ""
     users = get_users_with_role("German Accounting Order Approval")
