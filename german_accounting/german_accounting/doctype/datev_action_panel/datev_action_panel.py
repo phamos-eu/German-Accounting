@@ -111,11 +111,10 @@ def create_and_upload_csv(csv_rows, csv_columns, datev_export_log_name, field, f
 		writer.writerow(csv_row)
 
 	csv_str.seek(0)
-
-	file = save_file(filename, csv_str.getvalue(), "DATEV Export Log", datev_export_log_name, folder="Home/Attachments", is_private=1)
-	frappe.db.set_value("DATEV Export Log", datev_export_log_name, field, file.file_url)
-
-	return csv_str.getvalue()
+	content = csv_str.getvalue()
+	dt, dn = "DATEV Export Log", datev_export_log_name
+	file = save_file(filename, content, dt, dn, folder="Home/Attachments", is_private=1)
+	frappe.db.set_value(dt, dn, field, file.file_url)
 
 
 def create_and_upload_pdf(month, pdf_columns, pdf_rows, datev_export_log_name, field):
@@ -142,11 +141,11 @@ def create_and_upload_pdf(month, pdf_columns, pdf_rows, datev_export_log_name, f
 		"lang": frappe.local.lang
 	})
 
-	pdf = get_pdf(html, {"orientation": "Landscape"})
-
+	pdf_content = get_pdf(html, {"orientation": "Landscape"})
 	filename = f"{datev_export_log_name}-sales-invoice.pdf"
-	file_doc = save_file(filename, pdf, "DATEV Export Log", datev_export_log_name, is_private=True)
-	frappe.db.set_value("DATEV Export Log", datev_export_log_name, field, file_doc.file_url)
+	dt, dn = "DATEV Export Log", datev_export_log_name
+	file_doc = save_file(filename, pdf_content, dt, dn, is_private=True)
+	frappe.db.set_value(dt, dn, field, file_doc.file_url)
 
 
 @frappe.whitelist()
