@@ -159,7 +159,7 @@ def create_log(month, company=None, sales_invoices=[]):
 		"exported_on": exported_on,
 		"year": str(date.today().year)
 	})
-	log_doc.save(ignore_permissions=True)
+	log_doc.save()
 	
 	# update exported on in SI
 	for si in sales_invoices:
