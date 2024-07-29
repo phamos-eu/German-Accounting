@@ -136,6 +136,8 @@ def get_data(filters):
 	return data
 
 def get_debtors_csv_data(data):
+	if not data:
+		return []
 	customers = list(set([d.get("customer") for d in data]))
 
 	debtors_csv_data = frappe.db.sql(
