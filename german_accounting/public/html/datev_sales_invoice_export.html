@@ -11,7 +11,7 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-			<th style="width: 10%">{{ _("Document type") }}</th>
+			<th style="width: 8%">{{ _("Document type") }}</th>
 			<th style="width: 1%">{{ _("SH") }}</th>
 			<th style="width: 10%">{{ _("Amount") }}</th>
 			<th style="width: 10%">{{ _("Amount DATEV") }}</th>
@@ -28,6 +28,7 @@
 			<th style="width: 10%">{{ _("St.Rate") }}</th>
 			<th style="width: 10%">{{ _("currency") }}</th>
 			<th style="width: 10%">{{ _("Export Date") }}</th>
+			<th style="width: 10%">{{ _("Company") }}</th>
         </tr>
     </thead>
     <tbody>
@@ -50,6 +51,7 @@
                 <td style="text-align: right">{{ row.item_tax_rate }}</td>
                 <td style="text-align: right">{{ row.currency }}</td>
                 <td style="text-align: right">{{ row.custom_exported_on }}</td>
+                <td style="text-align: right">{{ row.company }}</td>
             </tr>
         {% endfor %}
     </tbody>
