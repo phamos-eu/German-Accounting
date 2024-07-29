@@ -1,9 +1,9 @@
 {% set sum_pdf_net_total = namespace(value=0) %}
 {% set sum_pdf_total = namespace(value=0) %}
-<h2 class="text-center">{{ title }}</h2>
+<h2 class="text-center">{{ _(title) }}</h2>
 <h4>
     {% if filters.month %}
-        Month: {{ filters.month }}
+        {{_("Month")}}: {{ filters.month }}
     {% endif %}
 </h4>
 
@@ -11,23 +11,23 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-			<th style="width: 10%">{%= _("Document type") %}</th>
-			<th style="width: 1%">{%= _("SH") %}</th>
-			<th style="width: 10%">{%= _("Amount") %}</th>
-			<th style="width: 10%">{%= _("Amount DATEV") %}</th>
-			<th style="width: 10%">{%= _("Revenue Account") %}</th>
+			<th style="width: 10%">{{ _("Document type") }}</th>
+			<th style="width: 1%">{{ _("SH") }}</th>
+			<th style="width: 10%">{{ _("Amount") }}</th>
+			<th style="width: 10%">{{ _("Amount DATEV") }}</th>
+			<th style="width: 10%">{{ _("Revenue Account") }}</th>
 
-			<th style="width: 1%">{%= _("Receipt No") %}</th>
-			<th style="width: 10%">{%= _("Booking date") %}</th>
-			<th style="width: 10%">{%= _("Short date") %}</th>
-			<th style="width: 10%">{%= _("Deb.-No.") %}</th>
-			<th style="width: 10%">{%= _("Deb.-No. Datev") %}</th>
+			<th style="width: 1%">{{ _("Receipt No") }}</th>
+			<th style="width: 10%">{{ _("Booking date") }}</th>
+			<th style="width: 10%">{{ _("Short date") }}</th>
+			<th style="width: 10%">{{ _("Deb.-No.") }}</th>
+			<th style="width: 10%">{{ _("Deb.-No. Datev") }}</th>
 
-			<th style="width: 1%">{%= _("Country") %}</th>
-			<th style="width: 10%">{%= _("Book text") %}</th>
-			<th style="width: 10%">{%= _("St.Rate") %}</th>
-			<th style="width: 10%">{%= _("currency") %}</th>
-			<th style="width: 10%">{%= _("Export Date") %}</th>
+			<th style="width: 1%">{{ _("Country") }}</th>
+			<th style="width: 10%">{{ _("Book text") }}</th>
+			<th style="width: 10%">{{ _("St.Rate") }}</th>
+			<th style="width: 10%">{{ _("currency") }}</th>
+			<th style="width: 10%">{{ _("Export Date") }}</th>
         </tr>
     </thead>
     <tbody>
@@ -57,4 +57,4 @@
 
 <p>{{_("Net Total")}} {{  frappe.utils.fmt_money(sum_pdf_net_total.value, currency="EUR") }}</p>
 <p>{{_("Gross Total")}} {{ frappe.utils.fmt_money(sum_pdf_total.value, currency="EUR") }}</p>
-<p class="text-right text-muted">{{_(Printed On)}} {{ frappe.utils.now_datetime() }}</p>
+<p class="text-right text-muted">{{_("Printed On")}} {{ frappe.utils.now_datetime() }}</p>
