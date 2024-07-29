@@ -28,6 +28,8 @@
 			<th style="width: 10%">{%= __("St.Rate") %}</th>
 			<th style="width: 10%">{%= __("currency") %}</th>
 			<th style="width: 10%">{%= __("Export Date") %}</th>
+			<th style="width: 10%">{%= __("Company") %}</th>
+
 		</tr>
 	</thead>
 	<tbody>
@@ -52,6 +54,7 @@
             <td style="text-align: right">{%= data[i].item_tax_rate%}</td>
             <td style="text-align: right">{%= data[i].currency%}</td>
             <td style="text-align: right">{%= data[i].custom_exported_on%}</td>
+            <td style="text-align: right">{%= data[i].company%}</td>
         </tr>
 		{% } %}
 	</tbody>
