@@ -35,7 +35,7 @@ def create_datev_export_logs(month, year, company=None):
 	
 	rows = get_data(datev_export_filters)
 	if not len(rows):
-		frappe.throw(_("No data found!"))
+		frappe.throw(_("Sales invoices for this configuration have already been exported!"))
 
 	sales_invoices = [row.get("invoice_no") for row in rows]
 
@@ -59,7 +59,7 @@ def create_datev_export_logs(month, year, company=None):
 		"include_header_in_csv": include_header_in_csv,
 	}))
 	if not rows_for_sales_invoice_pdf:
-		frappe.throw(_("No data found!"))
+		frappe.throw(_("Sales invoices for this configuration have already been exported!"))
 
 	columns_for_sales_invoice_pdf = get_columns({"export_type": "Sales Invoice PDF"})
 	create_and_upload_pdf(month, columns_for_sales_invoice_pdf, rows_for_sales_invoice_pdf, datev_export_log_name, "sales_invoice_pdf")
@@ -75,7 +75,7 @@ def create_datev_export_logs(month, year, company=None):
 	}))
 
 	if not debtors_csv_rows:
-		frappe.throw(_("No data found!"))
+		frappe.throw(_("Sales invoices for this configuration have already been exported!"))
 
 	field = "debtors_csv"
 	filename = datev_export_log_name + "-debtors.csv"
