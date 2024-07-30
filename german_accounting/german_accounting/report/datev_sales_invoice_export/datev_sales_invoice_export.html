@@ -3,7 +3,7 @@
 <h2 class="text-center">{%= __(title) %}</h2>
 <h4 >
 	{% if (filters.month) { %}
-		Month: {%= filters.month %}
+		__("Month"): {%= filters.month %}
 	{% } %}
 </h4>
 
@@ -28,6 +28,8 @@
 			<th style="width: 10%">{%= __("St.Rate") %}</th>
 			<th style="width: 10%">{%= __("currency") %}</th>
 			<th style="width: 10%">{%= __("Export Date") %}</th>
+			<th style="width: 10%">{%= __("Company") %}</th>
+
 		</tr>
 	</thead>
 	<tbody>
@@ -52,11 +54,12 @@
             <td style="text-align: right">{%= data[i].item_tax_rate%}</td>
             <td style="text-align: right">{%= data[i].currency%}</td>
             <td style="text-align: right">{%= data[i].custom_exported_on%}</td>
+            <td style="text-align: right">{%= data[i].company%}</td>
         </tr>
 		{% } %}
 	</tbody>
 </table>
 
-<p>Net Total {%= format_currency(sumPdfNetTotal) %}</p>
-<p>Gross Total {%= format_currency(sumPdfTotal) %}</p>
-<p class="text-right text-muted">Printed On {%= frappe.datetime.str_to_user(frappe.datetime.get_datetime_as_string()) %}</p>
+<p>{%= __("Net Total") %} {%= format_currency(sumPdfNetTotal) %}</p>
+<p>{%= __("Gross Total") %} {%= format_currency(sumPdfTotal) %}</p>
+<p class="text-right text-muted">{%= __("Printed On") %} {%= frappe.datetime.str_to_user(frappe.datetime.get_datetime_as_string()) %}</p>
