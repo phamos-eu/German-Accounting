@@ -82,7 +82,6 @@ def create_datev_export_logs(month, year, company=None):
 
 
 def create_and_upload_csv(csv_rows, csv_columns, datev_export_log_name, field, filename, include_header_in_csv=True):
-	csv_data = []
 	csv_str = io.StringIO()
 	writer = csv.writer(csv_str, delimiter=";", quotechar="'", quoting=csv.QUOTE_MINIMAL)
 
