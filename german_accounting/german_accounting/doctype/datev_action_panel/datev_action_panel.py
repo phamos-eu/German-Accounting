@@ -80,15 +80,16 @@ def create_datev_export_logs(month, year, company=None):
 	columns_for_debtors_csv = get_columns({"export_type": "Debtors CSV"})
 	create_and_upload_csv(debtors_csv_rows, columns_for_debtors_csv, datev_export_log_name, field, filename)
 
+	frappe.msgprint(_("A DATEV Export Log ")+ get_link_to_form("DATEV Export Log", datev_export_log_name) + _(" has been created for ")+ _(month) + _(" month containing a *.csv and *.pdf that can be downloaded"))
+
 
 def create_and_upload_csv(csv_rows, csv_columns, datev_export_log_name, field, filename, include_header_in_csv=True):
-	csv_data = []
 	csv_str = io.StringIO()
 	writer = csv.writer(csv_str, delimiter=";", quotechar="'", quoting=csv.QUOTE_MINIMAL)
 
 	if include_header_in_csv:
 		field_mapping_table = [column.get("custom_header") for column in csv_columns]
-		csv_data.append(field_mapping_table)
+		field_mapping_table.append("")
 		writer.writerow(field_mapping_table)
 
 	for row in csv_rows:
@@ -105,11 +106,11 @@ def create_and_upload_csv(csv_rows, csv_columns, datev_export_log_name, field, f
 					csv_row.append(value)
 			else:
 				csv_row.append("1" if one_col else "")
-		csv_data.append(csv_row)
+		csv_row.append("")
 		writer.writerow(csv_row)
 
 	csv_str.seek(0)
-	content = csv_str.getvalue()
+	content = csv_str.getvalue().rstrip()
 	dt, dn = "DATEV Export Log", datev_export_log_name
 	file = save_file(filename, content, dt, dn, folder="Home/Attachments", is_private=1)
 	frappe.db.set_value(dt, dn, field, file.file_url)
@@ -146,7 +147,6 @@ def create_and_upload_pdf(month, pdf_columns, pdf_rows, datev_export_log_name, f
 	frappe.db.set_value(dt, dn, field, file_doc.file_url)
 
 
-@frappe.whitelist()
 def create_log(month, company=None, sales_invoices=[]):
 	if sales_invoices and not isinstance(sales_invoices, list):
 		sales_invoices = frappe.parse_json(sales_invoices)
@@ -165,6 +165,4 @@ def create_log(month, company=None, sales_invoices=[]):
 	for si in sales_invoices:
 		frappe.db.set_value("Sales Invoice", si, "custom_exported_on", exported_on)
 		
-	frappe.msgprint(_("A DATEV Export Log ")+ get_link_to_form("DATEV Export Log", log_doc.name) + _(" has been created for ")+ _(month) + _(" month containing a *.csv and *.pdf that can be downloaded"))
 	return log_doc
-
