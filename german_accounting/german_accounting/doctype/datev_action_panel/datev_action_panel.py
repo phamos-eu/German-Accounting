@@ -109,7 +109,7 @@ def create_and_upload_csv(csv_rows, csv_columns, datev_export_log_name, field, f
 		writer.writerow(csv_row)
 
 	csv_str.seek(0)
-	content = csv_str.getvalue()
+	content = csv_str.getvalue().rstrip()
 	dt, dn = "DATEV Export Log", datev_export_log_name
 	file = save_file(filename, content, dt, dn, folder="Home/Attachments", is_private=1)
 	frappe.db.set_value(dt, dn, field, file.file_url)
