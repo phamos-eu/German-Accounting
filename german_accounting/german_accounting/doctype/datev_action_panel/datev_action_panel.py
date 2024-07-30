@@ -145,7 +145,6 @@ def create_and_upload_pdf(month, pdf_columns, pdf_rows, datev_export_log_name, f
 	frappe.db.set_value(dt, dn, field, file_doc.file_url)
 
 
-@frappe.whitelist()
 def create_log(month, company=None, sales_invoices=[]):
 	if sales_invoices and not isinstance(sales_invoices, list):
 		sales_invoices = frappe.parse_json(sales_invoices)
@@ -166,4 +165,3 @@ def create_log(month, company=None, sales_invoices=[]):
 		
 	frappe.msgprint(_("A DATEV Export Log ")+ get_link_to_form("DATEV Export Log", log_doc.name) + _(" has been created for ")+ _(month) + _(" month containing a *.csv and *.pdf that can be downloaded"))
 	return log_doc
-
