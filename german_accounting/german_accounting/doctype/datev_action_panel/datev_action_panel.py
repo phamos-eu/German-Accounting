@@ -88,7 +88,7 @@ def create_and_upload_csv(csv_rows, csv_columns, datev_export_log_name, field, f
 
 	if include_header_in_csv:
 		field_mapping_table = [column.get("custom_header") for column in csv_columns]
-		csv_data.append(field_mapping_table)
+		field_mapping_table.append("")
 		writer.writerow(field_mapping_table)
 
 	for row in csv_rows:
@@ -105,7 +105,7 @@ def create_and_upload_csv(csv_rows, csv_columns, datev_export_log_name, field, f
 					csv_row.append(value)
 			else:
 				csv_row.append("1" if one_col else "")
-		csv_data.append(csv_row)
+		csv_row.append("")
 		writer.writerow(csv_row)
 
 	csv_str.seek(0)
