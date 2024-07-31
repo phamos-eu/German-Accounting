@@ -171,18 +171,14 @@ def check_credit_limit(docname, customer, company, total, doctype, method=None):
 
 
 @frappe.whitelist()
-def get_headline_data(customer, company, doctype):
+def get_headline_data(customer, company=None, doctype=None):
 	from german_accounting.events.update_invoice_amounts import update_amounts
 	
-	amounts = update_amounts(customer)
-	check_bypass = bypass_checked(customer, company, doctype)
-	credit_limit = get_credit_limit(customer, company, doctype)
-	global_currency = frappe.defaults.get_global_default("currency")
-	currency_symbol = frappe.db.get_value("Currency", global_currency, "symbol")
+	headline_data = {}
+	headline_data["amounts"] = update_amounts(customer)
+	headline_data["currency_symbol"] = frappe.db.get_value("Currency", frappe.defaults.get_global_default("currency"), "symbol")
+	if company and doctype:
+		headline_data["check_bypass"] = bypass_checked(customer, company, doctype)
+		headline_data["credit_limit"] = get_credit_limit(customer, company, doctype)
 
-	return {
-		"amounts": amounts,
-		"check_bypass": check_bypass,
-		"credit_limit": credit_limit,
-		"currency_symbol": currency_symbol
-	}
+	return headline_data
