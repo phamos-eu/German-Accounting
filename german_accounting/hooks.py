@@ -138,10 +138,10 @@ before_uninstall = "german_accounting.setup.install.before_uninstall"
 # ---------------
 # Override standard doctype classes
 
-override_doctype_class = {
-	"Sales Order": "german_accounting.overrides.sales_order.custom_sales_order.CustomSalesOrder",
-	"Sales Invoice": "german_accounting.overrides.sales_invoice.custom_sales_invoice.CustomSalesInvoice"
-}
+# override_doctype_class = {
+# 	# "Sales Order": "german_accounting.overrides.sales_order.custom_sales_order.CustomSalesOrder",
+# 	# "Sales Invoice": "german_accounting.overrides.sales_invoice.custom_sales_invoice.CustomSalesInvoice"
+# }
 
 # Document Events
 # ---------------
