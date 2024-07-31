@@ -16,10 +16,11 @@ frappe.ui.form.on('Quotation', {
                 const doctype = frm.doc.doctype
                 const docname = frm.doc.name
 
-                const currency_symbol = await getCurrencySymbol()
-                const credit_limit =  (await getCreditLimit(customer, company, doctype)).toFixed(2);
-                const bypass_checked = await checkBypass(customer, company, doctype);
-                const amounts = await updateAmounts(customer)
+                const data_for_headline_text = await getDataForHeadlineText(customer, company, doctype);
+                const currency_symbol = data_for_headline_text.currency_symbol;
+                const credit_limit =  data_for_headline_text.credit_limit.toFixed(2);
+                const bypass_checked =  data_for_headline_text.bypass_checked;
+                const amounts = data_for_headline_text.amounts;
                 const total = amounts.total.toFixed(2)
                 const credit_limit_text = getCreditLimitText(credit_limit, currency_symbol)
 
