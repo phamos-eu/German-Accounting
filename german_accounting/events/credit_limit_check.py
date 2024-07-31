@@ -51,7 +51,6 @@ def user_has_german_accounting_order_approval_role():
     })
 
 
-@frappe.whitelist()
 def get_credit_limit(customer, company, doctype=None):
 	credit_limit = None
 
@@ -91,7 +90,7 @@ def get_customer_outstanding(customer, company, total):
 
 	return flt(total)
 
-@frappe.whitelist()
+
 def bypass_checked(customer, company, doctype):
 	field_map = {
 		'Sales Order': 'bypass_credit_limit_check',

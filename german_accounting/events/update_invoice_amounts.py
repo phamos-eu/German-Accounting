@@ -93,7 +93,7 @@ def update_total(open_invoice, non_invoice):
     total = open_invoice + non_invoice
     return total
 
-@frappe.whitelist()
+
 def update_amounts(customer):
     open_invoice=update_open_invoice_amount(customer)
     overdue_invoice = update_overdue_invoice_amount(customer)
