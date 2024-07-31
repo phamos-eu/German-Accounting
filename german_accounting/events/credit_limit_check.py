@@ -138,7 +138,7 @@ def check_credit_limit(docname, customer, company, total, doctype, method=None):
   table = ""
   button_label = "Submit"
 
-  if not user_has_german_accounting_order_approval_role():
+  if not user_has_german_accounting_order_approval_role() and doctype != "Quotation":
     button_label = "Request Approval"
     formatted_user_rows = ""
     users = get_users_with_role("German Accounting Order Approval")
