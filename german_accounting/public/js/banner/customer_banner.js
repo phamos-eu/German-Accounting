@@ -9,8 +9,9 @@ frappe.ui.form.on('Customer', {
         
             if (frm.doc.customer_name) {
                 const customer = frm.doc.customer_name
-                const currency_symbol = await getCurrencySymbol()
-                const amounts = await updateAmounts(customer)                
+                const data_for_headline_text = await getDataForHeadlineText(customer);
+                const currency_symbol = data_for_headline_text.currency_symbol;
+                const amounts = data_for_headline_text.amounts;
                 const headline_text = getHeadlineText(customer ,amounts,'','', currency_symbol)
 
                 frm.dashboard.clear_headline();

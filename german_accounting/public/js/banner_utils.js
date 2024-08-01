@@ -1,10 +1,12 @@
-async function updateAmounts(customer) {
+async function getDataForHeadlineText(customer, company, doctype) {
     return new Promise((resolve, reject) => {
 
         frappe.call({
-            method: "german_accounting.events.update_invoice_amounts.update_amounts",
+            method: "german_accounting.events.credit_limit_check.get_headline_data",
             args: {
-                customer
+                customer,
+                company,
+                doctype
             },
             callback: function (r) {
                 if (r.message !== null && r.message !== undefined) {
@@ -16,29 +18,7 @@ async function updateAmounts(customer) {
         });
 
     });
-} 
-
-
-async function getCreditLimit(customer, company, doctype) {
-    return new Promise((resolve, reject) => {
-        frappe.call({
-            method: 'german_accounting.events.credit_limit_check.get_credit_limit',
-            args: {
-                customer,
-                company,
-                doctype
-            },
-            callback: function(r) {
-                if (r.message !== null && r.message !== undefined) {
-                    resolve(r.message);
-                } else {
-                    resolve(0);
-                }
-            }
-        });
-    });
 }
-
 
 function getCreditLimitText(credit_limit, currency_symbol){
     return credit_limit !== '0.00' ?
@@ -67,37 +47,6 @@ function getHeadlineText(customer, amounts, credit_limit_text ,text_class, curre
                 </div>
             </div>
            `
-}
-
-
-async function getCurrencySymbol() {
-    
-    const global_currency = frappe.defaults.get_global_default("currency");
-    const currency_symbol = (await frappe.db.get_value("Currency", global_currency, "symbol")).message.symbol; 
-
-    return currency_symbol
-}
-
-
-async function checkBypass(customer, company, doctype) {
-    return new Promise((resolve, reject) => {
-
-        frappe.call({
-            method: 'german_accounting.events.credit_limit_check.bypass_checked',
-            args: {
-                customer,
-                company,
-                doctype
-            },
-            callback: function(r) {
-                if (r.message !== null && r.message !== undefined) {
-                    resolve(r.message);
-                } else {
-                    reject(new Error('Response not found'));
-                }
-            }
-        });
-    })
 }
 
 
