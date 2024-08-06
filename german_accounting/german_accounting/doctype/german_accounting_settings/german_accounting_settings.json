@@ -12,7 +12,9 @@
   "service_item_group",
   "good_or_service_selection",
   "datev_export_section",
-  "include_header_in_csv"
+  "include_header_in_csv",
+  "credit_controller_section",
+  "credit_controller_role"
  ],
  "fields": [
   {
@@ -61,12 +63,23 @@
    "fieldtype": "Select",
    "label": "Transaction Validation Message",
    "options": "Error Only\nError or Info"
+  },
+  {
+   "fieldname": "credit_controller_section",
+   "fieldtype": "Section Break",
+   "label": "Credit Controller"
+  },
+  {
+   "fieldname": "credit_controller_role",
+   "fieldtype": "Link",
+   "label": "Credit Controller Role",
+   "options": "Role"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-03-30 18:08:07.859246",
+ "modified": "2024-08-06 13:58:10.615318",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "German Accounting Settings",
@@ -84,5 +97,6 @@
   }
  ],
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "states": []
 }
