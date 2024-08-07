@@ -31,7 +31,8 @@ def get_custom_fields():
 		{
 			"label": "Item Group",
 			"fieldname": "item_group",
-			"fieldtype": "Data",
+			"fieldtype": "Link",
+			"options": "Item Group",
 			"read_only": 1,
 			"translatable": 0,
 			"insert_after": "german_accounting",
@@ -67,7 +68,8 @@ def get_custom_fields():
 		{
 			"label": "Item Group",
 			"fieldname": "item_group",
-			"fieldtype": "Data",
+			"fieldtype": "Link",
+			"options": "Item Group",
 			"read_only": 1,
 			"translatable": 0,
 			"insert_after": "german_accounting",
@@ -104,7 +106,8 @@ def get_custom_fields():
 		{
 			"label": "Item Group",
 			"fieldname": "item_group",
-			"fieldtype": "Data",
+			"fieldtype": "Link",
+			"options": "Item Group",			
 			"read_only": 1,
 			"translatable": 0,
 			"insert_after": "german_accounting",
