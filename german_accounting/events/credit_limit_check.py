@@ -41,6 +41,12 @@ def send_emails(users, docname, doctype=None):
 		return {"status": "error", "message": str(e)}
 
 def user_has_german_accounting_order_approval_role(role):
+	if not role:
+		frappe.throw(
+			_("Please set the credit controller role on {0}")
+			.format(frappe.utils.get_link_to_form("German Accounting Settings", "German Accounting Settings"))
+		)
+		
 	user = frappe.session.user
 		
 	return frappe.db.exists("Has Role", {
@@ -137,7 +143,7 @@ def check_credit_limit(docname, customer, company, total, doctype, method=None):
   button_label = "Submit"
   role = frappe.db.get_single_value("German Accounting Settings", "credit_controller_role")
    
-  if not user_has_german_accounting_order_approval_role(role) and doctype != "Quotation":
+  if doctype != "Quotation" and not user_has_german_accounting_order_approval_role(role):
     button_label = "Request Approval"
     formatted_user_rows = ""
     users = get_users_with_role(role)
