@@ -33,12 +33,6 @@ frappe.ui.form.on('DATEV Action Panel', {
 					][frappe.datetime.str_to_obj(frappe.datetime.get_today()).getMonth()],
 					"reqd": 1
 				},
-				{
-					"fieldname": "company",
-					"label": __("Company"),
-					"fieldtype": "Link",
-					"options": "Company"
-				}
 			],
 			primary_action: async function () {
 				let data = d.get_values();
@@ -47,7 +41,7 @@ frappe.ui.form.on('DATEV Action Panel', {
 					args: {
 						"month": data.month,
 						"year": data.year,
-						"company": data.company,
+						"company": frappe.defaults.get_default("company"),
 					},
 					callback: function (r) {
 
