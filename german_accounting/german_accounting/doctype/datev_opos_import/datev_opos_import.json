@@ -69,12 +69,13 @@
    "fieldname": "company",
    "fieldtype": "Link",
    "label": "Company",
-   "options": "Company"
+   "options": "Company",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-07 09:53:23.081553",
+ "modified": "2024-08-07 14:16:03.246191",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "DATEV OPOS Import",
