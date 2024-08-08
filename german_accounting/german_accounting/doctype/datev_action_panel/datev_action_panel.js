@@ -2,8 +2,40 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('DATEV Action Panel', {
-	// Copyright (c) 2024, phamos.eu and contributors
-	// For license information, please see license.txt
+	refresh: function(frm){
+		const company = frappe.defaults.get_default("company")
+		frappe.call({
+            method: "german_accounting.german_accounting.doctype.datev_action_panel.datev_action_panel.get_company_details",
+            args: {
+                company_name: company
+            },
+            callback: function(r) {
+				const company_details = r.message;
+				$('.title-area .title-text').text('DATEV Action Panel for ' + company_details.company_name);
+				if (company_details.country === 'Germany') {
+					frm.set_df_property('non_german_company_html', 'hidden', true);
+
+				} else {
+					frm.set_df_property('datev_exports_section', 'hidden', true);
+					frm.set_df_property('show_report_html', 'hidden', true);
+					frm.set_df_property('column_break_p4usw', 'hidden', true);
+					frm.set_df_property('show_report', 'hidden', true);
+					frm.set_df_property('section_break_dteax', 'hidden', true);
+					frm.set_df_property('create_datev_html', 'hidden', true);
+					frm.set_df_property('column_break_ltkjn', 'hidden', true);
+					frm.set_df_property('create_datev_export_logs', 'hidden', true);
+					frm.set_df_property('section_break_61fja', 'hidden', true);
+					frm.set_df_property('show_export_logs_html', 'hidden', true);
+					frm.set_df_property('column_break_6sdmb', 'hidden', true);
+					frm.set_df_property('show_export_logs', 'hidden', true);
+					frm.set_df_property('datev_imports_section', 'hidden', true);
+					frm.set_df_property('datev_import_html', 'hidden', true);
+					frm.set_df_property('column_break_hlyij', 'hidden', true);
+					frm.set_df_property('datev_opos_import', 'hidden', true);					
+				}
+			}
+		})
+	},
 	onload: function (frm) {
 		$('.page-actions').hide();
 	},

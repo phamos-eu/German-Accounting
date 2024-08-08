@@ -21,7 +21,9 @@
   "datev_imports_section",
   "datev_import_html",
   "column_break_hlyij",
-  "datev_opos_import"
+  "datev_opos_import",
+  "non_german_company_section",
+  "non_german_company_html"
  ],
  "fields": [
   {
@@ -98,13 +100,23 @@
   {
    "fieldname": "section_break_dteax",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "non_german_company_section",
+   "fieldtype": "Section Break",
+   "label": "Non-German Company"
+  },
+  {
+   "fieldname": "non_german_company_html",
+   "fieldtype": "HTML",
+   "options": "Your company is not located in Germany."
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-07-18 09:44:38.829473",
+ "modified": "2024-08-08 12:17:21.529724",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "DATEV Action Panel",
