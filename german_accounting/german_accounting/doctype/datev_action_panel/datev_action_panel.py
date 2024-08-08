@@ -166,3 +166,11 @@ def create_log(month, company=None, sales_invoices=[]):
 		frappe.db.set_value("Sales Invoice", si, "custom_exported_on", exported_on)
 		
 	return log_doc
+
+@frappe.whitelist()
+def get_company_details(company_name):
+    company = frappe.get_doc("Company", company_name)
+    return {
+        "company_name": company.name,
+        "country": company.country
+    }
