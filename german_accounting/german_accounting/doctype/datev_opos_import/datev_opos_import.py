@@ -95,12 +95,14 @@ class DATEVOPOSImport(Document):
 		invoices = frappe.get_all("Sales Invoice", filters={
 			"status": ["not in", ["Paid", "Cancelled", "Draft", "Credit Note Issued"]],
 			"outstanding_amount": ["!=", 0],
-			"name": ["not in", csv_invoice_numbers]
+			"name": ["not in", csv_invoice_numbers],
+			"company": self.company
 			}, fields=["name"])
         
 		for index,invoice in enumerate(invoices):
 			try:
 				payment_entry = frappe.call("erpnext.accounts.doctype.payment_entry.payment_entry.get_payment_entry", 'Sales Invoice', invoice.name)
+				payment_entry.company = self.company
 				payment_entry.reference_date = today()
 				payment_entry.reference_no = 'DATEV OPOS import '+ today()
 
@@ -115,7 +117,8 @@ class DATEVOPOSImport(Document):
 		# Get all sales invoice which are paid or partly paid and ID of the current import list
 		paid_invoices = frappe.get_all("Sales Invoice", filters={
 			"status": ["in", ["Paid", "Partly Paid"]],
-			"name": ["in", csv_invoice_numbers]
+			"name": ["in", csv_invoice_numbers],
+			"company": self.company
 			}, fields=["name"])
 		
 		for index,invoice in enumerate(paid_invoices):
