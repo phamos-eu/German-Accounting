@@ -11,10 +11,10 @@ frappe.ui.form.on('Quotation', {
     },
     before_submit: async (frm) => {
         const { party_name: customer, company, doctype, name: docname } = frm.doc;
-        const { amounts, credit_limit, check_bypass } = await getDataForHeadlineText(customer, company, doctype);
+        const { amounts, credit_limit } = await getDataForHeadlineText(customer, company, doctype);
         const total = parseFloat(amounts.total).toFixed(2);
 
-        if (parseFloat(total) > parseFloat(credit_limit) && parseFloat(credit_limit) > 0 && !check_bypass) {
+        if (parseFloat(total) > parseFloat(credit_limit) && parseFloat(credit_limit) > 0) {
             frappe.validated = false;
             checkCreditLimit(frm, customer, company, doctype, docname, total);
         }

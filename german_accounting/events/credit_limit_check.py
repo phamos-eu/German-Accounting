@@ -66,24 +66,17 @@ def get_credit_limit(customer, company, doctype=None):
 			"credit_limit",
 		)
 		
-		if not credit_limit:
+		if not credit_limit and doctype == 'Sales Order':
 			customer_group = frappe.get_cached_value("Customer", customer, "customer_group")
 
-			field_map = {
-				'Sales Order': 'bypass_credit_limit_check',
-				'Quotation': 'bypass_credit_limit_check_quotation'
-			}
-			
-			if doctype in field_map:
-				bypass_field = field_map[doctype]
-				result = frappe.db.get_values(
-					"Customer Credit Limit",
-					{"parent": customer_group, "parenttype": "Customer Group", "company": company},
-					fieldname=["credit_limit", bypass_field],
-					as_dict=True,
-				)
-				if result and not result[0].get(bypass_field):
-					credit_limit = result[0].credit_limit
+			result = frappe.db.get_values(
+				"Customer Credit Limit",
+				{"parent": customer_group, "parenttype": "Customer Group", "company": company},
+				fieldname=["credit_limit", "bypass_credit_limit_check"],
+				as_dict=True,
+			)
+			if result and not result[0].bypass_credit_limit_check:
+				credit_limit = result[0].credit_limit
 
 	if not credit_limit:
 		credit_limit = frappe.get_cached_value("Company", company, "credit_limit")
@@ -91,30 +84,22 @@ def get_credit_limit(customer, company, doctype=None):
 	return flt(credit_limit) 
 
 
-def get_customer_outstanding(customer, company, total):
-
-	return flt(total)
-
-
 def bypass_checked(customer, company, doctype):
-	field_map = {
-		'Sales Order': 'bypass_credit_limit_check',
-		'Quotation': 'bypass_credit_limit_check_quotation'
-	}
-	if doctype in field_map:
-		bypass_field = field_map[doctype]
 
+	if doctype == 'Sales Order':
 		return cint(
 			frappe.db.get_value(
 					"Customer Credit Limit",
 					{"parent": customer, "parenttype": "Customer", "company": company},
-					bypass_field,
+					"bypass_credit_limit_check",
 			)
 		)
 
+	return 0		
+
 
 def check_credit_limit_for_customer(docname, customer, company, total, doctype):
-	# if bypass credit limit check is set to true (1) at sales_order or quotation level,
+	# if bypass credit limit check is set to true (1) at sales_order,
 	# then we need not to check credit limit and vise versa
 	if not bypass_checked(customer, company, doctype):
 
@@ -122,7 +107,7 @@ def check_credit_limit_for_customer(docname, customer, company, total, doctype):
 		if not credit_limit:
 			return
 
-		customer_outstanding =  get_customer_outstanding(customer, company, total)
+		customer_outstanding = total
 			
 		if credit_limit > 0 and flt(customer_outstanding) > credit_limit:
 				
