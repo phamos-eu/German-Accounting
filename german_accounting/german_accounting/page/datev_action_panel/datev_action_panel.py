@@ -1,20 +1,12 @@
-# Copyright (c) 2024, phamos.eu and contributors
-# For license information, please see license.txt
-
-from frappe.model.document import Document
-from german_accounting.german_accounting.report.datev_sales_invoice_export.datev_sales_invoice_export import get_data, get_columns
-from frappe.utils import get_link_to_form, now_datetime
-from frappe.utils.jinja_globals import bundled_asset
-from frappe.utils.file_manager import save_file
-from frappe.utils.pdf import get_pdf
-from datetime import date
-from frappe import _
-import frappe
-import csv
 import io
-
-class DATEVActionPanel(Document):
-	pass
+import csv
+import frappe
+from frappe import _
+from datetime import date
+from frappe.utils.pdf import get_pdf
+from frappe.utils.jinja_globals import bundled_asset
+from frappe.utils import get_link_to_form, now_datetime
+from german_accounting.german_accounting.report.datev_sales_invoice_export.datev_sales_invoice_export import get_data, get_columns
 
 
 @frappe.whitelist()
@@ -112,7 +104,7 @@ def create_and_upload_csv(csv_rows, csv_columns, datev_export_log_name, field, f
 	csv_str.seek(0)
 	content = csv_str.getvalue().rstrip()
 	dt, dn = "DATEV Export Log", datev_export_log_name
-	file = save_file(filename, content, dt, dn, folder="Home/Attachments", is_private=1)
+	file = save_file(filename, content, dt, dn)
 	frappe.db.set_value(dt, dn, field, file.file_url)
 
 
@@ -143,7 +135,7 @@ def create_and_upload_pdf(month, pdf_columns, pdf_rows, datev_export_log_name, f
 	pdf_content = get_pdf(html, {"orientation": "Landscape"})
 	filename = f"{datev_export_log_name}-sales-invoice.pdf"
 	dt, dn = "DATEV Export Log", datev_export_log_name
-	file_doc = save_file(filename, pdf_content, dt, dn, is_private=True)
+	file_doc = save_file(filename, pdf_content, dt, dn)
 	frappe.db.set_value(dt, dn, field, file_doc.file_url)
 
 
@@ -167,6 +159,7 @@ def create_log(month, company=None, sales_invoices=[]):
 		
 	return log_doc
 
+
 @frappe.whitelist()
 def get_company_details(company_name):
     company = frappe.get_doc("Company", company_name)
@@ -174,3 +167,16 @@ def get_company_details(company_name):
         "company_name": company.name,
         "country": company.country
     }
+
+
+def save_file(file_name, content, attached_to_doctype, attached_to_name):
+	file_doc = frappe.new_doc("File")
+	file_doc.file_name = file_name
+	file_doc.attached_to_doctype = attached_to_doctype, 
+	file_doc.attached_to_name = attached_to_name
+	file_doc.content = content
+	file_doc.folder="Home/Attachments", 
+	file_doc.is_private = 1
+	file_doc.insert(ignore_permissions=True)
+
+	return file_doc
