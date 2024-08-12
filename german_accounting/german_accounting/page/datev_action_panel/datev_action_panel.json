@@ -1,0 +1,22 @@
+{
+ "content": null,
+ "creation": "2024-08-12 10:11:25.351784",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2024-08-12 10:11:25.351784",
+ "modified_by": "Administrator",
+ "module": "German Accounting",
+ "name": "datev-action-panel",
+ "owner": "Administrator",
+ "page_name": "datev-action-panel",
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0
+}
