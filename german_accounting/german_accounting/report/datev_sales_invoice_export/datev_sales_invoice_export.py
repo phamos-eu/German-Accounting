@@ -202,7 +202,7 @@ def get_conditions(filters):
 def get_columns(filters):
 	sales_inv_csv_columns = [
 		{
-			"label": _("grand_total"),
+			"label": _("Grand Total"),
 			"fieldtype": "Data",
 			"fieldname": "grand_total",
 			"custom_header": "amount",
@@ -216,14 +216,14 @@ def get_columns(filters):
 			"width": 20
 		},
 		{
-			"label": _("debitor_no_datev"),
+			"label": _("Debitor No. Datev"),
 			"fieldtype": "Data",
 			"fieldname": "debitor_no_datev",
 			"custom_header": "customer",
 			"width": 90
 		},
 		{
-			"label": _("invoice_no"),
+			"label": _("Invoice No."),
 			"fieldtype": "Link",
 			"fieldname": "invoice_no",
 			"options": "Sales Invoice",
@@ -239,21 +239,21 @@ def get_columns(filters):
 			"width": 20
 		},
 		{
-			"label": _("posting_date"),
+			"label": _("Posting Date"),
 			"fieldtype": "Data",
 			"fieldname": "posting_date",
 			"custom_header": "invoice date",
 			"width": 100
 		},
 		{
-			"label": _("income_account"),
+			"label": _("Income Account"),
 			"fieldtype": "Data",
 			"fieldname": "income_account",
 			"custom_header": "G/L account",
 			"width": 160
 		},
 		{
-			"label": _("cost_center"),
+			"label": _("Cost Center"),
 			"fieldtype": "Data",
 			"fieldname": "cost_center",
 			"custom_header": "cost centre",
@@ -288,21 +288,21 @@ def get_columns(filters):
 			"width": 20
 		},
 		{
-			"label": _("tax_id"),
+			"label": _("Tax Id"),
 			"fieldtype": "Data",
 			"fieldname": "tax_id",
 			"custom_header": "Vat-Id",
 			"width": 110
 		},
 		{
-			"label": _("item_tax_rate"),
+			"label": _("Item Tax Rate"),
 			"fieldtype": "Data",
 			"fieldname": "item_tax_rate",
 			"custom_header": "Tax rate",
 			"width": 120
 		},
 		{
-			"label": _("currency"),
+			"label": _("Currency"),
 			"fieldtype": "Data",
 			"fieldname": "currency",
 			"custom_header": "currency",
