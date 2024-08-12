@@ -45,11 +45,10 @@ def validate_tax_category_fields(doc, method=None):
     else:
         doc.item_group = german_accounting_settings.service_item_group
 
-    setting_tax_defaults(doc)
+    setting_tax_defaults(doc, german_accounting_settings.transaction_validation_message)
 
 
-def setting_tax_defaults(doc):
-    transaction_validation_type = frappe.db.get_single_value("German Accounting Settings", "transaction_validation_message")
+def setting_tax_defaults(doc, transaction_validation_type):
     if doc.doctype == 'Quotation' and doc.quotation_to == 'Customer' and doc.party_name:
         doc.tax_id = frappe.get_cached_value("Customer", doc.party_name, "tax_id")
     message = None
