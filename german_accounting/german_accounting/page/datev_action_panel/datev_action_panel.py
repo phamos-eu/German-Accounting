@@ -11,8 +11,7 @@ from german_accounting.german_accounting.report.datev_sales_invoice_export.datev
 
 @frappe.whitelist()
 def create_datev_export_logs(month, year, company=None):
-
-	include_header_in_csv= frappe.db.get_single_value("German Accounting Settings", "include_header_in_csv")
+	include_header_in_csv = frappe.get_cached_doc('German Accounting Settings').include_header_in_csv
 
 	datev_export_filters = frappe._dict({
 		"month": month,
@@ -161,11 +160,9 @@ def create_log(month, company=None, sales_invoices=[]):
 
 
 @frappe.whitelist()
-def get_company_details(company_name):
-    company = frappe.get_doc("Company", company_name)
+def get_company_country(company_name):
     return {
-        "company_name": company.name,
-        "country": company.country
+		"country": frappe.get_cached_value("Company", company_name, "country")
     }
 
 
