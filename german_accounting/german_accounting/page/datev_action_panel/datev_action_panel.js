@@ -45,10 +45,7 @@ function setup_action_panel(wrapper) {
 						"month": data.month,
 						"year": data.year,
 						"company": frappe.defaults.get_default("company"),
-					},
-					callback: function (r) {
-
-					},
+					}
 				});
 				d.hide();
 			},
