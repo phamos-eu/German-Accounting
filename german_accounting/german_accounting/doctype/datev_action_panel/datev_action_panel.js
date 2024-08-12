@@ -14,7 +14,6 @@ frappe.ui.form.on('DATEV Action Panel', {
 				$('.title-area .title-text').text('DATEV Action Panel for ' + company_details.company_name);
 				if (company_details.country === 'Germany') {
 					frm.set_df_property('non_german_company_html', 'hidden', true);
-
 				} else {
 					frm.set_df_property('datev_exports_section', 'hidden', true);
 					frm.set_df_property('show_report_html', 'hidden', true);
@@ -46,7 +45,7 @@ frappe.ui.form.on('DATEV Action Panel', {
 
 	export_datev_logs: function(frm){
 		let d = new frappe.ui.Dialog({
-			title: __("Select Year, Month and Company"),
+			title: __("Select Year and Month"),
 			fields: [
 				{
 					"fieldname": "year",
