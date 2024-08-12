@@ -1,10 +1,10 @@
 <div class="form-page" style="border-radius: var(--border-radius-md); box-shadow: var(--card-shadow); background-color: var(--card-bg);">
     <div class="row form-section card-section show-report-section">
-        <div class="section-head">DATEV EXPORTS</div>
+        <div class="section-head">{{__("DATEV EXPORTS")}}</div>
         <div class="section-body">
             <div class="form-column col-sm-6">
                 <form>
-                    <div class="frappe-control" data-fieldtype="HTML" data-fieldname="show_report_html" title="show_report_html">This button takes us to a view in which we can see the data as it is or will be shown in the exports. These views are not reliable and are used to check the master data. The data actually exported can be found in the DATEV export logs.</div>
+                    <div class="frappe-control" data-fieldtype="HTML" data-fieldname="show_report_html" title="show_report_html">{{__("This button takes us to a view in which we can see the data as it is or will be shown in the exports. These views are not reliable and are used to check the master data. The data actually exported can be found in the DATEV export logs.")}}</div>
                 </form>
             </div>
             <div class="form-column col-sm-6">
@@ -16,7 +16,7 @@
                             </div>
                             <div class="control-input-wrapper">
                                 <div class="control-input">
-                                    <button id="show-report" class="btn btn-xs btn-default" data-fieldtype="Button" data-fieldname="show_report" placeholder="" data-doctype="DATEV Action Panell" value="">Show Report</button>
+                                    <button id="show-report" class="btn btn-xs btn-default" data-fieldtype="Button" data-fieldname="show_report" placeholder="" data-doctype="DATEV Action Panell" value="">{{__("Show Report")}}</button>
                                 </div>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
         <div class="section-body">
             <div class="form-column col-sm-6">
                 <form>
-                    <div class="frappe-control" data-fieldtype="HTML" data-fieldname="create_datev_html" title="create_datev_html">Using the Create DATEV Export Logs button, we create an export of all outgoing invoices (including cancellations and credits) for import into DATEV. All documents that have been posted, have not been exported before and for which the master data has been created correctly are taken into account. The export refers to one calendar month but can be triggered multiple times.</div>
+                    <div class="frappe-control" data-fieldtype="HTML" data-fieldname="create_datev_html" title="create_datev_html">{{__("Using the Create DATEV Export Logs button, we create an export of all outgoing invoices (including cancellations and credits) for import into DATEV. All documents that have been posted, have not been exported before and for which the master data has been created correctly are taken into account. The export refers to one calendar month but can be triggered multiple times.")}}</div>
                 </form>
             </div>
             <div class="form-column col-sm-6">
@@ -41,7 +41,7 @@
                             </div>
                             <div class="control-input-wrapper">
                                 <div class="control-input">
-                                    <button id="create-datev-export-logs" class="btn btn-xs btn-default" data-fieldtype="Button" data-fieldname="create_datev_export_logs" placeholder="" data-doctype="DATEV Action Panell" value="">Create DATEV Export Logs</button>
+                                    <button id="create-datev-export-logs" class="btn btn-xs btn-default" data-fieldtype="Button" data-fieldname="create_datev_export_logs" placeholder="" data-doctype="DATEV Action Panell" value="">{{__("Create DATEV Export Logs")}}</button>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +54,7 @@
         <div class="section-body">
             <div class="form-column col-sm-6">
                 <form>
-                    <div class="frappe-control" data-fieldtype="HTML" data-fieldname="show_export_logs_html" title="show_export_logs_html">This button takes us to the list view of the exports that have already been carried out (DATEV Export Log). There we can view and download the *.csv file of the documents, an overview as a *.pdf and the *.csv of the customer master data.</div>
+                    <div class="frappe-control" data-fieldtype="HTML" data-fieldname="show_export_logs_html" title="show_export_logs_html">{{__("This button takes us to the list view of the exports that have already been carried out (DATEV Export Log). There we can view and download the *.csv file of the documents, an overview as a *.pdf and the *.csv of the customer master data.")}}</div>
                 </form>
             </div>
             <div class="form-column col-sm-6">
@@ -66,7 +66,7 @@
                             </div>
                             <div class="control-input-wrapper">
                                 <div class="control-input">
-                                    <button id="show-export-logs" class="btn btn-xs btn-default" data-fieldtype="Button" data-fieldname="show_export_logs" placeholder="" data-doctype="DATEV Action Panell" value="">Show Export Logs</button>
+                                    <button id="show-export-logs" class="btn btn-xs btn-default" data-fieldtype="Button" data-fieldname="show_export_logs" placeholder="" data-doctype="DATEV Action Panell" value="">{{__("Show Export Logs")}}</button>
                                 </div>
                             </div>
                         </div>
@@ -76,12 +76,11 @@
         </div>
     </div>
     <div class="row form-section card-section datev-import-section">
-        <div class="section-head">DATEV IMPORTS</div>
+        <div class="section-head">{{__("DATEV IMPORTS")}}</div>
         <div class="section-body">
             <div class="form-column col-sm-6">
                 <form>
-                    <div class="frappe-control" data-fieldtype="HTML" data-fieldname="datev_import_html" title="datev_import_html">With the DATEV OPOS import we upload a file with which we change the payment status of the outgoing invoices. The entries in the file represent the invoices that have not yet been paid. All outgoing invoice IDs that are not contained in the file are set to paid. Exceptions apply to the status 
-                        "Paid", "Cancelled", "Draft" and "Credit Note Issues".</div>
+                    <div class="frappe-control" data-fieldtype="HTML" data-fieldname="datev_import_html" title="datev_import_html">{{__("With the DATEV OPOS import we upload a file with which we change the payment status of the outgoing invoices. The entries in the file represent the invoices that have not yet been paid. All outgoing invoice IDs that are not contained in the file are set to paid. Exceptions apply to the status Paid, Cancelled, Draft and Credit Note Issues.")}}</div>
                 </form>
             </div>
             <div class="form-column col-sm-6">
@@ -93,7 +92,7 @@
                             </div>
                             <div class="control-input-wrapper">
                                 <div class="control-input">
-                                    <button id="datev-opos-import" class="btn btn-xs btn-default" data-fieldtype="Button" data-fieldname="datev_opos_import" placeholder="" data-doctype="DATEV Action Panell" value="">DATEV OPOS Import</button>
+                                    <button id="datev-opos-import" class="btn btn-xs btn-default" data-fieldtype="Button" data-fieldname="datev_opos_import" placeholder="" data-doctype="DATEV Action Panell" value="">{{__("DATEV OPOS Import")}}</button>
                                 </div>
                             </div>
                         </div>
@@ -103,11 +102,11 @@
         </div>
     </div>
     <div class="row form-section card-section non-german-company-section">
-        <div class="section-head">Non-German Company</div>
+        <div class="section-head">{{__("Non-German Company")}}</div>
         <div class="section-body">
             <div class="form-column col-sm-12">
                 <form>
-                    <div class="frappe-control" data-fieldtype="HTML" data-fieldname="non_german_company_html" title="non_german_company_html">Your company is not located in Germany.</div>
+                    <div class="frappe-control" data-fieldtype="HTML" data-fieldname="non_german_company_html" title="non_german_company_html">{{__("Your company is not located in Germany.")}}</div>
                 </form>
             </div>
         </div>
