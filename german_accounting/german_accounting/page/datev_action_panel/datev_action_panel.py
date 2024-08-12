@@ -159,11 +159,9 @@ def create_log(month, company=None, sales_invoices=[]):
 
 
 @frappe.whitelist()
-def get_company_details(company_name):
-    company = frappe.get_doc("Company", company_name)
+def get_company_country(company_name):
     return {
-        "company_name": company.name,
-        "country": company.country
+		"country": frappe.get_cached_value("Company", company_name, "country")
     }
 
 
