@@ -29,9 +29,6 @@ fixtures = [
             ["role_name", "in", ["German Accounting Order Approval"]]
         ]
     },
-	{
-        "dt": "Translation",
-    },
 	
 ]
 # include js, css files in header of desk.html

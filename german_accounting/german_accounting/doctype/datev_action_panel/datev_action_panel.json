@@ -34,7 +34,7 @@
   {
    "fieldname": "create_datev_html",
    "fieldtype": "HTML",
-   "options": "Mit dem Button <b>Create DATEV Export Logs</b> erstellen wir einen Export aller Ausgangsrechnungen (inkl. Stornos und Gutschriften) f\u00fcr den Import nach DATEV. Es werden alle Belege ber\u00fccksichtigt die gebucht sind, zuvor nicht exportiert wurden und bei welchen die Stammdaten korrekt angelegt sind. Der Export bezieht sich auf einen Kalendermonat kann aber mehrfach ausgel\u00f6st werden."
+   "options": "Using the Create DATEV Export Logs button, we create an export of all outgoing invoices (including cancellations and credits) for import into DATEV. All documents that have been posted, have not been exported before and for which the master data has been created correctly are taken into account. The export refers to one calendar month but can be triggered multiple times."
   },
   {
    "fieldname": "column_break_ltkjn",
@@ -53,7 +53,7 @@
   {
    "fieldname": "show_export_logs_html",
    "fieldtype": "HTML",
-   "options": "\u00dcber diesen Button gelangen wir in die Listenansicht der bereits get\u00e4tigten Exporte (DATEV Export Log). Dort k\u00f6nnen wir die *.csv Datei der Belege, eine \u00dcbersicht als *.pdf sowie die *.csv der Debitorenstammdaten einsehen und herunterladen."
+   "options": "This button takes us to the list view of the exports that have already been carried out (DATEV Export Log). There we can view and download the *.csv file of the documents, an overview as a *.pdf and the *.csv of the customer master data."
   },
   {
    "fieldname": "column_break_6sdmb",
@@ -67,7 +67,7 @@
   {
    "fieldname": "show_report_html",
    "fieldtype": "HTML",
-   "options": "\u00dcber diesen Button gelangen wir zu einer Ansicht in welcher wir die Daten wie sie in den Exporten abgebildet sind bzw. sein werden eingehen. Diese Ansichsten sind nicht belastbar und dienen zur Kontrolle der Stammdaten. Die tats\u00e4chlich exportierten Daten finden sich in den DATEV Export Logs."
+   "options": "This button takes us to a view in which we can see the data as it is or will be shown in the exports. These views are not reliable and are used to check the master data. The data actually exported can be found in the DATEV export logs."
   },
   {
    "fieldname": "show_report",
@@ -86,7 +86,7 @@
   {
    "fieldname": "datev_import_html",
    "fieldtype": "HTML",
-   "options": "Mit dem DATEV OPOS Import laden wir eine Datei hoch mit welcher wir den Zahlstatus des Ausgangsrechnungen \u00e4ndern. Die in der Datei enthaltenen Eintr\u00e4ge bilden die noch nicht bezahlten Rechnungen ab. Alle Ausgangsrechnungs IDs die also nicht in der Datei enthalten sind werden auf bezahlt gestellt. Ausnahmen gelten f\u00fcr den Status \"Bezahlt (Paid), Abgebrochen (Cancelled), Entwurf (Draft) und Gutschrift ausgel\u00f6st (Credit Note Issues)."
+   "options": "With the DATEV OPOS import we upload a file with which we change the payment status of the outgoing invoices. The entries in the file represent the invoices that have not yet been paid. All outgoing invoice IDs that are not contained in the file are set to paid. Exceptions apply to the status 'Paid', 'Cancelled', 'Draft' and 'Credit Note Issues'."
   },
   {
    "fieldname": "column_break_hlyij",
@@ -116,7 +116,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-08-08 12:17:21.529724",
+ "modified": "2024-08-12 00:44:22.896092",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "DATEV Action Panel",
