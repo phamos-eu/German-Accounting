@@ -167,7 +167,7 @@ def get_headline_data(customer, company=None, doctype=None):
 	
 	headline_data = {}
 	headline_data["amounts"] = update_amounts(customer)
-	headline_data["currency_symbol"] = frappe.db.get_value("Currency", frappe.defaults.get_global_default("currency"), "symbol")
+	headline_data["currency_symbol"] = frappe.get_cached_value("Currency", frappe.defaults.get_global_default("currency"), "symbol")
 	if company and doctype:
 		headline_data["check_bypass"] = bypass_checked(customer, company, doctype)
 		headline_data["credit_limit"] = get_credit_limit(customer, company, doctype)
