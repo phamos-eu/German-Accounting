@@ -30,7 +30,7 @@ def get_data(filters):
 		SELECT
 			si.name as invoice_no, si.posting_date, si.is_return,si.cost_center, 
 			si.tax_id, si.currency, si.grand_total, si.net_total as pdf_net_total, si.company,
-			acc.debtor_creditor_number as debit_to, si.custom_exported_on, co.code, ad.country, si.customer, 
+			acc.debtor_creditor_number as debit_to, si.custom_exported_on, UPPER(co.code) as code, ad.country, si.customer, 
 			sii.income_account, sii.item_tax_rate
 		FROM `tabSales Invoice` si, `tabSales Invoice Item` sii, `tabAddress` ad, `tabCountry` co, `tabParty Account` acc
 		WHERE si.docstatus=1 AND si.name = sii.parent AND si.customer_address=ad.name AND ad.country=co.name AND acc.parent = si.customer %s
@@ -145,7 +145,7 @@ def get_debtors_csv_data(data):
 		SELECT
 			DISTINCT COALESCE(cust.tax_id,"") as tax_id, COALESCE(cust.name,"") as customer, COALESCE(acc.debtor_creditor_number,"") as debitor_no_datev,
 			COALESCE(addrs.address_line1,"") as address_line1, COALESCE(addrs.address_line2,"") as address_line2, COALESCE(addrs.city,"") as city, COALESCE(addrs.pincode,"") as pincode, 
-			COALESCE((select cn.code from tabCountry as cn WHERE cn.name = addrs.country ),"") as country_code
+			COALESCE(UPPER((SELECT cn.code from tabCountry as cn WHERE cn.name = addrs.country)),"") as country_code
 		FROM 
 			`tabCustomer` cust
 		LEFT JOIN
