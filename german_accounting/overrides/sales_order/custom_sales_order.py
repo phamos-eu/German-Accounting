@@ -6,6 +6,10 @@ from erpnext.accounts.doctype.sales_invoice.sales_invoice import (
 )
 
 class CustomSalesOrder(OriginalSalesOrder):
+    def validate(self):
+        frappe.msgprint("Germany Accounting APP")
+        super().validate()
+
     def on_submit(self):
         # Override the method and remove self.check_credit_limit()
         self.update_reserved_qty()
