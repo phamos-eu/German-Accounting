@@ -13,8 +13,8 @@
   "good_or_service_selection",
   "datev_export_section",
   "include_header_in_csv",
-  "credit_controller_section",
-  "credit_controller_role"
+  "credit_limit_controller_section",
+  "credit_limit_controller_role"
  ],
  "fields": [
   {
@@ -65,21 +65,21 @@
    "options": "Error Only\nError or Info"
   },
   {
-   "fieldname": "credit_controller_section",
+   "fieldname": "credit_limit_controller_section",
    "fieldtype": "Section Break",
-   "label": "Credit Controller"
+   "label": "Credit Limit Controller"
   },
   {
-   "fieldname": "credit_controller_role",
+   "fieldname": "credit_limit_controller_role",
    "fieldtype": "Link",
-   "label": "Credit Controller Role",
+   "label": "Credit Limit Controller Role",
    "options": "Role"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-08-06 13:58:10.615318",
+ "modified": "2024-08-19 14:20:33.356879",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "German Accounting Settings",
