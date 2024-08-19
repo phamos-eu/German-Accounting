@@ -180,6 +180,7 @@ def get_custom_fields():
 			"options": "Address"
 		}
 	]
+
 	custom_fields_party_account = [
 		{
 			"label": "Debtor/Creditor Number",
@@ -190,6 +191,14 @@ def get_custom_fields():
 		},
 	]
 
+	custom_fields_payment_term = [
+		{
+			"label": "Datev Export Number",
+			"fieldname": "datev_export_number",
+			"fieldtype": "Int",
+			"in_list_view": 1
+		}
+	]
 
 	return {
 		"Quotation": custom_fields_quotation,
@@ -199,4 +208,5 @@ def get_custom_fields():
 		"Country": custom_fields_country,
 		"Customer": custom_fields_customer,
 		"Party Account": custom_fields_party_account,
+		"Payment Term": custom_fields_payment_term
 	}
