@@ -126,7 +126,7 @@ def check_credit_limit(docname, customer, company, total, doctype, method=None):
 
   table = ""
   button_label = "Submit"
-  role = frappe.db.get_single_value("German Accounting Settings", "credit_controller_role")
+  role = frappe.db.get_single_value("German Accounting Settings", "credit_limit_controller_role")
    
   if doctype != "Quotation" and not user_has_german_accounting_order_approval_role(role):
     button_label = "Request Approval"
