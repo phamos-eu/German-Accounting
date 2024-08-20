@@ -191,13 +191,25 @@ def get_custom_fields():
 		},
 	]
 
-	custom_fields_payment_term = [
+	custom_fields_payment_terms_template = [  
 		{
-			"label": "Datev Export Number",
-			"fieldname": "datev_export_number",
-			"fieldtype": "Int",
-			"in_list_view": 1
-		}
+			"label": "German Accounting",
+			"fieldname": "custom_german_accounting_section",
+			"fieldtype": "Section Break",
+			"insert_after": None,
+		},
+		{
+			"label": "DATEV Export Number",
+			"fieldname": "custom_datev_export_number",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"insert_after": "custom_german_accounting_section",
+		},
+		{
+			"fieldtype": "Section Break",
+			"fieldname": "custom_section_break_1ga",
+			"insert_after": "custom_datev_export_number",
+		},
 	]
 
 	return {
@@ -208,5 +220,5 @@ def get_custom_fields():
 		"Country": custom_fields_country,
 		"Customer": custom_fields_customer,
 		"Party Account": custom_fields_party_account,
-		"Payment Term": custom_fields_payment_term
+		"Payment Terms Template": custom_fields_payment_terms_template
 	}
