@@ -4,7 +4,7 @@
  "docstatus": 0,
  "doctype": "Page",
  "idx": 0,
- "modified": "2024-08-12 10:11:25.351784",
+ "modified": "2024-08-20 13:37:31.058453",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "datev-action-panel",
@@ -18,5 +18,6 @@
  "script": null,
  "standard": "Yes",
  "style": null,
- "system_page": 0
+ "system_page": 0,
+ "title": "DATEV Action Panel"
 }
