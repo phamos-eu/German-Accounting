@@ -63,7 +63,6 @@ def get_data(filters):
 			"customer": entry.customer,
 			"dc": h_or_s,
 			"company": entry.company,
-			"datev_export_number": entry.get('datev_export_number') if entry.get('datev_export_number') else "",
 		})
 	
 	merged_data = {}
@@ -111,7 +110,6 @@ def get_data(filters):
 			merged_values['pdf_total'] = entry['pdf_total']
 			merged_values['customer'] = entry['customer']
 			merged_values['company'] = entry['company']
-			merged_values['datev_export_number'] = entry['datev_export_number']
 
 		merged_data[key] = merged_values
 
@@ -134,11 +132,12 @@ def get_data(filters):
 		data.append(row)
 
 	if filters.get("export_type") == "Debtors CSV":
-		data = get_debtors_csv_data(data)
+		customer_datev_export_number_map = {"teletone": 1}
+		data = get_debtors_csv_data(data, customer_datev_export_number_map)
 
 	return data
 
-def get_debtors_csv_data(data):
+def get_debtors_csv_data(data, customer_datev_export_number_map):
 	if not data:
 		return []
 	customers = list(set([d.get("customer") for d in data]))
@@ -168,7 +167,8 @@ def get_debtors_csv_data(data):
 				zeros = '0' * n
 				debitor_no_datev += zeros
 			d['debitor_no_datev'] = debitor_no_datev
-
+		if customer_datev_export_number_map.get(d.get("customer")):
+			d['datev_export_number'] = customer_datev_export_number_map.get(d.get("customer"))
 	return debtors_csv_data
 
 
