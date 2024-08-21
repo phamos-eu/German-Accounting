@@ -149,17 +149,12 @@ def get_debtors_csv_data(data):
 			DISTINCT COALESCE(cust.tax_id,"") as tax_id, COALESCE(cust.name,"") as customer, COALESCE(acc.debtor_creditor_number,"") as debitor_no_datev,
 			COALESCE(addrs.address_line1,"") as address_line1, COALESCE(addrs.address_line2,"") as address_line2, COALESCE(addrs.city,"") as city, COALESCE(addrs.pincode,"") as pincode, 
 			COALESCE(UPPER((SELECT cn.code from tabCountry as cn WHERE cn.name = addrs.country)),"") as country_code,
-			COALESCE(ptt.custom_datev_export_number, '') as datev_export_number
 		FROM 
 			`tabCustomer` cust
 		LEFT JOIN
 			`tabParty Account` acc ON cust.name = acc.parent
 		LEFT JOIN
 			tabAddress addrs on cust.billing_address = addrs.name
-		LEFT JOIN
-        	`tabSales Invoice` si ON si.customer = cust.name
-		LEFT JOIN
-			`tabPayment Terms Template` ptt ON si.payment_terms_template = ptt.name
 		WHERE 
 			cust.name in (%s)
 	"""% ", ".join(["%s"] * len(customers)), tuple(customers), as_dict=1)
