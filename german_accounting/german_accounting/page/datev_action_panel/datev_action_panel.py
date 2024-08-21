@@ -136,8 +136,7 @@ def create_and_upload_pdf(month, pdf_columns, pdf_rows, datev_export_log_name, f
 		"lang": frappe.local.lang
 	})
 
-	# pdf_content = get_pdf(html, {"orientation": "Landscape"})
-	pdf_content = ""
+	pdf_content = get_pdf(html, {"orientation": "Landscape"})
 	filename = f"{datev_export_log_name}-sales-invoice.pdf"
 	dt, dn = "DATEV Export Log", datev_export_log_name
 	file_doc = save_file(filename, pdf_content, dt, dn)
