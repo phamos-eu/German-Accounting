@@ -155,7 +155,7 @@ def get_debtors_csv_data(data):
 		LEFT JOIN
 			tabAddress addrs on cust.billing_address = addrs.name
 		LEFT JOIN
-			`tabPayment Terms Template` ptt on cust.payment_terms_template = ptt.name
+			`tabPayment Terms Template` ptt on cust.payment_terms = ptt.name
 		WHERE 
 			cust.name in (%s)
 	"""% ", ".join(["%s"] * len(customers)), tuple(customers), as_dict=1)
