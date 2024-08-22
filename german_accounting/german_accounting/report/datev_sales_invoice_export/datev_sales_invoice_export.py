@@ -31,8 +31,7 @@ def get_data(filters):
 			si.name as invoice_no, si.posting_date, si.is_return,si.cost_center, 
 			si.tax_id, si.currency, si.grand_total, si.net_total as pdf_net_total, si.company,
 			acc.debtor_creditor_number as debit_to, si.custom_exported_on, UPPER(co.code) as code, ad.country, si.customer, 
-			sii.income_account, sii.item_tax_rate,
-			ptt.custom_datev_export_number as datev_export_number
+			sii.income_account, sii.item_tax_rate
 		FROM `tabSales Invoice` si, `tabSales Invoice Item` sii, `tabAddress` ad, `tabCountry` co, `tabParty Account` acc, `tabPayment Terms Template` ptt
 		WHERE si.docstatus=1 AND si.name = sii.parent AND si.customer_address=ad.name AND ad.country=co.name AND acc.parent = si.customer AND si.payment_terms_template = ptt.name %s
 	"""% conditions,filters, as_dict = 1)
