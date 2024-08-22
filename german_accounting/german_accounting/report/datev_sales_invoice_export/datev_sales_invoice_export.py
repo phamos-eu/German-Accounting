@@ -132,12 +132,11 @@ def get_data(filters):
 		data.append(row)
 
 	if filters.get("export_type") == "Debtors CSV":
-		customer_datev_export_number_map = {"teletone": 1}
-		data = get_debtors_csv_data(data, customer_datev_export_number_map)
+		data = get_debtors_csv_data(data)
 
 	return data
 
-def get_debtors_csv_data(data, customer_datev_export_number_map):
+def get_debtors_csv_data(data):
 	if not data:
 		return []
 	customers = list(set([d.get("customer") for d in data]))
@@ -147,13 +146,16 @@ def get_debtors_csv_data(data, customer_datev_export_number_map):
 		SELECT
 			DISTINCT COALESCE(cust.tax_id,"") as tax_id, COALESCE(cust.name,"") as customer, COALESCE(acc.debtor_creditor_number,"") as debitor_no_datev,
 			COALESCE(addrs.address_line1,"") as address_line1, COALESCE(addrs.address_line2,"") as address_line2, COALESCE(addrs.city,"") as city, COALESCE(addrs.pincode,"") as pincode, 
-			COALESCE(UPPER((SELECT cn.code from tabCountry as cn WHERE cn.name = addrs.country)),"") as country_code
+			COALESCE(UPPER((SELECT cn.code from tabCountry as cn WHERE cn.name = addrs.country)),"") as country_code,
+			COALESCE(ptt.custom_datev_export_number, "") as datev_export_number
 		FROM 
 			`tabCustomer` cust
 		LEFT JOIN
 			`tabParty Account` acc ON cust.name = acc.parent
 		LEFT JOIN
 			tabAddress addrs on cust.billing_address = addrs.name
+		LEFT JOIN
+			`tabPayment Terms Template` ptt on cust.payment_terms_template = ptt.name
 		WHERE 
 			cust.name in (%s)
 	"""% ", ".join(["%s"] * len(customers)), tuple(customers), as_dict=1)
