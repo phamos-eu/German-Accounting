@@ -31,9 +31,10 @@ def get_data(filters):
 			si.name as invoice_no, si.posting_date, si.is_return,si.cost_center, 
 			si.tax_id, si.currency, si.grand_total, si.net_total as pdf_net_total, si.company,
 			acc.debtor_creditor_number as debit_to, si.custom_exported_on, UPPER(co.code) as code, ad.country, si.customer, 
-			sii.income_account, sii.item_tax_rate
-		FROM `tabSales Invoice` si, `tabSales Invoice Item` sii, `tabAddress` ad, `tabCountry` co, `tabParty Account` acc
-		WHERE si.docstatus=1 AND si.name = sii.parent AND si.customer_address=ad.name AND ad.country=co.name AND acc.parent = si.customer %s
+			sii.income_account, sii.item_tax_rate,
+			ptt.custom_datev_export_number as datev_export_number
+		FROM `tabSales Invoice` si, `tabSales Invoice Item` sii, `tabAddress` ad, `tabCountry` co, `tabParty Account` acc, `tabPayment Terms Template` ptt
+		WHERE si.docstatus=1 AND si.name = sii.parent AND si.customer_address=ad.name AND ad.country=co.name AND acc.parent = si.customer AND si.payment_terms_template = ptt.name %s
 	"""% conditions,filters, as_dict = 1)
 	
 	invoices_map = {}
@@ -61,7 +62,7 @@ def get_data(filters):
 			"journal_text": entry.customer if entry.country == 'Germany' else entry.code + ", " + entry.customer,
 			"customer": entry.customer,
 			"dc": h_or_s,
-			"company": entry.company
+			"company": entry.company,
 		})
 	
 	merged_data = {}
@@ -145,13 +146,16 @@ def get_debtors_csv_data(data):
 		SELECT
 			DISTINCT COALESCE(cust.tax_id,"") as tax_id, COALESCE(cust.name,"") as customer, COALESCE(acc.debtor_creditor_number,"") as debitor_no_datev,
 			COALESCE(addrs.address_line1,"") as address_line1, COALESCE(addrs.address_line2,"") as address_line2, COALESCE(addrs.city,"") as city, COALESCE(addrs.pincode,"") as pincode, 
-			COALESCE(UPPER((SELECT cn.code from tabCountry as cn WHERE cn.name = addrs.country)),"") as country_code
+			COALESCE(UPPER((SELECT cn.code from tabCountry as cn WHERE cn.name = addrs.country)),"") as country_code,
+			COALESCE(ptt.custom_datev_export_number, "") as datev_export_number
 		FROM 
 			`tabCustomer` cust
 		LEFT JOIN
 			`tabParty Account` acc ON cust.name = acc.parent
 		LEFT JOIN
 			tabAddress addrs on cust.billing_address = addrs.name
+		LEFT JOIN
+			`tabPayment Terms Template` ptt on cust.payment_terms_template = ptt.name
 		WHERE 
 			cust.name in (%s)
 	"""% ", ".join(["%s"] * len(customers)), tuple(customers), as_dict=1)
@@ -165,7 +169,8 @@ def get_debtors_csv_data(data):
 				zeros = '0' * n
 				debitor_no_datev += zeros
 			d['debitor_no_datev'] = debitor_no_datev
-
+		if customer_datev_export_number_map.get(d.get("customer")):
+			d['datev_export_number'] = customer_datev_export_number_map.get(d.get("customer"))
 	return debtors_csv_data
 
 
@@ -525,8 +530,14 @@ def get_columns(filters):
 			"fieldname": "company",
 			"custom_header": "company",
 			"width": 100
+		},
+		{
+			"label": _("DATEV Export Number"),
+			"fieldtype": "Data",
+			"fieldname": "datev_export_number",
+			"custom_header": "datev_export_number",
+			"width": 100
 		}
-		
 	]
 
 	if filters.get("export_type") == "Sales Invoice CSV":
