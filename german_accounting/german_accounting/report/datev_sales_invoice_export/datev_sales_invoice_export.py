@@ -169,8 +169,7 @@ def get_debtors_csv_data(data):
 				zeros = '0' * n
 				debitor_no_datev += zeros
 			d['debitor_no_datev'] = debitor_no_datev
-		if customer_datev_export_number_map.get(d.get("customer")):
-			d['datev_export_number'] = customer_datev_export_number_map.get(d.get("customer"))
+
 	return debtors_csv_data
 
 
