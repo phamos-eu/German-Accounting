@@ -71,7 +71,12 @@ def create_datev_export_logs(month, year, company=None):
 	columns_for_debtors_csv = get_columns({"export_type": "Debtors CSV"})
 	create_and_upload_csv(debtors_csv_rows, columns_for_debtors_csv, datev_export_log_name, field, filename)
 
-	frappe.msgprint(_("A DATEV Export Log ")+ get_link_to_form("DATEV Export Log", datev_export_log_name) + _(" has been created for ")+ _(month) + _(" month containing a *.csv and *.pdf that can be downloaded"))
+	frappe.msgprint(
+		_("A DATEV Export Log {0} has been created for {1} month containing a *.csv and *.pdf that can be downloaded").format(
+			get_link_to_form("DATEV Export Log", datev_export_log_name),
+			month,
+		),
+	)
 
 
 def create_and_upload_csv(csv_rows, csv_columns, datev_export_log_name, field, filename, include_header_in_csv=True):
