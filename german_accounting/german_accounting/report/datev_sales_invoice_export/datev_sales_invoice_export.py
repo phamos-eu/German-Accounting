@@ -31,10 +31,9 @@ def get_data(filters):
 			si.name as invoice_no, si.posting_date, si.is_return,si.cost_center, 
 			si.tax_id, si.currency, si.grand_total, si.net_total as pdf_net_total, si.company,
 			acc.debtor_creditor_number as debit_to, si.custom_exported_on, UPPER(co.code) as code, ad.country, si.customer, 
-			sii.income_account, sii.item_tax_rate,
-			ptt.custom_datev_export_number as datev_export_number
-		FROM `tabSales Invoice` si, `tabSales Invoice Item` sii, `tabAddress` ad, `tabCountry` co, `tabParty Account` acc, `tabPayment Terms Template` ptt
-		WHERE si.docstatus=1 AND si.name = sii.parent AND si.customer_address=ad.name AND ad.country=co.name AND acc.parent = si.customer AND si.payment_terms_template = ptt.name %s
+			sii.income_account, sii.item_tax_rate
+		FROM `tabSales Invoice` si, `tabSales Invoice Item` sii, `tabAddress` ad, `tabCountry` co, `tabParty Account` acc
+		WHERE si.docstatus=1 AND si.name = sii.parent AND si.customer_address=ad.name AND ad.country=co.name AND acc.parent = si.customer %s
 	"""% conditions,filters, as_dict = 1)
 	
 	invoices_map = {}
@@ -63,7 +62,6 @@ def get_data(filters):
 			"customer": entry.customer,
 			"dc": h_or_s,
 			"company": entry.company,
-			"datev_export_number": entry.get('datev_export_number') if entry.get('datev_export_number') else "",
 		})
 	
 	merged_data = {}
@@ -111,7 +109,6 @@ def get_data(filters):
 			merged_values['pdf_total'] = entry['pdf_total']
 			merged_values['customer'] = entry['customer']
 			merged_values['company'] = entry['company']
-			merged_values['datev_export_number'] = entry['datev_export_number']
 
 		merged_data[key] = merged_values
 
@@ -148,13 +145,16 @@ def get_debtors_csv_data(data):
 		SELECT
 			DISTINCT COALESCE(cust.tax_id,"") as tax_id, COALESCE(cust.name,"") as customer, COALESCE(acc.debtor_creditor_number,"") as debitor_no_datev,
 			COALESCE(addrs.address_line1,"") as address_line1, COALESCE(addrs.address_line2,"") as address_line2, COALESCE(addrs.city,"") as city, COALESCE(addrs.pincode,"") as pincode, 
-			COALESCE(UPPER((SELECT cn.code from tabCountry as cn WHERE cn.name = addrs.country)),"") as country_code
+			COALESCE(UPPER((SELECT cn.code from tabCountry as cn WHERE cn.name = addrs.country)),"") as country_code,
+			COALESCE(ptt.custom_datev_export_number, "") as datev_export_number
 		FROM 
 			`tabCustomer` cust
 		LEFT JOIN
 			`tabParty Account` acc ON cust.name = acc.parent
 		LEFT JOIN
 			tabAddress addrs on cust.billing_address = addrs.name
+		LEFT JOIN
+			`tabPayment Terms Template` ptt on cust.payment_terms = ptt.name
 		WHERE 
 			cust.name in (%s)
 	"""% ", ".join(["%s"] * len(customers)), tuple(customers), as_dict=1)
