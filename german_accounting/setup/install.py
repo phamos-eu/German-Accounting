@@ -30,7 +30,7 @@ def get_custom_fields():
 		},
 		{
 			"label": "Item Group",
-			"fieldname": "item_group",
+			"fieldname": "tax_item_group",
 			"fieldtype": "Link",
 			"options": "Item Group",
 			"read_only": 1,
@@ -67,7 +67,7 @@ def get_custom_fields():
 		},
 		{
 			"label": "Item Group",
-			"fieldname": "item_group",
+			"fieldname": "tax_item_group",
 			"fieldtype": "Link",
 			"options": "Item Group",
 			"read_only": 1,
@@ -105,7 +105,7 @@ def get_custom_fields():
 		},
 		{
 			"label": "Item Group",
-			"fieldname": "item_group",
+			"fieldname": "tax_item_group",
 			"fieldtype": "Link",
 			"options": "Item Group",			
 			"read_only": 1,

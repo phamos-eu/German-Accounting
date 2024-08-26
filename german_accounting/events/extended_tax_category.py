@@ -36,14 +36,14 @@ def validate_tax_category_fields(doc, method=None):
             services_amt_sum += flt(item.amount)
 
     if goods_amt_sum > services_amt_sum:
-        doc.item_group = german_accounting_settings.goods_item_group
+        doc.tax_item_group = german_accounting_settings.goods_item_group
 
     elif goods_amt_sum == services_amt_sum:
         good_or_service_selection = frappe.scrub(german_accounting_settings.good_or_service_selection)
-        doc.item_group = german_accounting_settings.get(good_or_service_selection)
+        doc.tax_item_group = german_accounting_settings.get(good_or_service_selection)
 
     else:
-        doc.item_group = german_accounting_settings.service_item_group
+        doc.tax_item_group = german_accounting_settings.service_item_group
 
     setting_tax_defaults(doc, german_accounting_settings.transaction_validation_message)
 
@@ -52,10 +52,10 @@ def setting_tax_defaults(doc, transaction_validation_type):
     if doc.doctype == 'Quotation' and doc.quotation_to == 'Customer' and doc.party_name:
         doc.tax_id = frappe.get_cached_value("Customer", doc.party_name, "tax_id")
     message = None
-    if doc.item_group and doc.tax_category:
+    if doc.tax_item_group and doc.tax_category:
         is_vat_applicable = True if doc.tax_id else False
         filters = {
-            'parent': doc.item_group, 
+            'parent': doc.tax_item_group,
             'parenttype': 'Item Group',
             'tax_category': doc.tax_category, 
             'customer_type': doc.customer_type,
@@ -91,7 +91,7 @@ def setting_tax_defaults(doc, transaction_validation_type):
             doc.run_method("set_missing_values")
             doc.run_method("calculate_taxes_and_totals")
             if transaction_validation_type in ["Error or Info", "Error Only"]:
-                message = _("This case is not reflected in the table (German Accounting Tax Defaults) in {0}. Please check the fields tax_category, customer_type, is_vat_applicable and add your combination to the table.").format(frappe.get_desk_link("Item Group", doc.item_group))
+                message = _("This case is not reflected in the table (German Accounting Tax Defaults) in {0}. Please check the fields tax_category, customer_type, is_vat_applicable and add your combination to the table.").format(frappe.get_desk_link("Item Group", doc.tax_item_group))
     if message:
         frappe.msgprint(message)
 
