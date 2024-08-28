@@ -23,9 +23,20 @@ def get_users_with_role(role: str) -> list[str]:
 	)
 
 @frappe.whitelist()
-def send_emails(users, docname, doctype=None):
+def send_emails(users, docname, doctype):
 	try:
+		# Validate that users, docname, and doctype are not empty or None
+		if not users:
+			return {"status": "error", "message": _("The 'users' parameter is required.")}
+		if not docname:
+			return {"status": "error", "message": _("The 'docname' parameter is required.")}
+		if not doctype:
+			return {"status": "error", "message": _("The 'doctype' parameter is required.")}
+
 		users = json.loads(users)
+		if not isinstance(users, list) or not users:
+			return {"status": "error", "message": _("The 'users' parameter should be a non-empty list.")}
+
 		subject = _("Request for document release {0}.").format(docname)
 		message = _("Please release the following document {0}.").format( frappe.utils.get_url_to_form(doctype, docname))
 		
@@ -119,46 +130,46 @@ def check_credit_limit_for_customer(docname, customer, company, total, doctype):
 @frappe.whitelist()
 def check_credit_limit(docname, customer, company, total, doctype, method=None):
   
-  message = check_credit_limit_for_customer(docname, customer, company, total, doctype)
+	message = check_credit_limit_for_customer(docname, customer, company, total, doctype)
 
-  if message is None:
-    message = ""
+	if message is None:
+		message = ""
 
-  table = ""
-  button_label = "Submit"
-  role = frappe.db.get_single_value("German Accounting Settings", "credit_limit_controller_role")
-   
-  if doctype != "Quotation" and not user_has_german_accounting_order_approval_role(role):
-    button_label = "Request Approval"
-    formatted_user_rows = ""
-    users = get_users_with_role(role)
+	table = ""
+	button_label = "Submit"
+	role = frappe.db.get_single_value("German Accounting Settings", "credit_limit_controller_role")
+	
+	if doctype != "Quotation" and not user_has_german_accounting_order_approval_role(role):
+		button_label = "Request Approval"
+		formatted_user_rows = ""
+		users = get_users_with_role(role)
 
-    for user in users:
-      formatted_user_rows += f"""
-      		<tr>
-                <td style="padding: 5px;"><input type="checkbox" name="user_checkbox" value="{user}"></td>
-                <td style="padding: 5px;">{user}</td>
-            </tr>"""
+		for user in users:
+			formatted_user_rows += f"""
+					<tr>
+						<td style="padding: 5px;"><input type="checkbox" name="user_checkbox" value="{user}"></td>
+						<td style="padding: 5px;">{user}</td>
+					</tr>"""
 
-    table= """
-            <table>
-                <thead>
-                    <tr>
-                        <th style="padding: 5px;"><input type="checkbox" id="select-all"></th>
-                        <th style="padding: 5px;">{}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {}
-                </tbody>
-            </table>
-    """.format(_("Users"), formatted_user_rows)
+		table= """
+				<table>
+					<thead>
+						<tr>
+							<th style="padding: 5px;"><input type="checkbox" id="select-all"></th>
+							<th style="padding: 5px;">{}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{}
+					</tbody>
+				</table>
+		""".format(_("Users"), formatted_user_rows)
 
-  return {
-	"message": message, 
-	"users": table, 
-	"button_label": button_label
-  }
+	return {
+		"message": message, 
+		"users": table, 
+		"button_label": button_label
+	}
 
 
 @frappe.whitelist()
