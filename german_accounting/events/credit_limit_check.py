@@ -23,7 +23,7 @@ def get_users_with_role(role: str) -> list[str]:
 	)
 
 @frappe.whitelist()
-def send_emails(users, docname, doctype):
+def send_emails(users=None, docname=None, doctype=None):
 	try:
 		# Validate that users, docname, and doctype are not empty or None
 		if not users:
