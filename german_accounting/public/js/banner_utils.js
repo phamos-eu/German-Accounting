@@ -92,35 +92,40 @@ function checkCreditLimit(frm, customer, company, doctype, docname, total) {
                         });
                         
                         // send email
-                        frappe.call({
-                            method: "german_accounting.events.credit_limit_check.send_emails",
-                            args: {
-                                users,
-                                docname,
-                                doctype
-                            },
-                            callback: function (r) {
-
-                                if (r.message) {
-                                    if (r.message.status === "success") {
-                                        frappe.msgprint({
-                                            title: __('Success'),
-                                            indicator: 'green',
-                                            message: r.message.message
-                                        });
-                                    } else {
-                                        frappe.msgprint({
-                                            title: __('Error'),
-                                            indicator: 'red',
-                                            message: r.message.message
-                                        });
+                        if(users.length > 0){
+                            frappe.call({
+                                method: "german_accounting.events.credit_limit_check.send_emails",
+                                args: {
+                                    users,
+                                    docname,
+                                    doctype
+                                },
+                                callback: function (r) {
+    
+                                    if (r.message) {
+                                        if (r.message.status === "success") {
+                                            frappe.msgprint({
+                                                title: __('Success'),
+                                                indicator: 'green',
+                                                message: r.message.message
+                                            });
+                                        } else {
+                                            frappe.msgprint({
+                                                title: __('Error'),
+                                                indicator: 'red',
+                                                message: r.message.message
+                                            });
+                                        }
                                     }
                                 }
-                            }
-                        })
+                            })
+                            dialog.hide();
+                        }
+                        else{
+                            frappe.msgprint("Please select atleast one user.")
+                        }
                     }
 
-                    dialog.hide();
                 },
                 secondary_action_label: __('Cancel'),
                 secondary_action: function() {

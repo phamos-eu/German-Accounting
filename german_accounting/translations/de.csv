@@ -31,3 +31,4 @@ Invoice No.,Rechnungsnummer
 Non-German Company,Nicht-deutsches Unternehmen
 DATEV Export Number,DATEV-Exportnummer
 German Accounting,Deutsche Buchhaltung
+Credit limit has been crossed for customer {0} which has total outstanding amount of {1} and credit limit of {2},Das Kreditlimit für den Kunden {0} wurde überschritten. Der ausstehende Gesamtbetrag beträgt {1} und das Kreditlimit beträgt {2}.
