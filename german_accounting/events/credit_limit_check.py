@@ -165,10 +165,10 @@ def check_credit_limit(docname, customer, company, total, doctype, method=None):
 
 @frappe.whitelist()
 def get_headline_data(customer, company=None, doctype=None):
-	from german_accounting.events.update_invoice_amounts import update_amounts
+	from german_accounting.events.invoice_amounts import get_amounts
 	
 	headline_data = {}
-	headline_data["amounts"] = update_amounts(customer)
+	headline_data["amounts"] = get_amounts(customer)
 	headline_data["currency_symbol"] = frappe.get_cached_value("Currency", frappe.defaults.get_global_default("currency"), "symbol")
 	if company and doctype:
 		headline_data["check_bypass"] = bypass_checked(customer, company, doctype)

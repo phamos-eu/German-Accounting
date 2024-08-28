@@ -1,7 +1,7 @@
 import frappe
 from frappe import _
 
-def update_open_invoice_amount(customer):
+def __get_open_invoice_amount(customer):
    
 
     total_outstanding_amount = 0.0
@@ -24,7 +24,7 @@ def update_open_invoice_amount(customer):
     return total_outstanding_amount
 
 
-def update_overdue_invoice_amount(customer):
+def __get_overdue_invoice_amount(customer):
 
     total_overdue_amount = 0.0
 
@@ -45,7 +45,7 @@ def update_overdue_invoice_amount(customer):
     return total_overdue_amount
 
 
-def update_non_invoiced_amount(customer):
+def __get_non_invoiced_amount(customer):
     total_non_invoiced_amount = 0.0
     total_billed_amount = 0.0
     net_non_invoice_amount = 0.0
@@ -88,17 +88,17 @@ def update_non_invoiced_amount(customer):
     return net_non_invoice_amount
 
 
-def update_total(open_invoice, non_invoice):
+def __get_total(open_invoice, non_invoice):
 
     total = open_invoice + non_invoice
     return total
 
 
-def update_amounts(customer):
-    open_invoice=update_open_invoice_amount(customer)
-    overdue_invoice = update_overdue_invoice_amount(customer)
-    non_invoice = update_non_invoiced_amount(customer)
-    total = update_total(open_invoice, non_invoice)
+def get_amounts(customer):
+    open_invoice = __get_open_invoice_amount(customer)
+    overdue_invoice = __get_overdue_invoice_amount(customer)
+    non_invoice = __get_non_invoiced_amount(customer)
+    total = __get_total(open_invoice, non_invoice)
 
     return {
         "open_invoice": open_invoice,
