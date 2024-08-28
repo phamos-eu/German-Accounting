@@ -44,7 +44,7 @@ def get_custom_fields():
 			"fieldtype": "Data",
 			"read_only": 1,
 			"translatable": 0,
-			"insert_after": "item_group",
+			"insert_after": "tax_item_group",
 			"description": "This can be a validation in the backround that will check if the `vatid` field in Customer/Address is set."
 		},
 		{
@@ -83,7 +83,7 @@ def get_custom_fields():
 			"default": "",
 			"read_only": 1,
 			"translatable": 0,
-			"insert_after": "german_accounting",
+			"insert_after": "tax_item_group",
 		},
 	]
 
@@ -110,7 +110,7 @@ def get_custom_fields():
 			"options": "Item Group",			
 			"read_only": 1,
 			"translatable": 0,
-			"insert_after": "german_accounting",
+			"insert_after": "custom_sales_invoice_type",
 			"description": "This field will be filled by either 'Goods' or 'Services' depending on the result that is calculated in the item table."
 		},
 		{
@@ -121,7 +121,7 @@ def get_custom_fields():
 			"default": "",
 			"read_only": 1,
 			"translatable": 0,
-			"insert_after": "german_accounting",
+			"insert_after": "tax_item_group",
 		},
 		{
 			"label": "Exported On",
@@ -151,6 +151,7 @@ def get_custom_fields():
 		{
 			"fieldtype": "Section Break",
 			"fieldname": "other_fields_sb",
+			"insert_after": "tax_category",
 		},
 	]
 
@@ -176,8 +177,8 @@ def get_custom_fields():
 			"fieldname": "billing_address",
 			"fieldtype": "Link",
 			"description": "This represents the standard billing address used for the export for DATEV debtors file.",
+			"options": "Address",
 			"insert_after": "german_accounting_section",
-			"options": "Address"
 		}
 	]
 

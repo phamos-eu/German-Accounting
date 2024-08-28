@@ -10,7 +10,8 @@ from german_accounting.german_accounting.report.datev_sales_invoice_export.datev
 
 
 @frappe.whitelist()
-def create_datev_export_logs(month, year, company=None):
+def create_datev_export_logs(month, year):
+	company = frappe.defaults.get_user_default("Company")
 	include_header_in_csv = frappe.get_cached_doc('German Accounting Settings').include_header_in_csv
 
 	datev_export_filters = frappe._dict({
