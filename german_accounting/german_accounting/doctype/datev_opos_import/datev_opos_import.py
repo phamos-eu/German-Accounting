@@ -2,43 +2,43 @@
 # For license information, please see license.txt
 
 import frappe
-from frappe.utils.file_manager import get_file_path
 from frappe.utils import today
 from frappe.model.document import Document
 import os
 import csv
 import chardet
 from frappe import _
+from erpnext.accounts.doctype.payment_entry.payment_entry import get_payment_entry
+
 
 class DATEVOPOSImport(Document):
 	@frappe.whitelist()
 	def start_import(self, file_url):
-		file_path = self.get_file_from_url(file_url)
-		
-		# Detect encoding
-		with open(file_path, 'rb') as f:
-			rawdata = f.read()
-			result = chardet.detect(rawdata)
-			encoding = result['encoding']
+		try:		
+			file_path = self.get_file_from_url(file_url)
+			# Detect encoding
+			with open(file_path, 'rb') as f:
+				rawdata = f.read()
+				result = chardet.detect(rawdata)
+				encoding = result['encoding']
+   
+			if ['ascii'] in encoding:
+				# Read the first 1024 bytes to identify the delimiter
+				with open(file_path, 'r', encoding=encoding, errors='replace') as file:
+					sample = file.read(1024)
+					if ';' in sample:
+						delimiter = ';'
+					else:
+						delimiter = ','
 
-		# Read the first 1024 bytes to identify the delimiter
-		with open(file_path, 'r', encoding=encoding, errors='replace') as file:
-			sample = file.read(1024)
-			if ';' in sample:
-				delimiter = ';'
-			else:
-				delimiter = ','
-
-		total_rows = self.detect_actual_data_rows(file_path, encoding, delimiter)
-		self.db_set('payload_count', total_rows)
-		csv_data = []
-		try:
-			with open(file_path, mode='r', encoding=encoding, errors='replace') as csvfile:
+				total_rows = self.detect_actual_data_rows(file_path, encoding, delimiter)
+				self.db_set('payload_count', total_rows)
+				csv_data = []
 				
-				csv_reader = csv.reader(csvfile, delimiter=delimiter)
-				frappe.publish_progress(0, title='Importing', description='Starting import...')
-				
-				if encoding=='ascii':
+				with open(file_path, mode='r', encoding=encoding, errors='replace') as csvfile:
+					
+					csv_reader = csv.reader(csvfile, delimiter=delimiter)
+					frappe.publish_progress(0, title='Importing', description='Starting import...')
 					
 					for index, row in enumerate(csv_reader):
 
@@ -52,9 +52,9 @@ class DATEVOPOSImport(Document):
 						frappe.publish_progress(progress, title='Importing', description=f'Processing row {index}/{total_rows}')
 
 					self.update_sales_invoice_status(csv_data)
-				else:
-					self.update_status('Error')
-					frappe.throw(_('{0} is unsupported file format. Only ascii format is supported currently.').format(encoding))
+			else:
+				self.update_status('Error')
+				frappe.throw(_('{0} is unsupported file format. Only ascii format is supported currently.').format(encoding))
 
 		except Exception as e:
 			frappe.msgprint(f'Error during import: {e}')
@@ -101,7 +101,7 @@ class DATEVOPOSImport(Document):
         
 		for index,invoice in enumerate(invoices):
 			try:
-				payment_entry = frappe.call("erpnext.accounts.doctype.payment_entry.payment_entry.get_payment_entry", 'Sales Invoice', invoice.name)
+				payment_entry = get_payment_entry("Sales Invoice", invoice.name)
 				payment_entry.company = self.company
 				payment_entry.reference_date = today()
 				payment_entry.reference_no = 'DATEV OPOS import '+ today()
