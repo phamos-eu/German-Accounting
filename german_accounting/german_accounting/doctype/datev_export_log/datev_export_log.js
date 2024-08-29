@@ -3,7 +3,7 @@
 
 frappe.ui.form.on('DATEV Export Log', {
 	refresh: function(frm) {
-		$('a[data-action="clear_attachment"]').remove()
-		$('.attachment-row').find(".remove-btn").remove()
+		frm.$wrapper.find('a[data-action="clear_attachment"]').remove();
+		frm.$wrapper.find('a[data-action="reload_attachment"]').remove();
 	}
 });
