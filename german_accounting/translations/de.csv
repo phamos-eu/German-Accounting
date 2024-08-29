@@ -1,9 +1,9 @@
 Sales Invoice Type,Rechnungstyp
 Invoice Cancellation,Stornorechnung
 Credit Note,Gutschrift
-has been created for," wurde geschaffen für "
-A DATEV Export Log,"Ein DATEV-Exportprotokoll "
-"month containing a *.csv and *.pdf that can be downloaded"," Monat mit einer *.csv- und *.pdf-Datei zum Herunterladen"
+has been created for,"wurde geschaffen für"
+A DATEV Export Log,"Ein DATEV-Exportprotokoll"
+"month containing a *.csv and *.pdf that can be downloaded","Monat mit einer *.csv- und *.pdf-Datei zum Herunterladen"
 Revenue Account,Erlöskonto
 Export Date,Exportdatum
 currency,Währung
@@ -31,4 +31,17 @@ Invoice No.,Rechnungsnummer
 Non-German Company,Nicht-deutsches Unternehmen
 DATEV Export Number,DATEV-Exportnummer
 German Accounting,Deutsche Buchhaltung
+Go to Sales Invoice List,Zur Verkaufsrechnungsliste
+Successfully imported.,Erfolgreich importiert.
+Partially imported. Fix the error for unimported rows.,Teilweise importiert. Beheben Sie den Fehler für nicht importierte Zeilen.
+Importing,Importieren
+Request Approval,Genehmigung anfordern
 Credit limit has been crossed for customer {0} which has total outstanding amount of {1} and credit limit of {2},Das Kreditlimit für den Kunden {0} wurde überschritten. Der ausstehende Gesamtbetrag beträgt {1} und das Kreditlimit beträgt {2}.
+"Customer {} has an Open Invoice Amount of: {}, Overdue Invoice Amount of: {} and Non-Invoiced Amount of: {}","Kunde {} hat offenen Rechnungsbetrag: {}, überfälligen Betrag: {} und nicht berechneten Betrag: {}"
+This is a Total of {},Dies ist eine Summe von {}
+and The Credit Limit is,und das Kreditlimit beträgt
+Credit Limit is not set for this customer,Für diesen Kunden ist kein Kreditlimit festgelegt
+Are you sure you want to proceed?,Möchten Sie wirklich fortfahren?
+Please set the credit controller role on {0},Bitte legen Sie die Kreditcontrollerrolle auf {0} fest.
+Request for document release {0}.,Antrag auf Dokumentfreigabe {0}.
+Please release the following document {0}.,Bitte geben Sie folgendes Dokument frei: {0}.

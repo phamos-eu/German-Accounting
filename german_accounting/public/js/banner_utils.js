@@ -12,7 +12,7 @@ async function getDataForHeadlineText(customer, company, doctype) {
                 if (r.message !== null && r.message !== undefined) {
                     resolve(r.message);
                 } else {
-                    reject(new Error('Response not found'));
+                    reject(new Error(__('Response not found')));
                 }
             },
         });
@@ -80,10 +80,9 @@ function checkCreditLimit(frm, customer, company, doctype, docname, total) {
                 ],
                 primary_action_label: (response.button_label),
                 primary_action: function() {
-                    if (response.button_label == "Submit"){
-
+                    if (response.button_label === __("Submit")){
                         frm.save("Submit");
-
+                        dialog.hide();
                     } else {
 
                         let users = [];
@@ -125,9 +124,9 @@ function checkCreditLimit(frm, customer, company, doctype, docname, total) {
                                     }
                                 }
                             })
+                            dialog.hide();
                         }
                     }
-                    dialog.hide();
                 },
                 secondary_action_label: __('Cancel'),
                 secondary_action: function() {

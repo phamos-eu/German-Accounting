@@ -13,7 +13,8 @@ from erpnext.accounts.doctype.payment_entry.payment_entry import get_payment_ent
 
 class DATEVOPOSImport(Document):
 	@frappe.whitelist()
-	def start_import(self, file_url):
+	def start_import(self):
+		file_url = self.import_file
 		file_path = self.get_file_from_url(file_url)
 		
 		# Detect encoding
@@ -37,7 +38,7 @@ class DATEVOPOSImport(Document):
 			with open(file_path, mode='r', encoding=encoding, errors='replace') as csvfile:
 				
 				csv_reader = csv.reader(csvfile, delimiter=delimiter)
-				frappe.publish_progress(0, title='Importing', description='Starting import...')
+				frappe.publish_progress(0, title=_('Importing'), description=_('Starting import'))
 				
 				if encoding=='ascii':
 					
@@ -50,7 +51,7 @@ class DATEVOPOSImport(Document):
 
 						index+=1
 						progress = int((index / total_rows) * 100)
-						frappe.publish_progress(progress, title='Importing', description=f'Processing row {index}/{total_rows}')
+						frappe.publish_progress(progress, title=_('Importing'), description=_('Processing row {}/{}').format(index, total_rows))
 
 					self.update_sales_invoice_status(csv_data)
 				else:

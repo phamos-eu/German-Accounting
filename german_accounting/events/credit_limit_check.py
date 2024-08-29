@@ -25,7 +25,6 @@ def get_users_with_role(role: str) -> list[str]:
 @frappe.whitelist()
 def send_emails(users, docname, doctype):
 	try:
-
 		users = json.loads(users)
 		subject = _("Request for document release {0}.").format(docname)
 		message = _("Please release the following document {0}.").format( frappe.utils.get_url_to_form(doctype, docname))
@@ -108,7 +107,7 @@ def check_credit_limit(docname, customer, company, total, doctype, method=None):
 		message = ""
 
 	table = ""
-	button_label = "Submit"
+	button_label = _('Submit')
 	
 	if doctype != "Quotation":
 		role = frappe.get_cached_doc("German Accounting Settings").credit_limit_controller_role
@@ -119,7 +118,7 @@ def check_credit_limit(docname, customer, company, total, doctype, method=None):
 			)
 
 		if not frappe.db.exists("Has Role", {"parent": frappe.session.user, "role": role, "parenttype": "User"}):
-			button_label = "Request Approval"
+			button_label = _('Request Approval')
 			formatted_user_rows = ""
 			users = get_users_with_role(role)
 
