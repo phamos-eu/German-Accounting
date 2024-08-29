@@ -14,7 +14,7 @@ frappe.ui.form.on("DATEV OPOS Import", {
 
 		if (frm.doc.import_file && !['Success', 'Partial Success', 'Error'].includes(frm.doc.status)) {
 			frm.disable_save();
-			frm.page.set_primary_action("Start Import", () =>  {
+			frm.page.set_primary_action(__("Start Import"), () =>  {
 					frm.call("start_import", {
 						file_url: frm.doc.import_file,
 					});
@@ -64,12 +64,12 @@ frappe.ui.form.on("DATEV OPOS Import", {
 		let indicator='';
 	
 		if (frm.doc.status === 'Success') {
-			message = `Successfully imported.`;
-			indicator = 'blue';
+			message = __("Successfully imported.")
+			indicator = 'blue'
 		} 
 		else if (frm.doc.status === 'Partial Success') {
-			message = `Partially imported. Fix the error for unimported rows.`;
-			indicator = 'orange';
+			message = __("Partially imported. Fix the error for unimported rows.")
+			indicator = 'orange'
 		}
 		
 		frm.dashboard.set_headline(message, indicator);

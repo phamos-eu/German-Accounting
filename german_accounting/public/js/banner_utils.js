@@ -91,8 +91,14 @@ function checkCreditLimit(frm, customer, company, doctype, docname, total) {
                             users.push($(this).val());
                         });
                         
-                        // send email
-                        if(users.length > 0){
+                        if (users.length === 0) {
+                            frappe.msgprint({
+                                title: __('Error'),
+                                indicator: 'red',
+                                message: __("Please select at least one user to send an email")
+                            });
+                        } else {
+                            // send email
                             frappe.call({
                                 method: "german_accounting.events.credit_limit_check.send_emails",
                                 args: {
@@ -101,7 +107,7 @@ function checkCreditLimit(frm, customer, company, doctype, docname, total) {
                                     doctype
                                 },
                                 callback: function (r) {
-    
+        
                                     if (r.message) {
                                         if (r.message.status === "success") {
                                             frappe.msgprint({
@@ -119,13 +125,9 @@ function checkCreditLimit(frm, customer, company, doctype, docname, total) {
                                     }
                                 }
                             })
-                            dialog.hide();
-                        }
-                        else{
-                            frappe.msgprint("Please select atleast one user.")
                         }
                     }
-
+                    dialog.hide();
                 },
                 secondary_action_label: __('Cancel'),
                 secondary_action: function() {

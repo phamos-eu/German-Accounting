@@ -14,31 +14,32 @@ from erpnext.accounts.doctype.payment_entry.payment_entry import get_payment_ent
 class DATEVOPOSImport(Document):
 	@frappe.whitelist()
 	def start_import(self, file_url):
-		try:		
-			file_path = self.get_file_from_url(file_url)
-			# Detect encoding
-			with open(file_path, 'rb') as f:
-				rawdata = f.read()
-				result = chardet.detect(rawdata)
-				encoding = result['encoding']
-   
-			if ['ascii'] in encoding:
-				# Read the first 1024 bytes to identify the delimiter
-				with open(file_path, 'r', encoding=encoding, errors='replace') as file:
-					sample = file.read(1024)
-					if ';' in sample:
-						delimiter = ';'
-					else:
-						delimiter = ','
+		file_path = self.get_file_from_url(file_url)
+		
+		# Detect encoding
+		with open(file_path, 'rb') as f:
+			rawdata = f.read()
+			result = chardet.detect(rawdata)
+			encoding = result['encoding']
 
-				total_rows = self.detect_actual_data_rows(file_path, encoding, delimiter)
-				self.db_set('payload_count', total_rows)
-				csv_data = []
+		# Read the first 1024 bytes to identify the delimiter
+		with open(file_path, 'r', encoding=encoding, errors='replace') as file:
+			sample = file.read(1024)
+			if ';' in sample:
+				delimiter = ';'
+			else:
+				delimiter = ','
+
+		total_rows = self.detect_actual_data_rows(file_path, encoding, delimiter)
+		self.db_set('payload_count', total_rows)
+		csv_data = []
+		try:
+			with open(file_path, mode='r', encoding=encoding, errors='replace') as csvfile:
 				
-				with open(file_path, mode='r', encoding=encoding, errors='replace') as csvfile:
-					
-					csv_reader = csv.reader(csvfile, delimiter=delimiter)
-					frappe.publish_progress(0, title='Importing', description='Starting import...')
+				csv_reader = csv.reader(csvfile, delimiter=delimiter)
+				frappe.publish_progress(0, title='Importing', description='Starting import...')
+				
+				if encoding=='ascii':
 					
 					for index, row in enumerate(csv_reader):
 
@@ -52,12 +53,12 @@ class DATEVOPOSImport(Document):
 						frappe.publish_progress(progress, title='Importing', description=f'Processing row {index}/{total_rows}')
 
 					self.update_sales_invoice_status(csv_data)
-			else:
-				self.update_status('Error')
-				frappe.throw(_('{0} is unsupported file format. Only ascii format is supported currently.').format(encoding))
+				else:
+					self.update_status('Error')
+					frappe.throw(_('{0} is unsupported file format. Only ascii format is supported currently.').format(encoding))
 
 		except Exception as e:
-			frappe.msgprint(f'Error during import: {e}')
+			frappe.throw(_('Error during import: {0}').format(str(e)))
 			self.update_status('Error')
 
 	def update_status(self, status):
@@ -111,7 +112,7 @@ class DATEVOPOSImport(Document):
 			except Exception as e:
 				self.update_status('Partial Success')
 				self.db_set('imported_records', index)
-				frappe.msgprint(f'Error creating payment for: {invoice}')
+				frappe.msgprint(_('Error creating payment for: {0}').format(invoice))
 
 
 		# Get all sales invoice which are paid or partly paid and ID of the current import list
@@ -134,7 +135,7 @@ class DATEVOPOSImport(Document):
 					payment_entry = frappe.get_doc('Payment Entry', entry.parent)
 					payment_entry.cancel()
 			except Exception as e:
-				frappe.msgprint(f'Error cancelling payment entry for: {invoice}')
+				frappe.msgprint(_('Error cancelling payment entry for: {0}').format(invoice))
 		
 		if self.status=='Not Started':
 			self.update_status('Success')
