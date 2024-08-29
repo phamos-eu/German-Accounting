@@ -27,9 +27,6 @@ def send_emails(users, docname, doctype):
 	try:
 
 		users = json.loads(users)
-		if not isinstance(users, list) or not users:
-			return {"status": "error", "message": _("The 'users' parameter should be a non-empty list.")}
-
 		subject = _("Request for document release {0}.").format(docname)
 		message = _("Please release the following document {0}.").format( frappe.utils.get_url_to_form(doctype, docname))
 		
@@ -43,22 +40,6 @@ def send_emails(users, docname, doctype):
 		return {"status": "success", "message": _("Email sent successfully.")}
 	except Exception as e:
 		return {"status": "error", "message": str(e)}
-
-def user_has_german_accounting_order_approval_role(role):
-	if not role:
-		frappe.throw(
-			_("Please set the credit controller role on {0}")
-			.format(frappe.utils.get_link_to_form("German Accounting Settings", "German Accounting Settings"))
-		)
-		
-	user = frappe.session.user
-		
-	return frappe.db.exists("Has Role", {
-        "parent": user,
-        "role": role,
-        "parenttype": "User", 
-    })
-
 
 def get_credit_limit(customer, company, doctype=None):
 	credit_limit = None
@@ -128,33 +109,40 @@ def check_credit_limit(docname, customer, company, total, doctype, method=None):
 
 	table = ""
 	button_label = "Submit"
-	role = frappe.db.get_single_value("German Accounting Settings", "credit_limit_controller_role")
 	
-	if doctype != "Quotation" and not user_has_german_accounting_order_approval_role(role):
-		button_label = "Request Approval"
-		formatted_user_rows = ""
-		users = get_users_with_role(role)
+	if doctype != "Quotation":
+		role = frappe.get_cached_doc("German Accounting Settings").credit_limit_controller_role
+		if not role:
+			frappe.throw(
+				_("Please set the credit controller role on {0}")
+				.format(frappe.utils.get_link_to_form("German Accounting Settings", "German Accounting Settings"))
+			)
 
-		for user in users:
-			formatted_user_rows += f"""
-					<tr>
-						<td style="padding: 5px;"><input type="checkbox" name="user_checkbox" value="{user}"></td>
-						<td style="padding: 5px;">{user}</td>
-					</tr>"""
+		if not frappe.db.exists("Has Role", {"parent": frappe.session.user, "role": role, "parenttype": "User"}):
+			button_label = "Request Approval"
+			formatted_user_rows = ""
+			users = get_users_with_role(role)
 
-		table= """
-				<table>
-					<thead>
+			for user in users:
+				formatted_user_rows += f"""
 						<tr>
-							<th style="padding: 5px;"><input type="checkbox" id="select-all"></th>
-							<th style="padding: 5px;">{}</th>
-						</tr>
-					</thead>
-					<tbody>
-						{}
-					</tbody>
-				</table>
-		""".format(_("Users"), formatted_user_rows)
+							<td style="padding: 5px;"><input type="checkbox" name="user_checkbox" value="{user}"></td>
+							<td style="padding: 5px;">{user}</td>
+						</tr>"""
+
+			table= """
+					<table>
+						<thead>
+							<tr>
+								<th style="padding: 5px;"><input type="checkbox" id="select-all"></th>
+								<th style="padding: 5px;">{}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{}
+						</tbody>
+					</table>
+			""".format(_("Users"), formatted_user_rows)
 
 	return {
 		"message": message, 
