@@ -9,6 +9,7 @@ app_license = "MIT"
 
 # Includes in <head>
 # ------------------
+required_apps = ["erpnext"]
 
 fixtures = [
 	{

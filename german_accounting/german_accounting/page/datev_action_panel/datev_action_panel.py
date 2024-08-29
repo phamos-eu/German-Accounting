@@ -114,7 +114,7 @@ def create_and_upload_csv(csv_rows, csv_columns, datev_export_log_name, field, f
 
 
 def create_and_upload_pdf(month, pdf_columns, pdf_rows, datev_export_log_name, field):
-	content = frappe.render_template("german_accounting/public/html/datev_sales_invoice_export.html", {
+	content = frappe.render_template("german_accounting/german_accounting/page/datev_action_panel/datev_sales_invoice_export/datev_sales_invoice_export.html", {
 		"title": frappe._("DATEV Sales Invoice"),
 		"subtitle": "filters_html",
 		"filters": {
@@ -125,7 +125,7 @@ def create_and_upload_pdf(month, pdf_columns, pdf_rows, datev_export_log_name, f
 
 	print_bundle_css = bundled_asset("print.bundle.css")
 	print_css = frappe.www.printview.get_print_style(frappe.db.get_singles_dict("Print Settings").print_style or "Redesign", for_legacy=True)
-	html = frappe.render_template("german_accounting/public/html/print_template.html", {
+	html = frappe.render_template("german_accounting/german_accounting/page/datev_action_panel/datev_sales_invoice_export/print_template.html", {
 		"title": frappe._("DATEV Sales Invoice"),
 		"content": content,
 		"base_url": frappe.utils.get_url(),
