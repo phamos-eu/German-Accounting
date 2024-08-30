@@ -12,6 +12,12 @@ from german_accounting.german_accounting.report.datev_sales_invoice_export.datev
 @frappe.whitelist()
 def create_datev_export_logs(month, year):
 	company = frappe.defaults.get_user_default("Company")
+	if not company:
+		frappe.throw(_("Please set the default company"))
+
+	if not get_company_country(company) == "Germany":
+		frappe.throw(_("Country in Default {} must be Germany").format(get_link_to_form("Company", company)))
+
 	include_header_in_csv = frappe.get_cached_doc('German Accounting Settings').include_header_in_csv
 
 	datev_export_filters = frappe._dict({
