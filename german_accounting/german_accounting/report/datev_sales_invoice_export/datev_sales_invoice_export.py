@@ -173,7 +173,7 @@ def get_debtors_csv_data(data):
 
 
 def get_conditions(filters):
-	conditions = ""
+	conditions = " AND si.company = %(company)s"
 	if filters.get("month"):
 		filters["month"] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November",
 				"December"].index(filters.get("month")) + 1
@@ -196,9 +196,6 @@ def get_conditions(filters):
 			first_day = get_first_day(today.replace(month=filters.get("month")))
 			last_day = get_last_day(today.replace(month=filters.get("month")))
 			conditions += " AND si.posting_date BETWEEN '{0}' AND '{1}'".format(first_day, last_day)
-
-	if filters.get("company"):
-		conditions += " AND si.company = %(company)s"
 
 	return conditions
 

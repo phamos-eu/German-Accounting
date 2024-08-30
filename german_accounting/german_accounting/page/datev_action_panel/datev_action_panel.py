@@ -12,6 +12,12 @@ from german_accounting.german_accounting.report.datev_sales_invoice_export.datev
 @frappe.whitelist()
 def create_datev_export_logs(month, year):
 	company = frappe.defaults.get_user_default("Company")
+	if not company:
+		frappe.throw(_("Please set the default company"))
+
+	if not get_company_country(company) == "Germany":
+		frappe.throw(_("Country in Default {} must be Germany").format(get_link_to_form("Company", company)))
+
 	include_header_in_csv = frappe.get_cached_doc('German Accounting Settings').include_header_in_csv
 
 	datev_export_filters = frappe._dict({
@@ -144,10 +150,7 @@ def create_and_upload_pdf(month, pdf_columns, pdf_rows, datev_export_log_name, f
 	frappe.db.set_value(dt, dn, field, file_doc.file_url)
 
 
-def create_log(month, company=None, sales_invoices=[]):
-	if sales_invoices and not isinstance(sales_invoices, list):
-		sales_invoices = frappe.parse_json(sales_invoices)
-
+def create_log(month, company, sales_invoices):
 	exported_on = now_datetime().strftime("%d-%m-%Y %H:%M:%S")
 	log_doc = frappe.new_doc("DATEV Export Log")
 	log_doc.update({
