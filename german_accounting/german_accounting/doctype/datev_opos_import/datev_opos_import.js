@@ -57,11 +57,11 @@ frappe.ui.form.on("DATEV OPOS Import", {
 		let message='';
 		let indicator='';
 	
-		if (frm.doc.status === __('Success')) {
+		if (frm.doc.status === 'Success') {
 			message = __("Successfully imported.")
 			indicator = 'blue'
 		} 
-		else if (frm.doc.status === __('Partial Success')) {
+		else if (frm.doc.status === 'Partial Success') {
 			message = __("Partially imported. Fix the error for unimported rows.")
 			indicator = 'orange'
 		}
