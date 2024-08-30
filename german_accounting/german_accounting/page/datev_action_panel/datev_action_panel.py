@@ -150,10 +150,7 @@ def create_and_upload_pdf(month, pdf_columns, pdf_rows, datev_export_log_name, f
 	frappe.db.set_value(dt, dn, field, file_doc.file_url)
 
 
-def create_log(month, company=None, sales_invoices=[]):
-	if sales_invoices and not isinstance(sales_invoices, list):
-		sales_invoices = frappe.parse_json(sales_invoices)
-
+def create_log(month, company, sales_invoices):
 	exported_on = now_datetime().strftime("%d-%m-%Y %H:%M:%S")
 	log_doc = frappe.new_doc("DATEV Export Log")
 	log_doc.update({
