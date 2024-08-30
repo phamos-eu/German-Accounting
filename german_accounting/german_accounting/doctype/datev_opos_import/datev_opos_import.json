@@ -58,7 +58,7 @@
   },
   {
    "fieldname": "year",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Year",
@@ -70,12 +70,13 @@
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company",
-   "reqd": 1
+   "reqd": 1,
+   "set_only_once": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-29 17:27:29.176411",
+ "modified": "2024-08-30 12:06:58.625203",
  "modified_by": "Administrator",
  "module": "German Accounting",
  "name": "DATEV OPOS Import",

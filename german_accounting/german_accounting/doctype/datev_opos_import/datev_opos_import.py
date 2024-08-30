@@ -7,11 +7,16 @@ from frappe.model.document import Document
 import os
 import csv
 import chardet
+import re
 from frappe import _
 from erpnext.accounts.doctype.payment_entry.payment_entry import get_payment_entry
 
 
 class DATEVOPOSImport(Document):
+	def validate(self):
+		if not re.match(r'^\d{4}$', str(self.year)):
+			frappe.throw(_('Year must be a 4-digit number.'))
+
 	@frappe.whitelist()
 	def start_import(self):
 		file_url = self.import_file
