@@ -160,7 +160,7 @@ def create_log(month, company=None, sales_invoices=[]):
 	
 	# update exported on in SI
 	for si in sales_invoices:
-		frappe.db.set_value("Sales Invoice", si, "custom_exported_on", exported_on)
+		frappe.db.set_value("Sales Invoice", si, "exported_on", exported_on)
 		
 	return log_doc
 

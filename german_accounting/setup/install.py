@@ -95,7 +95,7 @@ def get_custom_fields():
 		},
 		{
 			"label": "Sales Invoice Type",
-			"fieldname": "custom_sales_invoice_type",
+			"fieldname": "sales_invoice_type",
 			"fieldtype": "Select",
 			"options": "Sales Invoice\nInvoice Cancellation\nCredit Note",   
 			"default": "Sales Invoice",
@@ -110,7 +110,7 @@ def get_custom_fields():
 			"options": "Item Group",			
 			"read_only": 1,
 			"translatable": 0,
-			"insert_after": "custom_sales_invoice_type",
+			"insert_after": "sales_invoice_type",
 			"description": "This field will be filled by either 'Goods' or 'Services' depending on the result that is calculated in the item table."
 		},
 		{
@@ -125,7 +125,7 @@ def get_custom_fields():
 		},
 		{
 			"label": "Exported On",
-			"fieldname": "custom_exported_on",
+			"fieldname": "exported_on",
 			"fieldtype": "Data",
 			"no_copy": 1,
 			"hidden": 0,
@@ -195,21 +195,21 @@ def get_custom_fields():
 	custom_fields_payment_terms_template = [  
 		{
 			"label": "German Accounting",
-			"fieldname": "custom_german_accounting_section",
+			"fieldname": "german_accounting_section",
 			"fieldtype": "Section Break",
 			"insert_after": None,
 		},
 		{
 			"label": "DATEV Export Number",
-			"fieldname": "custom_datev_export_number",
+			"fieldname": "datev_export_number",
 			"fieldtype": "Data",
 			"in_list_view": 1,
-			"insert_after": "custom_german_accounting_section",
+			"insert_after": "german_accounting_section",
 		},
 		{
 			"fieldtype": "Section Break",
-			"fieldname": "custom_section_break_1ga",
-			"insert_after": "custom_datev_export_number",
+			"fieldname": "section_break_1ga",
+			"insert_after": "datev_export_number",
 		},
 	]
 
