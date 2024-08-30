@@ -1,11 +1,11 @@
 frappe.ui.form.on('Sales Invoice', {
     onload: function(frm){
         if (frm.is_new() && frm.doc.is_return){
-            frm.doc.custom_sales_invoice_type = "Invoice Cancellation"
+            frm.doc.sales_invoice_type = "Invoice Cancellation"
             frm.events.toggle_fields(frm);
         }
         else if (frm.is_new() && frm.doc.items.some(item => item.sales_order)){
-            frm.doc.custom_sales_invoice_type = "Sales Invoice"
+            frm.doc.sales_invoice_type = "Sales Invoice"
             frm.events.toggle_fields(frm);
         }   
     },
@@ -13,14 +13,14 @@ frappe.ui.form.on('Sales Invoice', {
         frm.events.toggle_fields(frm);
     },
 
-    custom_sales_invoice_type: function(frm) {
+    sales_invoice_type: function(frm) {
         frm.events.toggle_fields(frm);
     },
 
     toggle_fields: function(frm) {
         
         
-            if (frm.doc.custom_sales_invoice_type === "Sales Invoice"){
+            if (frm.doc.sales_invoice_type === "Sales Invoice"){
                 // Details tab
                 frm.set_df_property('is_pos', 'hidden', true);
                 frm.set_df_property('pos_profile', 'hidden', true);
@@ -34,7 +34,7 @@ frappe.ui.form.on('Sales Invoice', {
                 
             }
 
-            if (frm.doc.custom_sales_invoice_type === "Credit Note"){
+            if (frm.doc.sales_invoice_type === "Credit Note"){
                 // Details tab
                 frm.set_df_property('is_return', 'hidden', false);
                 frm.set_value('is_return', 1);
@@ -42,7 +42,7 @@ frappe.ui.form.on('Sales Invoice', {
 
             }
 
-            if (frm.doc.custom_sales_invoice_type === "Invoice Cancellation"){
+            if (frm.doc.sales_invoice_type === "Invoice Cancellation"){
                 // Details tab
                 frm.set_df_property('is_pos', 'hidden', true);
 

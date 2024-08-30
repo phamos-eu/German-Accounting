@@ -45,3 +45,4 @@ Are you sure you want to proceed?,Möchten Sie wirklich fortfahren?
 Please set the credit controller role on {0},Bitte legen Sie die Kreditcontrollerrolle auf {0} fest.
 Request for document release {0}.,Antrag auf Dokumentfreigabe {0}.
 Please release the following document {0}.,Bitte geben Sie folgendes Dokument frei: {0}.
+Year must be a 4-digit number.,Das Jahr muss eine 4-stellige Zahl sein.

@@ -30,7 +30,7 @@ def get_data(filters):
 		SELECT
 			si.name as invoice_no, si.posting_date, si.is_return,si.cost_center, 
 			si.tax_id, si.currency, si.grand_total, si.net_total as pdf_net_total, si.company,
-			acc.debtor_creditor_number as debit_to, si.custom_exported_on, UPPER(co.code) as code, ad.country, si.customer, 
+			acc.debtor_creditor_number as debit_to, si.exported_on, UPPER(co.code) as code, ad.country, si.customer, 
 			sii.income_account, sii.item_tax_rate
 		FROM `tabSales Invoice` si, `tabSales Invoice Item` sii, `tabAddress` ad, `tabCountry` co, `tabParty Account` acc
 		WHERE si.docstatus=1 AND si.name = sii.parent AND si.customer_address=ad.name AND ad.country=co.name AND acc.parent = si.customer %s
@@ -56,7 +56,7 @@ def get_data(filters):
 			"debit_to": entry.get('debit_to'),
 			"item_tax_rate": entry.get('item_tax_rate'),
 			"income_account": entry.get('income_account'),
-			"custom_exported_on": entry.get('custom_exported_on'),
+			"exported_on": entry.get('exported_on'),
 			"country": entry.code,
 			"journal_text": entry.customer if entry.country == 'Germany' else entry.code + ", " + entry.customer,
 			"customer": entry.customer,
@@ -95,7 +95,7 @@ def get_data(filters):
 
 			merged_values['posting_date'] = entry['posting_date']
 			merged_values['pdf_posting_date'] = entry['pdf_posting_date']
-			merged_values['custom_exported_on'] = entry['custom_exported_on']
+			merged_values['exported_on'] = entry['exported_on']
 			merged_values['grand_total'] = entry['grand_total']
 			merged_values['debit_to'] = entry['debit_to']
 			merged_values['cost_center'] = entry['cost_center']
@@ -146,7 +146,7 @@ def get_debtors_csv_data(data):
 			DISTINCT COALESCE(cust.tax_id,"") as tax_id, COALESCE(cust.name,"") as customer, COALESCE(acc.debtor_creditor_number,"") as debitor_no_datev,
 			COALESCE(addrs.address_line1,"") as address_line1, COALESCE(addrs.address_line2,"") as address_line2, COALESCE(addrs.city,"") as city, COALESCE(addrs.pincode,"") as pincode, 
 			COALESCE(UPPER((SELECT cn.code from tabCountry as cn WHERE cn.name = addrs.country)),"") as country_code,
-			COALESCE(ptt.custom_datev_export_number, "") as datev_export_number
+			COALESCE(ptt.datev_export_number, "") as datev_export_number
 		FROM 
 			`tabCustomer` cust
 		LEFT JOIN
@@ -183,10 +183,10 @@ def get_conditions(filters):
 		conditions += " AND year(si.posting_date) = %(year)s "
 
 	if filters.get("unexported_sales_invoice"):
-		conditions += " AND coalesce(si.custom_exported_on, '') = '' "
+		conditions += " AND coalesce(si.exported_on, '') = '' "
 
 	elif not filters.get("unexported_sales_invoice") and filters.get("exported_on"):
-		conditions += " AND si.custom_exported_on = %(exported_on)s"
+		conditions += " AND si.exported_on = %(exported_on)s"
 
 	if filters.get("from_date") and filters.get("to_date"):
 		conditions += " AND si.posting_date BETWEEN %(from_date)s AND %(to_date)s"
@@ -452,7 +452,7 @@ def get_columns(filters):
 		{
 			"label": _("Exportdate"),
 			"fieldtype": "Data",
-			"fieldname": "custom_exported_on",
+			"fieldname": "exported_on",
 			"custom_header": "Exportdatum",
 			"width": 160
 		},
