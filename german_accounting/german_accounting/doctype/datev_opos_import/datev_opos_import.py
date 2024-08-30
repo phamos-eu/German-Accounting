@@ -23,40 +23,34 @@ class DATEVOPOSImport(Document):
 			result = chardet.detect(rawdata)
 			encoding = result['encoding']
 
+		if encoding != 'ascii':
+			self.update_status('Error')
+			frappe.throw(_('{0} is unsupported file format. Only ascii format is supported currently.').format(encoding))
+
 		# Read the first 1024 bytes to identify the delimiter
 		with open(file_path, 'r', encoding=encoding, errors='replace') as file:
 			sample = file.read(1024)
-			if ';' in sample:
-				delimiter = ';'
-			else:
-				delimiter = ','
+			delimiter = ';' if ';' in sample else ','
 
 		total_rows = self.detect_actual_data_rows(file_path, encoding, delimiter)
 		self.db_set('payload_count', total_rows)
-		csv_data = []
+		
 		try:
 			with open(file_path, mode='r', encoding=encoding, errors='replace') as csvfile:
-				
 				csv_reader = csv.reader(csvfile, delimiter=delimiter)
 				frappe.publish_progress(0, title=_('Importing'), description=_('Starting import'))
-				
-				if encoding=='ascii':
-					
-					for index, row in enumerate(csv_reader):
 
-						if index >= total_rows:
-							break
+				csv_data = []	
+				for index, row in enumerate(csv_reader):
+					if index >= total_rows:
+						break
 												
-						csv_data.append(row)
+					csv_data.append(row)
+					index+=1
+					progress = int((index / total_rows) * 100)
+					frappe.publish_progress(progress, title=_('Importing'), description=_('Processing row {}/{}').format(index, total_rows))
 
-						index+=1
-						progress = int((index / total_rows) * 100)
-						frappe.publish_progress(progress, title=_('Importing'), description=_('Processing row {}/{}').format(index, total_rows))
-
-					self.update_sales_invoice_status(csv_data)
-				else:
-					self.update_status('Error')
-					frappe.throw(_('{0} is unsupported file format. Only ascii format is supported currently.').format(encoding))
+				self.update_sales_invoice_status(csv_data)			
 
 		except Exception as e:
 			frappe.throw(_('Error during import: {0}').format(str(e)))
