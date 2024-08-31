@@ -13,7 +13,7 @@ from erpnext.accounts.doctype.payment_entry.payment_entry import get_payment_ent
 
 class DATEVOPOSImport(Document):
 	def validate(self):
-		if not 1000 <= self.year <= 9999:
+		if not 2000 <= self.year <= 3000:
 			frappe.throw(_('Year must be a 4-digit number.'))
 
 	@frappe.whitelist()
