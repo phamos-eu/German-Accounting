@@ -15,7 +15,7 @@ def create_datev_export_logs(month, year):
 	if not company:
 		frappe.throw(_("Please set the default company"))
 
-	if not get_company_country(company) == "Germany":
+	if not get_company_country(company)["country"] == "Germany":
 		frappe.throw(_("Country in Default {} must be Germany").format(get_link_to_form("Company", company)))
 
 	include_header_in_csv = frappe.get_cached_doc('German Accounting Settings').include_header_in_csv
@@ -35,7 +35,7 @@ def create_datev_export_logs(month, year):
 
 	sales_invoices = [row.get("invoice_no") for row in rows]
 
-	datev_export_log = create_log(month, company, sales_invoices)
+	datev_export_log = create_log(month, year, company, sales_invoices)
 
 	datev_export_log_name = datev_export_log.name
 	datev_exported_on = datev_export_log.exported_on
@@ -150,14 +150,14 @@ def create_and_upload_pdf(month, pdf_columns, pdf_rows, datev_export_log_name, f
 	frappe.db.set_value(dt, dn, field, file_doc.file_url)
 
 
-def create_log(month, company, sales_invoices):
+def create_log(month, year, company, sales_invoices):
 	exported_on = now_datetime().strftime("%d-%m-%Y %H:%M:%S")
 	log_doc = frappe.new_doc("DATEV Export Log")
 	log_doc.update({
 		"month": month,
 		"company": company,
 		"exported_on": exported_on,
-		"year": str(date.today().year)
+		"year": year
 	})
 	log_doc.save()
 	
