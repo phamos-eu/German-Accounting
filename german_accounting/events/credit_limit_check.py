@@ -1,6 +1,6 @@
 import frappe
 from frappe.utils import cint, flt
-from frappe import _, msgprint
+from frappe import _
 import json
 from frappe.query_builder import DocType
 

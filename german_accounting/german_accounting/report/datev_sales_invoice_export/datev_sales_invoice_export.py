@@ -1,13 +1,12 @@
 # Copyright (c) 2024, phamos.eu and contributors
 # For license information, please see license.txt
 
+import json
 import frappe
 from frappe import _
 from frappe.utils import flt, cstr, cint, get_first_day, get_last_day, format_date
 from datetime import datetime
-from collections import defaultdict
 from frappe.utils import get_link_to_form
-import json
 
 
 @frappe.whitelist()
