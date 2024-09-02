@@ -6,6 +6,7 @@ from frappe import _
 from frappe.utils import flt, cstr, cint, get_first_day, get_last_day, format_date
 from datetime import datetime
 from collections import defaultdict
+from frappe.utils import get_link_to_form
 import json
 
 
@@ -15,6 +16,8 @@ def execute(filters=None):
 		filters = json.loads(filters)
 	filters = frappe._dict(filters or {})
 	columns, data = [], []
+
+	validate_company_filter(filters)
 	columns = get_columns(filters)
 	data = get_data(filters)
 
@@ -170,6 +173,21 @@ def get_debtors_csv_data(data):
 			d['debitor_no_datev'] = debitor_no_datev
 
 	return debtors_csv_data
+
+
+def validate_company_filter(filters):
+	company = frappe.defaults.get_user_default("Company")
+	if not company:
+		frappe.throw(_("Please set the default company"))
+
+	if not filters.get("company"):
+		filters["company"] = company
+
+	if company != filters.get("company"):
+		frappe.throw(_("Company filter must be user default company {0}").format(company))
+
+	if not frappe.get_cached_value("Company", filters.get("company"), "country") == "Germany":
+		frappe.throw(_("Default Company country {0} must be Germany").format(get_link_to_form("Company", filters.get("company"))))
 
 
 def get_conditions(filters):
