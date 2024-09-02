@@ -450,7 +450,7 @@ def get_columns(filters):
 			"width": 160
 		},
 		{
-			"label": _("Tax Percentige"),
+			"label": _("Tax Percentage"),
 			"fieldtype": "Data",
 			"fieldname": "item_tax_rate",
 			"custom_header": "St.-satz",

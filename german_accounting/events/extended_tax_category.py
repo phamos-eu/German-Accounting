@@ -18,13 +18,13 @@ def validate_tax_category_fields(doc, method=None):
     german_accounting_settings = frappe.get_cached_doc('German Accounting Settings')
 
     if not german_accounting_settings.goods_item_group:
-        frappe.throw('Please set Goods Item Group in German Accounting Settings')
+        frappe.throw(_('Please set Goods Item Group in German Accounting Settings'))
 
     if not german_accounting_settings.service_item_group:
-        frappe.throw('Please set Service Item Group in German Accounting Settings')
+        frappe.throw(_('Please set Service Item Group in German Accounting Settings'))
 
     if not german_accounting_settings.good_or_service_selection:
-        frappe.throw('Please set Goods or Service Selection in German Accounting Settings')
+        frappe.throw(_('Please set Goods or Service Selection in German Accounting Settings'))
 
     goods_item_group_list = get_parent_and_descendants_item_group_list(german_accounting_settings.goods_item_group)
     services_item_group_list = get_parent_and_descendants_item_group_list(german_accounting_settings.service_item_group)

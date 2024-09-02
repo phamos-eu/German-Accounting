@@ -2,8 +2,6 @@ Sales Invoice Type,Rechnungstyp
 Invoice Cancellation,Stornorechnung
 Credit Note,Gutschrift
 has been created for,"wurde geschaffen für"
-A DATEV Export Log,"Ein DATEV-Exportprotokoll"
-"month containing a *.csv and *.pdf that can be downloaded","Monat mit einer *.csv- und *.pdf-Datei zum Herunterladen"
 Revenue Account,Erlöskonto
 Export Date,Exportdatum
 currency,Währung
@@ -21,7 +19,6 @@ Document type,Belegart
 "Using the Create DATEV Export Logs button, we create an export of all outgoing invoices (including cancellations and credits) for import into DATEV. All documents that have been posted, have not been exported before and for which the master data has been created correctly are taken into account. The export refers to one calendar month but can be triggered multiple times.","Über den Button DATEV-Exportprotokolle erstellen, erstellen wir einen Export aller Ausgangsrechnungen (inkl. Stornierungen und Gutschriften) für den Import in DATEV. Dabei werden alle gebuchten, noch nicht exportierten Belege berücksichtigt, deren Stammdaten korrekt angelegt wurden. Der Export bezieht sich auf einen Kalendermonat, kann aber mehrfach angestoßen werden."
 "This button takes us to the list view of the exports that have already been carried out (DATEV Export Log). There we can view and download the *.csv file of the documents, an overview as a *.pdf and the *.csv of the customer master data.","Über diesen Button gelangen wir in die Listenansicht der bereits getätigten Exporte (DATEV Export Log). Dort können wir die *.csv Datei der Belege, eine Übersicht als *.pdf sowie die *.csv der Debitorenstammdaten einsehen und herunterladen."
 "With the DATEV OPOS import we upload a file with which we change the payment status of the outgoing invoices. The entries in the file represent the invoices that have not yet been paid. All outgoing invoice IDs that are not contained in the file are set to paid. Exceptions apply to the status 'Paid', 'Cancelled', 'Draft' and 'Credit Note Issues'.","Mit dem DATEV OPOS Import laden wir eine Datei hoch mit welcher wir den Zahlstatus des Ausgangsrechnungen ändern. Die in der Datei enthaltenen Einträge bilden die noch nicht bezahlten Rechnungen ab. Alle Ausgangsrechnungs IDs die also nicht in der Datei enthalten sind werden auf bezahlt gestellt. Ausnahmen gelten für den Status ""Bezahlt (Paid), Abgebrochen (Cancelled), Entwurf (Draft) und Gutschrift ausgelöst (Credit Note Issues)."
-DATEV Action Panel for IMAT,DATEV-Aktionspanel für IMAT
 Create DATEV Export Logs,DATEV Exportprotokolle erstellen
 Show Export Logs,Exportprotokolle anzeigen
 DATEV OPOS Import,DATEV OPOS Import
@@ -46,3 +43,71 @@ Please set the credit controller role on {0},Bitte legen Sie die Kreditcontrolle
 Request for document release {0}.,Antrag auf Dokumentfreigabe {0}.
 Please release the following document {0}.,Bitte geben Sie folgendes Dokument frei: {0}.
 Year must be a 4-digit number.,Das Jahr muss eine 4-stellige Zahl sein.
+{0} is unsupported file format. Only ascii format is supported currently.,{0} ist ein nicht unterstütztes Dateiformat. Derzeit wird nur das ASCII-Format unterstützt.
+Your company is not located in Germany.,Ihr Unternehmenssitz befindet sich nicht in Deutschland.
+"With the DATEV OPOS import we upload a file with which we change the payment status of the outgoing invoices. The entries in the file represent the invoices that have not yet been paid. All outgoing invoice IDs that are not contained in the file are set to paid. Exceptions apply to the status Paid, Cancelled, Draft and Credit Note Issues.","Mit dem DATEV OPOS Import laden wir eine Datei hoch, mit der wir den Zahlungsstatus der Ausgangsrechnungen ändern. Die Einträge in der Datei stellen die noch nicht bezahlten Rechnungen dar. Alle Ausgangsrechnungs-IDs, die nicht in der Datei enthalten sind, werden auf bezahlt gesetzt. Ausnahmen gelten für den Status Bezahlt, Storniert, Entwurf und Gutschriftsausgabe."
+Country in Default {} must be Germany,Land in Standard {} muss Deutschland sein
+In case the amount of Goods and Service Items are equal this case will be chosen.,"Dieser Fall wird gewählt, wenn die Menge der Waren und der Dienstleistungspositionen gleich ist."
+This will control the type of messages that will be shown in transaction when validating German Accounting Tax Default Table values set in Item Group,"Hiermit wird die Art der Nachrichten gesteuert, die in der Transaktion angezeigt werden, wenn die in der Artikelgruppe festgelegten Werte der deutschen Buchhaltungssteuer-Standardtabelle validiert werden."
+Credit Limit Controller Role,Rolle des Kreditlimit-Controllers
+Credit Limit Controller,Kreditlimit-Controller
+Please select at least one user to send an email,"Bitte wählen Sie mindestens einen Benutzer aus, dem Sie eine E-Mail senden möchten"
+Please set the default company,Bitte legen Sie das Standardunternehmen fest
+Sales invoices for this configuration have already been exported!,Verkaufsrechnungen für diese Konfiguration wurden bereits exportiert!
+"This case is not reflected in the table (German Accounting Tax Defaults) in {0}. Please check the fields tax_category, customer_type, is_vat_applicable and add your combination to the table.","Dieser Fall wird in der Tabelle (German Accounting Tax Defaults) in {0} nicht berücksichtigt. Bitte überprüfen Sie die Felder tax_category, customer_type, is_vat_applicable und fügen Sie Ihre Kombination der Tabelle hinzu."
+"A DATEV Export Log {0} has been created for {1} month containing a *.csv and *.pdf that can be downloaded","Es wurde ein DATEV Exportprotokoll {0} für {1} Monat erstellt, das eine *.csv und *.pdf Datei enthält und heruntergeladen werden kann"
+Transaction Validation Message,Transaktionsvalidierungsnachricht
+Addressline 1,Adresszeile 1
+Addressline 2,Adresszeile 2
+Country Code,Landesvorwahl
+Custom Item Tax,Steuer auf Sonderartikel
+Customer Name,Kundenname
+Customer Type,Kundentyp
+DATEV Action Panel for {0},DATEV Maßnahmenpanel für {0}
+"Error cancelling payment entry for: {0}","Fehler beim Stornieren des Zahlungseintrags für: {0}"
+"Error creating payment for: {0}","Fehler beim Erstellen der Zahlung für: {0}"
+German Accounting Settings,Deutsche Buchhaltungseinstellungen
+German Accounting Tax Defaults,Deutsche Bilanzsteuervorgaben
+Goods Item Group,Warenpositionsgruppe
+Please set Goods Item Group in German Accounting Settings,Bitte legen Sie die Warenartikelgruppe in den deutschen Buchhaltungseinstellungen fest
+Please set Service Item Group in German Accounting Settings,Bitte legen Sie die Serviceartikelgruppe in den deutschen Buchhaltungseinstellungen fest
+Please set Goods or Service Selection in German Accounting Settings,Bitte legen Sie die Waren- oder Dienstleistungsauswahl in den deutschen Buchhaltungseinstellungen fest
+Goods or Service Selection,"Waren- oder Dienstleistungsauswahl"
+Tax ID,Umsatzsteuer-Identifikationsnummer
+Net Total,"Gesamtbetrag (netto)"
+"File not found: {0}","Datei nicht gefunden: {0}"
+Grand Total,Gesamtsumme
+Posting Date,Buchungsdatum
+Income Account,Einkommenskonto
+Item Tax Rate,Artikelsteuersatz
+Voucher Type,Gutscheintyp
+Total DATEV,DATEV gesamt
+Voucher No,Gutschein-Nr
+Shortdate,Kurzes Date
+Debitor No DATEV,Debitoren-Nr. DATEV
+Journal Text,Zeitschriftentext
+Tax Percentage,Steuersatz
+Exportdate,Exportdatum
+Starting import,Import wird gestartet
+Importing,Importieren
+Include Header in CSV,Header in CSV einschließen
+Service Item Group,Serviceartikelgruppe
+Error Only,Nur Fehler
+Error or Info,Fehler oder Info
+DATEV Export Log,DATEV Exportprotokoll
+Exported On,Exportiert am
+Sales Invoice CSV,Verkaufsrechnung CSV
+Sales Invoice PDF,Verkaufsrechnung PDF
+Debtors CSV,Schuldner CSV
+DATEV Export Report,DATEV Exportbericht
+DATEV Sales Invoice,DATEV Verkaufsrechnung
+Sales Invoice Exported,Verkaufsrechnung exportiert
+Not Started,Nicht gestartet
+Printed On,Gedruckt auf
+"Processing row {}/{}","Zeile {}/{} wird verarbeitet"
+Error during import: {0},Fehler beim Import: {0}
+Response not found,Antwort nicht gefunden
+Is VAT Applicable,Ist Mehrwertsteuer anwendbar
+Item Tax Template,Artikelsteuervorlage
+Sales Taxes and Charges Template,"Vorlage für Umsatzsteuern und -gebühren"
+Gross Total,Bruttogesamt
