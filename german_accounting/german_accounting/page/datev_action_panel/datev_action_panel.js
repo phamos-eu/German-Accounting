@@ -76,7 +76,7 @@ function setup_action_panel(wrapper) {
 function toggle_section_based_on_default_country(page, wrapper) {
 	const company = frappe.defaults.get_default("company");
 
-	page.set_title('DATEV Action Panel for ' + company);
+	page.set_title(__('DATEV Action Panel for {0}', [company]));
 
 	frappe.call({
 		method: "german_accounting.german_accounting.page.datev_action_panel.datev_action_panel.get_company_country",
