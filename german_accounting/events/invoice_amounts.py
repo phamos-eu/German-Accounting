@@ -1,5 +1,5 @@
 import frappe
-from frappe import _
+
 
 def __get_open_invoice_amount(customer):
    

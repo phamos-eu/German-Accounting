@@ -2,7 +2,6 @@ import io
 import csv
 import frappe
 from frappe import _
-from datetime import date
 from frappe.utils.pdf import get_pdf
 from frappe.utils.jinja_globals import bundled_asset
 from frappe.utils import get_link_to_form, now_datetime

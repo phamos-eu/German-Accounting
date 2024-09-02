@@ -1,4 +1,3 @@
-import frappe
 from erpnext.stock.doctype.delivery_note.delivery_note import DeliveryNote as OriginalDeliveryNote
 
 class CustomDeliveryNote(OriginalDeliveryNote):

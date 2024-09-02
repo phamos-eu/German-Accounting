@@ -1,4 +1,3 @@
-import frappe
 from erpnext.accounts.doctype.journal_entry.journal_entry import JournalEntry as OriginalJournalEntry
 
 class CustomJournalEntry(OriginalJournalEntry):
