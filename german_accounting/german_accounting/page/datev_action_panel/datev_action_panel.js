@@ -7,7 +7,8 @@ frappe.pages['datev-action-panel'].on_page_load = function(wrapper) {
 
 	$(frappe.render_template("datev_action_panel")).appendTo(page.body.addClass("no-border"));
 	setup_action_panel(wrapper);
-	toggle_section_based_on_company(page, wrapper);
+	toggle_section_based_on_default_country(page, wrapper);
+
 }
 
 
@@ -71,11 +72,10 @@ function setup_action_panel(wrapper) {
 	});
 }
 
-
 function toggle_section_based_on_company(page, wrapper) {
 	const company = frappe.defaults.get_user_default("Company");
 	if (company) {
-		page.set_title('DATEV Action Panel for ' + company);
+		page.set_title(__('DATEV Action Panel for {0}', [company]));
 		$(wrapper).find('.default-company-not-set').hide();
 		frappe.call({
 			method: "german_accounting.german_accounting.page.datev_action_panel.datev_action_panel.get_company_country",
@@ -95,11 +95,36 @@ function toggle_section_based_on_company(page, wrapper) {
 			}
 		});
 	} else {
-		page.set_title('DATEV Action Panel');
+		page.set_title(__('DATEV Action Panel'));
 		$(wrapper).find('.non-german-company-section').hide();
 		$(wrapper).find('.show-report-section').hide();
 		$(wrapper).find('.create-datev-section').hide();
 		$(wrapper).find('.show-export-logs-section').hide();
 		$(wrapper).find('.datev-import-section').hide();
 	}
+}
+
+
+function toggle_section_based_on_default_country(page, wrapper) {
+	const company = frappe.defaults.get_default("company");
+
+	page.set_title(__('DATEV Action Panel for {0}', [company]));
+
+	frappe.call({
+		method: "german_accounting.german_accounting.page.datev_action_panel.datev_action_panel.get_company_country",
+		args: {
+			company_name: company
+		},
+		callback: function(r) {
+			const company_details = r.message;
+			if (company_details.country === 'Germany') {
+				$(wrapper).find('.non-german-company-section').hide();
+			} else {
+				$(wrapper).find('.show-report-section').hide();
+				$(wrapper).find('.create-datev-section').hide();
+				$(wrapper).find('.show-export-logs-section').hide();
+				$(wrapper).find('.datev-import-section').hide();
+			}
+		}
+	});
 }
