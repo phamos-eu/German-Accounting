@@ -133,11 +133,11 @@ def get_data(filters):
 		data.append(row)
 
 	if filters.get("export_type") == "Debtors CSV":
-		data = get_debtors_csv_data(data)
+		data = get_debtors_csv_data(data, filters)
 
 	return data
 
-def get_debtors_csv_data(data):
+def get_debtors_csv_data(data, filters):
 	if not data:
 		return []
 	customers = list(set([d.get("customer") for d in data]))
@@ -152,14 +152,14 @@ def get_debtors_csv_data(data):
 		FROM 
 			`tabCustomer` cust
 		LEFT JOIN
-			`tabParty Account` acc ON cust.name = acc.parent
+			`tabParty Account` acc ON cust.name = acc.parent AND acc.company = %s
 		LEFT JOIN
 			tabAddress addrs on cust.billing_address = addrs.name
 		LEFT JOIN
 			`tabPayment Terms Template` ptt on cust.payment_terms = ptt.name
 		WHERE 
-			cust.name in (%s)
-	"""% ", ".join(["%s"] * len(customers)), tuple(customers), as_dict=1)
+			cust.name in ({})
+	""".format(", ".join(["%s"] * len(customers))), (filters.get("company"),*tuple(customers)), as_dict=1)
 
 	for d in debtors_csv_data:
 		d['debitor_no_datev'] = d['debitor_no_datev'] if d.get("debitor_no_datev") else ""
@@ -190,7 +190,7 @@ def validate_company_filter(filters):
 
 
 def get_conditions(filters):
-	conditions = " AND si.company = %(company)s"
+	conditions = " AND si.company = %(company)s AND acc.company = %(company)s"
 	if filters.get("month"):
 		filters["month"] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November",
 				"December"].index(filters.get("month")) + 1
