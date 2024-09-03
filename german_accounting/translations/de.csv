@@ -111,3 +111,9 @@ Is VAT Applicable,Ist Mehrwertsteuer anwendbar
 Item Tax Template,Artikelsteuervorlage
 Sales Taxes and Charges Template,"Vorlage für Umsatzsteuern und -gebühren"
 Gross Total,Bruttogesamt
+Company filter must be user default company {0},Der Firmenfilter muss die Standardfirma des Benutzers {0} sein
+DATEV Action Panel,DATEV-Aktionspanel
+DATEV Export Mapping Sales Invoice Field
+Default Company country {0} must be Germany,Das Standard-Firmenland {0} muss Deutschland sein
+Default Company not set,Standardfirma nicht festgelegt
+Please set default company for current user,Bitte legen Sie das Standardunternehmen für den aktuellen Benutzer fest
