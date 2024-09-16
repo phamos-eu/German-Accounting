@@ -50,6 +50,7 @@ doctype_js = {
 		"public/js/banner/customer_banner.js"
 	],
 	"Quotation": "public/js/banner/quotation_banner.js",
+	"Item Group": "public/js/item_group.js",
 	"Sales Order": "public/js/banner/sales_order_banner.js",
 	"Sales Invoice": "public/js/sales_invoice.js"
 } 

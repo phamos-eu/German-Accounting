@@ -56,6 +56,7 @@ def setting_tax_defaults(doc, transaction_validation_type):
         is_vat_applicable = True if doc.tax_id else False
         filters = {
             'parent': doc.tax_item_group,
+            'company': doc.company,
             'parenttype': 'Item Group',
             'tax_category': doc.tax_category, 
             'customer_type': doc.customer_type,
@@ -91,7 +92,7 @@ def setting_tax_defaults(doc, transaction_validation_type):
             doc.run_method("set_missing_values")
             doc.run_method("calculate_taxes_and_totals")
             if transaction_validation_type in ["Error or Info", "Error Only"]:
-                message = _("This case is not reflected in the table (German Accounting Tax Defaults) in {0}. Please check the fields tax_category, customer_type, is_vat_applicable and add your combination to the table.").format(frappe.get_desk_link("Item Group", doc.tax_item_group))
+                message = _("This case is not reflected in the table (German Accounting Tax Defaults) in {0}. Please check the fields tax_category, customer_type, is_vat_applicable, company and add your combination to the table.").format(frappe.get_desk_link("Item Group", doc.tax_item_group))
     if message:
         frappe.msgprint(message)
 
