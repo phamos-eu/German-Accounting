@@ -9,6 +9,13 @@ frappe.ui.form.on('Sales Invoice', {
             frm.events.toggle_fields(frm);
         }   
     },
+
+    before_submit: function(frm){
+        if (frm.doc.grand_total === 0) {
+            frappe.throw(__("The grand total can't be zero."));
+        }
+    },
+
     refresh: function(frm) {
         frm.events.toggle_fields(frm);
     },
@@ -18,7 +25,6 @@ frappe.ui.form.on('Sales Invoice', {
     },
 
     toggle_fields: function(frm) {
-        
         
             if (frm.doc.sales_invoice_type === "Sales Invoice"){
                 // Details tab
@@ -52,7 +58,6 @@ frappe.ui.form.on('Sales Invoice', {
 
                 frm.set_value('update_outstanding_for_self', 0);
             }
-
             
             // Payments tab
             frm.set_df_property('advances_section', 'hidden', true);
@@ -65,7 +70,6 @@ frappe.ui.form.on('Sales Invoice', {
             frm.set_df_property('is_opening', 'hidden', true);
             frm.set_df_property('sales_team_section_break', 'hidden', true);
             frm.set_df_property('subscription_section', 'hidden', true);
-            frm.set_df_property('more_information', 'hidden', true);                        
-              
+            frm.set_df_property('more_information', 'hidden', true);                             
     }
 });

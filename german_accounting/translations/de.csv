@@ -117,3 +117,4 @@ DATEV Export Mapping Sales Invoice Field
 Default Company country {0} must be Germany,Das Standard-Firmenland {0} muss Deutschland sein
 Default Company not set,Standardfirma nicht festgelegt
 Please set default company for current user,Bitte legen Sie das Standardunternehmen für den aktuellen Benutzer fest
+The grand total can't be zero.,Der Rechnungsbetrag darf nicht Null sein.
