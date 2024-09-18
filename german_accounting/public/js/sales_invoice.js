@@ -10,12 +10,6 @@ frappe.ui.form.on('Sales Invoice', {
         }   
     },
 
-    before_submit: function(frm){
-        if (frm.doc.grand_total === 0) {
-            frappe.throw(__("The grand total can't be zero."));
-        }
-    },
-
     refresh: function(frm) {
         frm.events.toggle_fields(frm);
     },
