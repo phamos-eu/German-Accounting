@@ -1,0 +1,19 @@
+{
+    "name": "german_accounting",
+    "scripts": {
+        "lint": "eslint . --ext .js,.ts --fix",
+        "format": "prettier --write ."
+    },
+    "devDependencies": {
+        "@types/eslint": "^8.21.0",
+        "@types/prettier": "^2.7.2",
+        "@typescript-eslint/eslint-plugin": "^7.14.1",
+        "eslint": "^8.57.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-config-canonical": "^42.8.3",
+        "eslint-plugin-compat": "4.0.2",
+        "eslint-plugin-vue": "^9.19.2",
+        "prettier": "^2.8.4",
+        "typescript": "^5.4.5"
+    }
+}

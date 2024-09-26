@@ -1,0 +1,40 @@
+[project]
+name = "german_accounting"
+authors = [
+    { name = "phamos.eu", email = "support@phamos.eu"}
+]
+description = "Accounting for Germany"
+requires-python = ">=3.10"
+dynamic = ["version"]
+dependencies = []
+
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool]
+
+	[tool.bench.dev-dependencies]
+
+	[tool.mypy]
+	show_column_numbers = true
+	allow_untyped_defs = false
+	allow_subclassing_any = true
+	allow_untyped_calls = false
+	allow_untyped_decorators = true
+	strict = true
+	warn_no_return = true
+	warn_unreachable = true
+	warn_redundant_casts = true
+	warn_unused_ignores = true
+	exclude = [
+		".*/apps/erpnext/.*",
+		".*/apps/frappe/.*",
+	]
+
+	[[tool.mypy.overrides]]
+	module = [
+		"frappe.*",
+		"erpnext.*"
+	]
+	ignore_missing_imports = true

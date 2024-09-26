@@ -1,0 +1,100 @@
+target-version = "py310"
+
+line-length = 150
+
+[format]
+quote-style = "double"
+indent-style="tab"
+exclude = [
+	"*.pyi",
+	"**/apps/frappe/**/*.py",
+	"**/apps/erpnext/**/*.py",
+]
+
+[lint]
+# as defined in https://docs.astral.sh/ruff/rules
+select = [
+	"E", # pycodestyle
+	"D", # pydocstyle
+    "UP", # pyupgrade
+	"F", # pyflakes
+	"W", # pycodestyle
+	"N", # pep8-naming
+	"Q", # flake8-quotes
+	"ANN", # flake8-annotations
+	"BLE", # flake8-blind-except
+	"A", # flake8-builtins
+	"COM", # flake8-commas
+	"C4", # flake8-comprehensions
+	"T10", # flake8-debugger
+	"EM", # flake8-errmsg
+	"FA", # flake8-future-annotations
+	"ISC", # flake8-implicit-str-concat
+	"ICN", # flake8-import-conventions
+	"INP", # flake8-no-pep420
+	"PIE", # flake8-pie
+	"T20", # flake8-print
+	"RSE", # flake8-raise
+	"SLF", # flake8-self
+	"SIM", # flake8-simplify
+	"TID", # flake8-tidy-imports
+	"TCH", # flake8-type-checking
+	"INT", # flake8-gettext
+	"ARG", # flake8-unused-arguments
+	"PTH", # flake8-use-pathlib
+	"ERA", # eradicate
+	"PL", # Pylint
+	"TRY", # tryceratops
+	"FLY", # flynt
+	"PERF", # Perflint
+	"FURB", # refurb
+	"RUF", # Ruff-specific rules
+	"I", # isort
+	"B", # bugbear
+]
+
+extend-ignore = [
+	# pycodestyle
+	"D100", # Missing docstring in public module
+	"D101", # Missing docstring in public class
+	"D104", # Missing docstring in public package
+	"D200", # One-line docstring should fit on one line with quotes
+	"D202", # No blank lines allowed after function docstring
+	"D206", # Docstring should be indented with spaces, not tabs
+	"D212", # Multi-line docstring summary should start at the first line
+
+	# pycodestyle
+	"W191", # Indentation contains tabs
+	"E242", # Tab after ','
+
+	# flake8-annotations
+	"ANN101", # missing-type-self
+
+	# eradicate
+	"ERA001", # Checks for commented-out Python code.
+
+	# flake8-simplify
+	"SIM102", # collapsible-if
+	"SIM110", # reimplemented-builtin
+]
+
+extend-unsafe-fixes = [
+	"F401", # Checks for unused imports.
+]
+
+fixable = ["ALL"]
+
+ignore-init-module-imports = true
+
+exclude = [
+	"*.pyi",
+]
+
+[lint.pylint]
+max-args = 8
+
+[lint.isort]
+lines-after-imports = 2
+
+[lint.pydocstyle]
+convention = "google"

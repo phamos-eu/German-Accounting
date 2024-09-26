@@ -1,0 +1,72 @@
+{
+    // Formatting and trimming settings
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+
+    // Python-specific settings
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit",
+            "source.fixAll": "explicit",
+            "source.fixAll.unusedImports": "never"
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true
+    },
+
+    // TypeScript settings for linting and formatting
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "always"
+        }
+    },
+
+    // JavaScript-specific settings for formatting
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "always"
+        }
+    },
+
+    // Enable MyPy type checking for Python
+    "mypy-type-checker.importStrategy": "useBundled",
+    "mypy-type-checker.preferDaemon": false,
+
+    // Ruff settings for Python linting
+    "ruff.enable": true,
+    "ruff.importStrategy": "useBundled",
+    "ruff.organizeImports": true,
+    "ruff.fixAll": true,
+
+    // ESLint settings for JavaScript and TypeScript
+    "eslint.validate": ["javascript", "typescript"],
+    "eslint.run": "onSave",
+
+    // Prettier settings for code formatting
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "all",
+
+    // Recommended extensions for the project
+    "extensions.recommendations": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-python.mypy-type-checker",
+        "charliermarsh.ruff",
+        "vivaxy.vscode-conventional-commits"
+    ],
+
+    // Additional settings for a better development experience
+    "editor.tabSize": 2,
+    "editor.wordWrap": "on",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+
+    // Optional: Disable telemetry for privacy
+    "telemetry.enableTelemetry": false,
+    "telemetry.enableCrashReporter": false
+}
